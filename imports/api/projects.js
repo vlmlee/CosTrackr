@@ -29,6 +29,7 @@ Meteor.methods({
 			owner: this.userId,
 			username: Meteor.users.findOne(this.userId).username,
 			items: [],
+			private: true,
 			total: 0
 		});
 	},
@@ -38,6 +39,18 @@ Meteor.methods({
 		}
 
 		Projects.remove(projectId);
+	},
+	'project.private' (projectId, privacy) {
+
+		const project = Projects.findOne(projectId);
+
+		if (project.owner !== this.userId) {
+			throw new Meteor.Error('error');
+		}
+
+		Projects.update(projectId, { $set: {
+			private: privacy
+		}});
 	},
 	'items.insert' (projectId, name, price) {
 		if (!this.userId) {

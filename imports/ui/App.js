@@ -11,15 +11,21 @@ import Footer from './components/Footer.js';
 class App extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { };
+		this.state = {};
 	}
 
 	render() {
 		return (
 			<div>
 				<Header />
-				{this.props.main(this.props)} 
-				{this.props.section}
+				<main>
+					{this.props.main(this.props)} 
+				</main>
+					{ this.props.section ? 
+						<section>
+							{this.props.section}
+							</section>
+					: '' }
 				<Footer />
 			</div>
 		);
@@ -38,7 +44,7 @@ export default AppContainer = createContainer(props => {
 
 	return {
 		projects: Projects.find({}, { sort: { createdAt: -1 } }).fetch(),
-		comments: Comments.find({}).fetch(),
+		comments: Comments.find({}, {sort: { createdAt: -1 } }).fetch(),
 		currentUser: Meteor.user(),
 	};
 }, App);

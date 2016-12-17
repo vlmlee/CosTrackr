@@ -23,8 +23,7 @@ export default class Project extends Component {
 						<li> { project.name } </li>
 						<li> { project.createdAt.toString() } </li>
 					</ul> )
-					: '' 
-				}
+				: '' }
 
 				<button onClick={ () => this.createInputField() }>
 					add new input
@@ -32,8 +31,7 @@ export default class Project extends Component {
 
 				<Comments 
 					projectId={this.props.projectId} 
-					comments={comments ? comments : 'No comments'}
-					/>
+					comments={comments} />
 			</section>
 		);
 	}
