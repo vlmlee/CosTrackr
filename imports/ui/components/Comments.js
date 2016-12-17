@@ -52,3 +52,8 @@ export default class Comments extends Component {
 	}
 }
 
+Comments.propTypes = {
+	projectId: PropTypes.string.isRequired,
+	comments: PropTypes.array.isRequired,
+}
+
