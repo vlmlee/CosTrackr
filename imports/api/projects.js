@@ -40,8 +40,7 @@ Meteor.methods({
 
 		Projects.remove(projectId);
 	},
-	'project.private' (projectId, privacy) {
-
+	'projects.private' (projectId, privacy) {
 		const project = Projects.findOne(projectId);
 
 		if (project.owner !== this.userId) {
@@ -69,24 +68,24 @@ Meteor.methods({
 			}
 		}});
 	},
-	'items.remove' (projectId, itemId) {
-		const project = Projects.find(projectId);
-		if (project.owner !== this.userId) {
-			throw new Meteor.Error('error');
-		}
-
-		Projects.update(projectId, { $pull: { 
-			items: { id: itemId }
-		}});
-	},
 	'items.update' (projectId, items) {
-		const project = Projects.find(projectId);
+		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
 		}
 
 		Projects.update(projectId, { $set: {
 			items: items
+		}});
+	},
+	'items.remove' (projectId, itemId) {
+		const project = Projects.findOne(projectId);
+		if (project.owner !== this.userId) {
+			throw new Meteor.Error('error');
+		}
+
+		Projects.update(projectId, { $pull: { 
+			items: { id: itemId }
 		}});
 	},
 	'items.sum' (projectId) {

@@ -41,9 +41,10 @@ export default class Comments extends Component {
 										text={comment.text}
 										createdAt={comment.createdAt.toString()}
 										projectId={comment.projectId} />
-									<button 
-										onClick={() => this.handleDeleteComment(comment._id)}>
-										Delete </button>
+									<input
+										type="button"
+										onClick={() => this.handleDeleteComment(comment._id)}
+										value="Delete" />
 								</div>
 							))}
 						</div>) 

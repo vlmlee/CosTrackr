@@ -14,10 +14,10 @@ const ProjectBox = ({ id, name, createdAt, total }) => (
 );
 
 ProjectBox.propTypes = {
-	id: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired,
+	id: PropTypes.string,
+	name: PropTypes.string,
 	createdAt: PropTypes.object,
-	total: PropTypes.number.isRequired,
+	total: PropTypes.number,
 }
 
 export default ProjectBox;

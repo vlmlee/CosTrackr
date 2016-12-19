@@ -6,6 +6,7 @@ export default class Project extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
+			project: {},
 			items: []
 		};
 		this.createNewItem = this.createNewItem.bind(this);
@@ -17,12 +18,11 @@ export default class Project extends Component {
 		let items = [];
 		setTimeout(() => {
 			const project = this.props.projects.find(project => this.props.projectId === project._id);
-
 			if (project) {
 				items = project.items;
-				this.setState({ items: items });
+				this.setState({ project: project, items: items });
 			}
-		}, 500);
+		}, 0);
 	}
 
 	createNewItem() {
@@ -36,26 +36,25 @@ export default class Project extends Component {
 
 	handleSaveItems(e) {
 		e.preventDefault();
-		Meteor.call('items.update', this.props.projectId, this.state.items);
+		Meteor.call('items.update', this.state.project._id, this.state.items);
+		alert('Saved!');
 	}
 
-	handleRemoveItem(itemId, e) {
-		e.preventDefault();
-		Meteor.call('items.remove', this.props.projectId, itemId);
+	handleRemoveItem(itemId) {
+		Meteor.call('items.remove', this.state.project._id, itemId);
 	}
 
 	render() {
-		let project = this.props.projects.find(project => this.props.projectId === project._id);
-		let comments = this.props.comments.filter(comment => this.props.projectId === comment.projectId);
+		let project = this.state.project;
+		let comments = this.props.comments.filter(comment => this.state.project._id === comment.projectId);
 		return (
 			<section>
 				{ project ? ( 
 					<ul>
 						<li> { project.name } </li>
-						<li> { project.createdAt.toString() } </li>
+						<li> { project.createdAt ? project.createdAt.toString() : '' } </li>
 					</ul> )
 				: '' }
-
 				<form 
 					onSubmit={this.handleSaveItems} >
 					{ this.state.items ? 
@@ -64,7 +63,8 @@ export default class Project extends Component {
 								<Item
 									id={item.id}
 									name={item.name}
-									price={item.price} />
+									price={item.price}
+									projectId={project._id} />
 								<input
 									type="button"
 									onClick={() => this.handleRemoveItem(item.id)}
@@ -91,4 +91,4 @@ Project.propTypes = {
 	projectId: PropTypes.string.isRequired,
 	projects: PropTypes.array.isRequired,
 	comments: PropTypes.array.isRequired,
-}
+};
