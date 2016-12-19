@@ -39,7 +39,7 @@ export default AppContainer = createContainer(props => {
 
 	return {
 		projects: Projects.find({}, { sort: { createdAt: -1 } }).fetch(),
-		comments: Comments.find({}, {sort: { createdAt: -1 } }).fetch(),
+		comments: Comments.find({}, {sort: { createdAt: 1 } }).fetch(),
 		currentUser: Meteor.user(),
 	};
 }, App);

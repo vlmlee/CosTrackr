@@ -8,7 +8,7 @@ const ProjectBox = ({ id, name, createdAt, total }) => (
 			</a>
 		</li>
 		<li>{name}</li>
-		<li>{createdAt}</li>
+		<li>{createdAt ? createdAt.toString() : '' }</li>
 		<li>{total}</li>
 	</ul>
 );
@@ -16,7 +16,7 @@ const ProjectBox = ({ id, name, createdAt, total }) => (
 ProjectBox.propTypes = {
 	id: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
-	createdAt: PropTypes.string.isRequired,
+	createdAt: PropTypes.object,
 	total: PropTypes.number.isRequired,
 }
 

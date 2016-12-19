@@ -27,11 +27,13 @@ Meteor.methods({
 			owner: this.userId,
 			username: Meteor.users.findOne(this.userId).username,
 			items: [],
-			private: false,
+			private: true,
 			total: 0
 		});
 	},
 	'projects.remove' (projectId) {
+		const project = Projects.findOne(projectId);
+
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
 		}
@@ -54,9 +56,7 @@ Meteor.methods({
 		if (!this.userId) {
 			throw new Meteor.Error('error');
 		}
-
 		const project = Projects.findOne(projectId);
-
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
 		}
@@ -75,7 +75,7 @@ Meteor.methods({
 			throw new Meteor.Error('error');
 		}
 
-		Projects.update(projectId, { $unset: { 
+		Projects.update(projectId, { $pull: { 
 			items: { id: itemId }
 		}});
 	},

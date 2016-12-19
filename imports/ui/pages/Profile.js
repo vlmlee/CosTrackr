@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -18,6 +19,7 @@ export default class Profile extends Component {
 	createNewProject(e) {
 		e.preventDefault();
 		Meteor.call('projects.create', this.state.name);
+		ReactDOM.findDOMNode(this.refs.createProject).value = '';
 	}
 
 	render() {
@@ -27,6 +29,7 @@ export default class Profile extends Component {
 				<form
 					onSubmit={this.createNewProject}>
 					<input
+						ref="createProject"
 						onChange={this.handleNameChange} />
 					<input 
 						type="submit" 

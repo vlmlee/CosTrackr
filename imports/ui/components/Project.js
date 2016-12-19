@@ -18,11 +18,11 @@ export default class Project extends Component {
 		setTimeout(() => {
 			const project = this.props.projects.find(project => this.props.projectId === project._id);
 
-			if (project != '') {
-				items = project.item;
+			if (project) {
+				items = project.items;
 				this.setState({ items: items });
 			}
-		}, 400);
+		}, 500);
 	}
 
 	createNewItem() {
@@ -39,14 +39,14 @@ export default class Project extends Component {
 		Meteor.call('items.update', this.props.projectId, this.state.items);
 	}
 
-	handleRemoveItem(itemId) {
+	handleRemoveItem(itemId, e) {
+		e.preventDefault();
 		Meteor.call('items.remove', this.props.projectId, itemId);
 	}
 
 	render() {
 		let project = this.props.projects.find(project => this.props.projectId === project._id);
 		let comments = this.props.comments.filter(comment => this.props.projectId === comment.projectId);
-		console.log(this.state.items);
 		return (
 			<section>
 				{ project ? ( 
@@ -65,20 +65,20 @@ export default class Project extends Component {
 									id={item.id}
 									name={item.name}
 									price={item.price} />
-								<button
-									onClick={() => this.handleRemoveItem(item.id)} >
-									Delete
-								</button>
+								<input
+									type="button"
+									onClick={() => this.handleRemoveItem(item.id)}
+									value="Delete" />
 							</section> 
 					)) : '' }
 					<input
 						type="submit"
 						value="Save" />
 				</form>
-				<button onClick={ () => this.createNewItem() }>
-					add new input
-				</button>
-
+				<input
+					type="button" 
+					onClick={ () => this.createNewItem() }
+					value="Add new input" />
 				<Comments 
 					projectId={this.props.projectId} 
 					comments={comments} />
