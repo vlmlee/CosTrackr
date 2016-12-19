@@ -9,11 +9,6 @@ import Header from './components/Header.js';
 import Footer from './components/Footer.js';
 
 class App extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {};
-	}
-
 	render() {
 		return (
 			<div>
@@ -23,8 +18,8 @@ class App extends Component {
 				</main>
 					{ this.props.section ? 
 						<section>
-							{this.props.section}
-							</section>
+							{this.props.section(this.props)}
+						</section>
 					: '' }
 				<Footer />
 			</div>

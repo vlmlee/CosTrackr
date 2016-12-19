@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-const ProjectBox = (props) => (
+const ProjectBox = ({ id, name, createdAt, total }) => (
 	<ul>
 		<li>
-			<a href={"/project/"+props.project._id}>
-				{props.project._id}
+			<a href={"/project/"+id}>
+				{id}
 			</a>
 		</li>
-		<li>{props.project.name}</li>
-		<li>{props.project.createdAt.toString()}</li>
-		<li>{props.project.items}</li>
-		<li>{props.project.total}</li>
+		<li>{name}</li>
+		<li>{createdAt}</li>
+		<li>{total}</li>
 	</ul>
 );
+
+ProjectBox.propTypes = {
+	id: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
+	createdAt: PropTypes.string.isRequired,
+	total: PropTypes.number.isRequired,
+}
 
 export default ProjectBox;

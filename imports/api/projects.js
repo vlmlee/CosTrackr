@@ -15,8 +15,6 @@ if (Meteor.isServer) {
 	});
 }
 
-// boilerplate CRUD
-
 Meteor.methods({
 	'projects.create' (name) {
 		if (!this.userId) {
@@ -29,7 +27,7 @@ Meteor.methods({
 			owner: this.userId,
 			username: Meteor.users.findOne(this.userId).username,
 			items: [],
-			private: true,
+			private: false,
 			total: 0
 		});
 	},
@@ -77,8 +75,18 @@ Meteor.methods({
 			throw new Meteor.Error('error');
 		}
 
-		Projects.update(projectId, { $pull: { 
+		Projects.update(projectId, { $unset: { 
 			items: { id: itemId }
+		}});
+	},
+	'items.update' (projectId, items) {
+		const project = Projects.find(projectId);
+		if (project.owner !== this.userId) {
+			throw new Meteor.Error('error');
+		}
+
+		Projects.update(projectId, { $set: {
+			items: items
 		}});
 	},
 	'items.sum' (projectId) {

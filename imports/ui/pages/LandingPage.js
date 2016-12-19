@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LandingPage = (props) => (
+const LandingPage = () => (
 	<div>
 		<a href="/public">Check out public projects</a>
 	</div>

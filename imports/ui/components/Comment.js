@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-const Comment = (props) => (
+const Comment = ({ id, text, createdAt, projectId }) => (
 	<ul>
-		<li> {props.comment.text} </li> 
-		<li> {props.comment.createdAt.toString()} </li>
-		<li> {props.comment.projectId} </li>
+		<li> {id} </li>
+		<li> {text} </li> 
+		<li> {createdAt} </li>
+		<li> {projectId} </li>
 	</ul>
 );
+
+Comment.propTypes = {
+	id: PropTypes.string.isRequired,
+	text: PropTypes.string.isRequired,
+	createdAt: PropTypes.string.isRequired,
+	projectId: PropTypes.string.isRequired,
+};
 
 export default Comment;

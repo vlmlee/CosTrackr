@@ -8,6 +8,9 @@ export default class Project extends Component {
 		this.state = { 
 			items: []
 		};
+		this.createNewItem = this.createNewItem.bind(this);
+		this.handleSaveItems = this.handleSaveItems.bind(this);
+		this.handleRemoveItem = this.handleRemoveItem.bind(this);
 	}
 
 	componentWillMount() {
@@ -19,7 +22,7 @@ export default class Project extends Component {
 				items = project.item;
 				this.setState({ items: items });
 			}
-		}, 500);
+		}, 400);
 	}
 
 	createNewItem() {
@@ -31,14 +34,19 @@ export default class Project extends Component {
 		}])});
 	}
 
-	saveItems(e) {
+	handleSaveItems(e) {
 		e.preventDefault();
 		Meteor.call('items.update', this.props.projectId, this.state.items);
+	}
+
+	handleRemoveItem(itemId) {
+		Meteor.call('items.remove', this.props.projectId, itemId);
 	}
 
 	render() {
 		let project = this.props.projects.find(project => this.props.projectId === project._id);
 		let comments = this.props.comments.filter(comment => this.props.projectId === comment.projectId);
+		console.log(this.state.items);
 		return (
 			<section>
 				{ project ? ( 
@@ -49,14 +57,20 @@ export default class Project extends Component {
 				: '' }
 
 				<form 
-					onSubmit={this.saveItems} >
-					{ this.state.items.map(item => (
-						<Item
-							key={item.id}
-							id={item.id}
-							name={item.name}
-							price={item.price} />
-					)) }
+					onSubmit={this.handleSaveItems} >
+					{ this.state.items ? 
+						this.state.items.map(item => (
+							<section key={item.id}>
+								<Item
+									id={item.id}
+									name={item.name}
+									price={item.price} />
+								<button
+									onClick={() => this.handleRemoveItem(item.id)} >
+									Delete
+								</button>
+							</section> 
+					)) : '' }
 					<input
 						type="submit"
 						value="Save" />
@@ -78,6 +92,3 @@ Project.propTypes = {
 	projects: PropTypes.array.isRequired,
 	comments: PropTypes.array.isRequired,
 }
-
-// <button onClick={ () => this.createInputField() }>
-// <button onClick={ () => this.save() }> Save </button>
