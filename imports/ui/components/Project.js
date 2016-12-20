@@ -32,7 +32,7 @@ export default class Project extends Component {
 					total: items.reduce((a, b) => a + Number(b["price"]), 0), 
 				});
 			}
-		}, 0);
+		}, 250);
 	}
 
 	createNewItem() {

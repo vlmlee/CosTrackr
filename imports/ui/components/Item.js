@@ -15,7 +15,7 @@ const Item = ({ id, name, price, handleNameChange, handlePriceChange }) => (
 		{ price ? 
 			<input 
 				onChange={handlePriceChange.bind(this, id)}
-				defaultValue={price} /> :
+				defaultValue={parseInt(price)} /> :
 			<input
 				onChange={handlePriceChange.bind(this, id)}
 				placeholder="Enter a price" /> }

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ProjectBox from '../components/ProjectBox.js';
+import CreateNewProjectForm from '../components/CreateNewProjectForm.js';
 
 export default class ListOfProjects extends Component {
 	handleRemoveProject(projectId) {
@@ -8,7 +9,8 @@ export default class ListOfProjects extends Component {
 
 	render() {
 		return (
-			<div> 
+			<section> 
+				<CreateNewProjectForm />
 				{this.props.projects.map(project => (
 					<section
 						key={project._id} >
@@ -23,7 +25,7 @@ export default class ListOfProjects extends Component {
 							value="Remove Project" />
 					</section>
 				))} 
-			</div>
+			</section>
 		);
 	}
 }
