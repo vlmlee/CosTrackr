@@ -20,7 +20,6 @@ Meteor.methods({
 		if (!this.userId) {
 			throw new Meteor.Error('error');
 		}
-
 		Projects.insert({
 			name: name,
 			createdAt: new Date(),
@@ -33,52 +32,41 @@ Meteor.methods({
 	},
 	'projects.remove' (projectId) {
 		const project = Projects.findOne(projectId);
-
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
 		}
-
 		Projects.remove(projectId);
 	},
 	'projects.privacy' (projectId, privacy) {
 		const project = Projects.findOne(projectId);
-
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
 		}
-
-		Projects.update(projectId, { $set: {
-			private: privacy
-		}});
+		Projects.update(projectId, 
+			{ $set: { private: privacy } });
 	},
-	'items.update' (projectId, items) {
+	'items.update' (projectId, items, total) {
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
 		}
-
-		Projects.update(projectId, { $set: {
-			items: items
-		}});
+		Projects.update(projectId, 
+			{ $set: { items: items, total: total } });
 	},
 	'items.remove' (projectId, itemId) {
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
 		}
-
-		Projects.update(projectId, { $pull: { 
-			items: { id: itemId }
-		}});
+		Projects.update(projectId, 
+			{ $pull: { items: { id: itemId } } });
 	},
 	'items.sum' (projectId, total) {
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
 		}
-
-		Projects.update(projectId, { $set: {
-			total: total
-		}});
+		Projects.update(projectId, 
+			{ $set: { total: total } });
 	}
 });

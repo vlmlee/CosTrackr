@@ -10,8 +10,6 @@ if (Meteor.isServer) {
 	});
 }
 
-// boilerplate CRUD
-
 Meteor.methods({
 	'comments.insert' (text, projectId) {
 		if (!this.userId) {
@@ -37,8 +35,7 @@ Meteor.methods({
 		if (comment.owner !== this.userId) {
 			throw new Meteor.Error('error');
 		}
-		Comments.update(commentId, { $set: {
-			text: text
-		}});
+		Comments.update(commentId, 
+			{ $set: { text: text } });
 	}
 });

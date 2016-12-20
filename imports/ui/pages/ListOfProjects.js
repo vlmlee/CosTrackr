@@ -17,11 +17,10 @@ export default class ListOfProjects extends Component {
 							name={project.name}
 							createdAt={project.createdAt}
 							total={project.total} />
-
-						<button
-							onClick={() => this.handleRemoveProject(project._id)}>
-							Remove Project
-						</button>
+						<input
+							type="button"
+							onClick={() => this.handleRemoveProject(project._id)}
+							value="Remove Project" />
 					</section>
 				))} 
 			</div>

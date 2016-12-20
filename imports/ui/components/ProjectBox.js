@@ -9,7 +9,7 @@ const ProjectBox = ({ id, name, createdAt, total }) => (
 		</li>
 		<li>{name}</li>
 		<li>{createdAt ? createdAt.toString() : '' }</li>
-		<li>{total}</li>
+		<li>{total.toFixed(2)}</li>
 	</ul>
 );
 

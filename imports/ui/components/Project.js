@@ -16,27 +16,34 @@ export default class Project extends Component {
 		this.handlePriceChange = this.handlePriceChange.bind(this);
 		this.handleSaveItems = this.handleSaveItems.bind(this);
 		this.handleRemoveItem = this.handleRemoveItem.bind(this);
+		this.toggleMakePublic = this.toggleMakePublic.bind(this);
 	}
 
 	componentWillMount() {
 		let items = [];
 		setTimeout(() => {
-			const project = this.props.projects.find(project => this.props.projectId === project._id);
+			const project = this.props.projects
+				.find(project => this.props.projectId === project._id);
 			if (project) {
 				items = project.items;
-				let total = items.reduce((a, b) => a + Number(b["price"]), 0);
-				this.setState({ project: project, items: items, total: total });
+				this.setState({ 
+					project: project, 
+					items: items, 
+					total: items.reduce((a, b) => a + Number(b["price"]), 0), 
+				});
 			}
 		}, 0);
 	}
 
 	createNewItem() {
 		let id = this.generateRandomId();
-		this.setState({ items: this.state.items.concat([{
-			id: id,
-			name: '',
-			price: '0',
-		}])});
+		this.setState({ 
+			items: this.state.items.concat([{
+				id: id,
+				name: '',
+				price: '0',
+			}])
+		});
 	}
 
 	handleNameChange(itemId, e) {
@@ -50,46 +57,52 @@ export default class Project extends Component {
 		const items = this.state.items;
 		const index = items.indexOf(items.find(i => i.id === itemId));
 		items[index].price = e.target.value;
-		const project = this.state.project;
-		this.getTotal(items);
-		this.setState({ items: items, project: project});
-	}
-
-	handleSaveItems(e) {
-		e.preventDefault();
-		Meteor.call('items.update', this.state.project._id, this.state.items);
-		Meteor.call('items.sum', this.state.project._id, this.state.total);
-		alert('Saved!');
+		this.handleGetTotal(items);
 	}
 
 	handleRemoveItem(item) {
 		let items = this.state.items.filter(i => i !== item);
-		this.setState({ items: items });
-		this.getTotal(items);
-		Meteor.call('items.update', this.state.project._id, this.state.items);
+		this.handleGetTotal(items);
 	}
 
-	getTotal(items) {
+	handleGetTotal(items) {
 		let total = items.reduce((a, b) => a + Number(b["price"]), 0);
-		this.setState({ total: total });
+		this.setState({ items: items, total: total });
 	}
 
-	makePublic() {
-		Meteor.call('projects.privacy', this.state.project._id, !this.state.project.private);
+	handleSaveItems(e) {
+		e.preventDefault();
+		Meteor.call( 'items.update', 
+			this.state.project._id, 
+			this.state.items, 
+			this.state.total 
+		);
+		alert('Saved!');
+	}
+
+	toggleMakePublic() {
+		const project = this.state.project;
+		project.private = !this.state.project.private;
+		this.setState({ project: project });
+		Meteor.call('projects.privacy', 
+			this.state.project._id, 
+			project.private
+		);
 	}
 
 	generateRandomId() {
 		let randomId = '';
         for (var i = 0; i < 16; i++) {
-            randomId += 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'.charAt(
-                Math.floor(Math.random() * (62)));
+            randomId += 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
+            	.charAt( Math.floor( Math.random() * (62) ));
         }
 		return randomId;
 	}
 
 	render() {
 		let project = this.state.project;
-		let comments = this.props.comments.filter(comment => this.state.project._id === comment.projectId);
+		let comments = this.props.comments
+			.filter(comment => this.state.project._id === comment.projectId);
 		let total = this.state.total;
 		return (
 			<section>
@@ -115,20 +128,20 @@ export default class Project extends Component {
 									type="button"
 									onClick={() => this.handleRemoveItem(item)}
 									value="Delete" />
-							</section> 
-					)) : '' }
+							</section> ))
+					: '' }
 					<input
 						type="submit"
 						value="Save" />
 				</form>
-				<span> {total ? total : ''} </span>
+				<span> { total ? total.toFixed(2) : '' } </span>
 				<input
 					type="button" 
 					onClick={ () => this.createNewItem() }
 					value="Add new input" />
 				<input
 					type="button"
-					onClick={ () => this.makePublic() }
+					onClick={ () => this.toggleMakePublic() }
 					value="Make Public" />
 				<Comments 
 					projectId={this.props.projectId} 

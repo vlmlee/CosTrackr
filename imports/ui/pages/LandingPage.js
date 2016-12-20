@@ -2,7 +2,7 @@ import React from 'react';
 
 const LandingPage = () => (
 	<div>
-		<a href="/public">Check out public projects</a>
+		<a href="/projects">Check out public projects</a>
 	</div>
 );
 
