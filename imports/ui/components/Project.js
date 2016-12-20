@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import Item from './Item.js'
 import Comments from './Comments.js';
 import update from 'immutability-helper';
@@ -10,6 +9,7 @@ export default class Project extends Component {
 		this.state = { 
 			project: {},
 			items: [],
+			total: 0
 		};
 		this.createNewItem = this.createNewItem.bind(this);
 		this.handleNameChange = this.handleNameChange.bind(this);
@@ -24,7 +24,8 @@ export default class Project extends Component {
 			const project = this.props.projects.find(project => this.props.projectId === project._id);
 			if (project) {
 				items = project.items;
-				this.setState({ project: project, items: items });
+				let total = items.reduce((a, b) => a + Number(b["price"]), 0);
+				this.setState({ project: project, items: items, total: total });
 			}
 		}, 0);
 	}
@@ -49,18 +50,28 @@ export default class Project extends Component {
 		const items = this.state.items;
 		const index = items.indexOf(items.find(i => i.id === itemId));
 		items[index].price = e.target.value;
-		this.setState({ items: items });
+		const project = this.state.project;
+		this.getTotal(items);
+		this.setState({ items: items, project: project});
 	}
 
 	handleSaveItems(e) {
 		e.preventDefault();
 		Meteor.call('items.update', this.state.project._id, this.state.items);
+		Meteor.call('items.sum', this.state.project._id, this.state.total);
 		alert('Saved!');
 	}
 
 	handleRemoveItem(item) {
-		this.setState({ items: this.state.items.filter(i => i !== item)});
+		let items = this.state.items.filter(i => i !== item);
+		this.setState({ items: items });
+		this.getTotal(items);
 		Meteor.call('items.update', this.state.project._id, this.state.items);
+	}
+
+	getTotal(items) {
+		let total = items.reduce((a, b) => a + Number(b["price"]), 0);
+		this.setState({ total: total });
 	}
 
 	makePublic() {
@@ -79,8 +90,7 @@ export default class Project extends Component {
 	render() {
 		let project = this.state.project;
 		let comments = this.props.comments.filter(comment => this.state.project._id === comment.projectId);
-
-		console.log(this.state.project.private);
+		let total = this.state.total;
 		return (
 			<section>
 				{ project ? ( 
@@ -111,6 +121,7 @@ export default class Project extends Component {
 						type="submit"
 						value="Save" />
 				</form>
+				<span> {total ? total : ''} </span>
 				<input
 					type="button" 
 					onClick={ () => this.createNewItem() }

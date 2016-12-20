@@ -51,23 +51,6 @@ Meteor.methods({
 			private: privacy
 		}});
 	},
-	'items.insert' (projectId, name, price) {
-		if (!this.userId) {
-			throw new Meteor.Error('error');
-		}
-		const project = Projects.findOne(projectId);
-		if (project.owner !== this.userId) {
-			throw new Meteor.Error('error');
-		}
-
-		Projects.update(projectId, { $push: {
-			items: {
-				id: { $inc: { seq: 1 } },
-				name: name,
-				price: price
-			}
-		}});
-	},
 	'items.update' (projectId, items) {
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
@@ -88,9 +71,14 @@ Meteor.methods({
 			items: { id: itemId }
 		}});
 	},
-	'items.sum' (projectId) {
-		Projects.update(projectId, { total: 
-			{ $sum: "$items.price" }
-		});
+	'items.sum' (projectId, total) {
+		const project = Projects.findOne(projectId);
+		if (project.owner !== this.userId) {
+			throw new Meteor.Error('error');
+		}
+
+		Projects.update(projectId, { $set: {
+			total: total
+		}});
 	}
 });
