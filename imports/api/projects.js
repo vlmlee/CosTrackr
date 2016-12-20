@@ -40,7 +40,7 @@ Meteor.methods({
 
 		Projects.remove(projectId);
 	},
-	'projects.private' (projectId, privacy) {
+	'projects.privacy' (projectId, privacy) {
 		const project = Projects.findOne(projectId);
 
 		if (project.owner !== this.userId) {
