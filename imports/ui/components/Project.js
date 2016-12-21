@@ -10,6 +10,7 @@ export default class Project extends Component {
 		this.state = { 
 			project: {},
 			items: [],
+			saved: false,
 			total: 0
 		};
 		this.createNewItem = this.createNewItem.bind(this);
@@ -76,6 +77,7 @@ export default class Project extends Component {
 			this.state.items, 
 			this.state.total 
 		);
+		this.setState({ saved: true });
 		alert('Saved!');
 	}
 
@@ -129,17 +131,21 @@ export default class Project extends Component {
 									value="Delete" />
 							</section> ))
 					: '' }
-					{ this.props.currentUser._id === project.owner ? 
-						<input
-							type="submit"
-							value="Save" />
+					{ this.props.currentUser ? 
+						(this.props.currentUser._id === project.owner ? 
+							<input
+								type="submit"
+								value="Save" />
+						: '' )
 					: '' }
 				</form>
 				<span> { total ? total.toFixed(2) : '' } </span>
-				{ this.props.currentUser._id === project.owner ? 
-					<ProjectButtons 
-						createNewItem={this.createNewItem} 
-						toggleMakePublic={this.toggleMakePublic} />
+				{ this.props.currentUser ? 
+					(this.props.currentUser._id === project.owner ? 
+						<ProjectButtons 
+							createNewItem={this.createNewItem} 
+							toggleMakePublic={this.toggleMakePublic} />
+					: '' )
 				: '' }
 				<Comments 
 					projectId={this.props.projectId} 
