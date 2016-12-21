@@ -28,11 +28,11 @@ export default class Project extends Component {
 				items = project.items;
 				this.setState({ 
 					project: project, 
-					items: items, 
+					items: project.items, 
 					total: items.reduce((a, b) => a + Number(b["price"]), 0), 
 				});
 			}
-		}, 250);
+		}, 0);
 	}
 
 	createNewItem() {

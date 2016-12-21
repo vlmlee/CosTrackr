@@ -7,23 +7,30 @@ import { Comments } from '../api/comments.js';
 import AccountsUIWrapper from './components/AccountsUIWrapper.js';
 import Header from './components/Header.js';
 import Footer from './components/Footer.js';
+import Spinner from 'react-spin';
 
 class App extends Component {
 	render() {
-		return (
-			<div>
-				<Header />
-				<main>
-					{this.props.main(this.props)} 
-				</main>
-					{ this.props.section ? 
-						<section>
-							{this.props.section(this.props)}
-						</section>
-					: '' }
-				<Footer />
-			</div>
-		);
+		if (this.props.loading) {
+			return (
+				<div>
+					<Header />
+					<main>
+						{this.props.main(this.props)} 
+					</main>
+						{ this.props.section ? 
+							<section>
+								{this.props.section(this.props)}
+							</section>
+						: '' }
+					<Footer />
+				</div>
+			);
+		} else {
+			return (
+				<Spinner />
+			);
+		}
 	}
 }
 
@@ -34,12 +41,14 @@ App.propTypes = {
 };
 
 export default AppContainer = createContainer(props => {
-	Meteor.subscribe('projects');
-	Meteor.subscribe('comments');
+	const subProjects = Meteor.subscribe('projects');
+	const subComments = Meteor.subscribe('comments');
+	const loading = subProjects.ready() && subComments.ready();
 
 	return {
 		projects: Projects.find({}, { sort: { createdAt: -1 } }).fetch(),
 		comments: Comments.find({}, {sort: { createdAt: 1 } }).fetch(),
 		currentUser: Meteor.user(),
+		loading: loading,
 	};
 }, App);
