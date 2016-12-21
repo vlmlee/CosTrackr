@@ -11,7 +11,7 @@ export default class ListOfProjects extends Component {
 		return (
 			<section> 
 				<CreateNewProjectForm currentUser={this.props.currentUser} />
-				{this.props.projects.map(project => (
+				{ this.props.projects.map(project => (
 					<section
 						key={project._id} >
 						<ProjectBox 
@@ -19,10 +19,14 @@ export default class ListOfProjects extends Component {
 							name={project.name}
 							createdAt={project.createdAt}
 							total={project.total} />
-						<input
-							type="button"
-							onClick={() => this.handleRemoveProject(project._id)}
-							value="Remove Project" />
+						{ this.props.currentUser ?
+							( this.props.currentUser._id === project.owner ? 
+								<input
+									type="button"
+									onClick={() => this.handleRemoveProject(project._id)}
+									value="Remove Project" />
+							: '' ) 
+						: '' }
 					</section>
 				))} 
 			</section>
@@ -32,4 +36,5 @@ export default class ListOfProjects extends Component {
 
 ListOfProjects.propTypes = {
 	projects: PropTypes.array.isRequired,
+	currentUser: PropTypes.object,
 };
