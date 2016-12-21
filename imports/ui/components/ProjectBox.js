@@ -18,6 +18,6 @@ ProjectBox.propTypes = {
 	name: PropTypes.string,
 	createdAt: PropTypes.object,
 	total: PropTypes.number,
-}
+};
 
 export default ProjectBox;

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 
 export default class CreateNewProjectForm extends Component {
 	constructor(props) {

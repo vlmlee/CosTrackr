@@ -68,5 +68,5 @@ Meteor.methods({
 		}
 		Projects.update(projectId, 
 			{ $set: { total: total } });
-	}
+	},
 });
