@@ -3,6 +3,7 @@ import Item from './Item.js'
 import ProjectButtons from './ProjectButtons.js';
 import Comments from './Comments.js';
 import update from 'immutability-helper';
+import { Session } from 'meteor/session';
 
 export default class Project extends Component {
 	constructor(props) {
@@ -10,9 +11,11 @@ export default class Project extends Component {
 		this.state = { 
 			project: {},
 			items: [],
-			saved: false,
 			total: 0
 		};
+
+		Session.set('unsavedChanges', false);
+		
 		this.createNewItem = this.createNewItem.bind(this);
 		this.handleNameChange = this.handleNameChange.bind(this);
 		this.handlePriceChange = this.handlePriceChange.bind(this);
@@ -44,6 +47,7 @@ export default class Project extends Component {
 				price: '0',
 			}])
 		});
+		Session.set('unsavedChanges', true);
 	}
 
 	handleNameChange(itemId, e) {
@@ -51,6 +55,7 @@ export default class Project extends Component {
 		const index = items.indexOf(items.find(i => i.id === itemId));
 		items[index].name = e.target.value;
 		this.setState({ items: items });
+		Session.set('unsavedChanges', true);
 	}
 
 	handlePriceChange(itemId, e) {
@@ -68,6 +73,7 @@ export default class Project extends Component {
 	handleGetTotal(items) {
 		let total = items.reduce((a, b) => a + Number(b["price"]), 0);
 		this.setState({ items: items, total: total });
+		Session.set('unsavedChanges', true);
 	}
 
 	handleSaveItems(e) {
@@ -77,7 +83,7 @@ export default class Project extends Component {
 			this.state.items, 
 			this.state.total 
 		);
-		this.setState({ saved: true });
+		Session.set('unsavedChanges', false);
 		alert('Saved!');
 	}
 
