@@ -27,8 +27,16 @@ class App extends Component {
 				</div>
 			);
 		} else {
+			let opts = {
+				lines: 13, 
+				length: 32,
+				width: 14,
+				radius: 42,
+				opacity: 0.25,
+				speed: 0.6
+			};
 			return (
-				<Spinner />
+				<Spinner config={opts} />
 			);
 		}
 	}
