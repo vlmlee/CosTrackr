@@ -10,7 +10,7 @@ export default class ListOfProjects extends Component {
 	render() {
 		return (
 			<section> 
-				<CreateNewProjectForm />
+				<CreateNewProjectForm currentUser={this.props.currentUser} />
 				{this.props.projects.map(project => (
 					<section
 						key={project._id} >

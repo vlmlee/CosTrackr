@@ -24,15 +24,19 @@ export default class CreateNewProjectForm extends Component {
 
 	render() {
 		return (
-			<form
-				onSubmit={this.createNewProject}>
-				<input
-					ref="createProject"
-					onChange={this.handleNameChange} />
-				<input 
-					type="submit" 
-					value="Create project" />
-			</form>
+			<div>
+				{ this.props.currentUser ? 
+					<form
+						onSubmit={this.createNewProject}>
+						<input
+							ref="createProject"
+							onChange={this.handleNameChange} />
+						<input 
+							type="submit" 
+							value="Create project" />
+					</form>
+				: '' }
+			</div>
 		);
 	}
 }
