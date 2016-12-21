@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Item from './Item.js'
+import ProjectButtons from './ProjectButtons.js';
 import Comments from './Comments.js';
 import update from 'immutability-helper';
 
@@ -128,19 +129,18 @@ export default class Project extends Component {
 									value="Delete" />
 							</section> ))
 					: '' }
-					<input
-						type="submit"
-						value="Save" />
+					{ this.props.currentUser._id === project.owner ? 
+						<input
+							type="submit"
+							value="Save" />
+					: '' }
 				</form>
 				<span> { total ? total.toFixed(2) : '' } </span>
-				<input
-					type="button" 
-					onClick={ () => this.createNewItem() }
-					value="Add new input" />
-				<input
-					type="button"
-					onClick={ () => this.toggleMakePublic() }
-					value="Make Public" />
+				{ this.props.currentUser._id === project.owner ? 
+					<ProjectButtons 
+						createNewItem={this.createNewItem} 
+						toggleMakePublic={this.toggleMakePublic} />
+				: '' }
 				<Comments 
 					projectId={this.props.projectId} 
 					comments={comments} />
@@ -153,4 +153,5 @@ Project.propTypes = {
 	projectId: PropTypes.string.isRequired,
 	projects: PropTypes.array.isRequired,
 	comments: PropTypes.array.isRequired,
+	currentUser: PropTypes.object,
 };
