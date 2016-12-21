@@ -28,11 +28,11 @@ class App extends Component {
 			);
 		} else {
 			let opts = {
-				lines: 13, 
-				length: 32,
-				width: 14,
+				lines: 20, 
+				length: 2,
+				width: 2,
 				radius: 42,
-				opacity: 0.25,
+				opacity: 0.1,
 				speed: 0.6
 			};
 			return (

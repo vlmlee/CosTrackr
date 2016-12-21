@@ -21,18 +21,16 @@ export default class Project extends Component {
 
 	componentWillMount() {
 		let items = [];
-		setTimeout(() => {
-			const project = this.props.projects
-				.find(project => this.props.projectId === project._id);
-			if (project) {
-				items = project.items;
-				this.setState({ 
-					project: project, 
-					items: project.items, 
-					total: items.reduce((a, b) => a + Number(b["price"]), 0), 
-				});
-			}
-		}, 0);
+		const project = this.props.projects
+			.find(project => this.props.projectId === project._id);
+		if (project) {
+			items = project.items;
+			this.setState({ 
+				project: project, 
+				items: project.items, 
+				total: items.reduce((a, b) => a + Number(b["price"]), 0), 
+			});
+		}
 	}
 
 	createNewItem() {
