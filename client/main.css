@@ -109,9 +109,9 @@ footer p {
 *  PROJECT PAGE  *
 *****************/
 
-.user-input {
+.input-user {
     height: 34px;
-    width: 300px;
+    width: 295px;
     color: #555;
     border-radius: 3px;
     padding: 6px 10px;
@@ -124,8 +124,21 @@ footer p {
     cursor: auto;
 }
 
-.user-input:focus {
+.input-user:focus {
 	outline: none;
+}
+
+.name {
+	margin: 5px 5px 5px 0;
+}
+
+.price {
+	margin: 5px 0 5px 5px;
+}
+
+.link {
+	display: block;
+	width: 600px;
 }
 
 .back {

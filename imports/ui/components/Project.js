@@ -19,6 +19,7 @@ export default class Project extends Component {
 		this.createNewItem = this.createNewItem.bind(this);
 		this.handleNameChange = this.handleNameChange.bind(this);
 		this.handlePriceChange = this.handlePriceChange.bind(this);
+		this.handleLinkChange = this.handleLinkChange.bind(this);
 		this.handleSaveItems = this.handleSaveItems.bind(this);
 		this.handleRemoveItem = this.handleRemoveItem.bind(this);
 		this.toggleMakePublic = this.toggleMakePublic.bind(this);
@@ -56,6 +57,16 @@ export default class Project extends Component {
 		const items = this.state.items;
 		const index = items.indexOf(items.find(i => i.id === itemId));
 		items[index].name = e.target.value;
+		this.setState({ items: items });
+		if (!Session.get('unSavedChanges')) {
+			Session.set('unsavedChanges', true);
+		}
+	}
+
+	handleLinkChange(item, e) {
+		const items = this.state.items;
+		const index = items.indexOf(items.find(i => i.id === itemId));
+		items[index].link = e.target.value;
 		this.setState({ items: items });
 		if (!Session.get('unSavedChanges')) {
 			Session.set('unsavedChanges', true);
@@ -133,12 +144,14 @@ export default class Project extends Component {
 									id={item.id}
 									name={item.name}
 									price={item.price}
+									link={item.link}
 									projectId={project._id}
 									handleNameChange={this.handleNameChange}
-									handlePriceChange={this.handlePriceChange} />
+									handlePriceChange={this.handlePriceChange}
+									handleLinkChange={this.handleLinkChange} />
 								<input
 									type="button"
-									className="btn red"
+									className="btn red inline"
 									onClick={() => this.handleRemoveItem(item)}
 									value="Delete" />
 							</section> ))

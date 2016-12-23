@@ -30,6 +30,10 @@ export default class Comments extends Component {
 		Meteor.call('comments.remove', commentId);
 	}
 
+	componentDidMount() {
+		ReactDOM.findDOMNode(this.refs.comments).scrollTop = ReactDOM.findDOMNode(this.refs.comments).scrollHeight;
+	}
+
 	componentWillUpdate() {
 		ReactDOM.findDOMNode(this.refs.comments).scrollTop = ReactDOM.findDOMNode(this.refs.comments).scrollHeight;
 	}
