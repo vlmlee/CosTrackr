@@ -119,6 +119,9 @@ export default class Project extends Component {
 		let total = this.state.total;
 		return (
 			<section>
+				<a href="javascript:history.back()">
+					<i className="fa fa-chevron-circle-left fa-2x"></i>Back
+				</a> 
 				{ project ? ( 
 					<ul>
 						<li> { project.name } </li>
