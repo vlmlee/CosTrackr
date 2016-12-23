@@ -47,7 +47,9 @@ export default class Project extends Component {
 				price: '0',
 			}])
 		});
-		Session.set('unsavedChanges', true);
+		if (!Session.get('unSavedChanges')) {
+			Session.set('unsavedChanges', true);
+		}
 	}
 
 	handleNameChange(itemId, e) {
@@ -55,7 +57,9 @@ export default class Project extends Component {
 		const index = items.indexOf(items.find(i => i.id === itemId));
 		items[index].name = e.target.value;
 		this.setState({ items: items });
-		Session.set('unsavedChanges', true);
+		if (!Session.get('unSavedChanges')) {
+			Session.set('unsavedChanges', true);
+		}
 	}
 
 	handlePriceChange(itemId, e) {
@@ -73,7 +77,9 @@ export default class Project extends Component {
 	handleGetTotal(items) {
 		let total = items.reduce((a, b) => a + Number(b["price"]), 0);
 		this.setState({ items: items, total: total });
-		Session.set('unsavedChanges', true);
+		if (!Session.get('unSavedChanges')) {
+			Session.set('unsavedChanges', true);
+		}
 	}
 
 	handleSaveItems(e) {
