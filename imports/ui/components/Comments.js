@@ -36,38 +36,39 @@ export default class Comments extends Component {
 					{ (this.props.comments != '') ? (
 						<div>
 							{this.props.comments.map(comment => (
-								<div 
+								<section className="comments" 
 									key={comment._id} >
 									<Comment 
 										id={comment._id}
+										username={this.props.currentUser.username}
 										text={comment.text}
 										createdAt={comment.createdAt.toString()}
 										projectId={comment.projectId} />
-									<input
-										type="button"
-										className="btn red"
-										onClick={() => this.handleDeleteComment(comment._id)}
-										value="Delete" />
-								</div>
+										{ this.props.currentUser === comment.owner ? 
+											<input
+												type="button"
+												className="btn red inline"
+												onClick={() => this.handleDeleteComment(comment._id)}
+												value="Delete" />
+										: '' }
+								</section>
 							))}
 						</div>) 
 					: <div> No comments. </div> }
 				</div>
-				<div>
-					<h2> Add a comment </h2>
-					<form 
-						onSubmit={this.handleSubmitComment}>
-						<textarea
-							ref="comment"
-							className="comment-box"
-							value={this.state.value}
-							onChange={this.handleChange} />
-						<input 
-							type="submit" 
-							className="btn green"
-							value="Submit" />
-					</form>
-				</div>
+				<h2> Add a comment </h2>
+				<form 
+					onSubmit={this.handleSubmitComment}>
+					<textarea
+						ref="comment"
+						className="comment-box"
+						value={this.state.value}
+						onChange={this.handleChange} />
+					<input 
+						type="submit" 
+						className="btn green block"
+						value="Submit" />
+				</form>
 			</section>
 		);
 	}

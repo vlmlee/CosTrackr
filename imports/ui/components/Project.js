@@ -168,7 +168,8 @@ export default class Project extends Component {
 					: '' )
 				: '' }
 				<Comments 
-					projectId={this.props.projectId} 
+					projectId={this.props.projectId}
+					currentUser={this.props.currentUser} 
 					comments={comments} />
 			</section>
 		);

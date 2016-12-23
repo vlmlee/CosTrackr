@@ -53,6 +53,16 @@ aside {
     margin: 20px;
 }
 
+a {
+	text-decoration: none;
+}
+
+h2 {
+	font-size: 26px;
+	font-weight: 600;
+	text-align: center;
+}
+
 footer {
     display: flex;
     height: 50px;
@@ -67,13 +77,20 @@ footer p {
     margin: 0 auto;
 }
 
+.inline {
+	display: inline-block;
+}
+
+.block {
+	display: block;
+}
+
 .btn {
     border-radius: 5px;
     padding: 10px 20px;
     font-size: 14px;
     margin: 20px;
     color: #fff;
-    display: inline-block;
     text-decoration: none;
     outline: none;
     border: none;
