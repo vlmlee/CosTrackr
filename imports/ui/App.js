@@ -49,14 +49,18 @@ App.propTypes = {
 };
 
 export default AppContainer = createContainer(props => {
-	const subProjects = Meteor.subscribe('projects');
-	const subComments = Meteor.subscribe('comments');
-	const loading = subProjects.ready() && subComments.ready();
+	const subProjects = Meteor.subscribe('projects'),
+		subComments = Meteor.subscribe('comments'),
+		userSubs = Meteor.subscribe('directory');
+	const loading = subProjects.ready() 
+		&& subComments.ready()
+		&& subComments.ready();
 
 	return {
 		projects: Projects.find({}, { sort: { createdAt: -1 } }).fetch(),
 		comments: Comments.find({}, {sort: { createdAt: 1 } }).fetch(),
 		currentUser: Meteor.user(),
+		users: Meteor.users.find().fetch(),
 		loading: loading,
 	};
 }, App);
