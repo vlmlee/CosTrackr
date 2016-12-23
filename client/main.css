@@ -1,4 +1,6 @@
-/* CSS declarations go here */
+/*********
+*  MAIN  *
+*********/
 
 body {
     font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
@@ -54,36 +56,155 @@ aside {
 }
 
 a {
-	text-decoration: none;
-}
-
-h2 {
-	font-size: 26px;
-	font-weight: 600;
-	text-align: center;
+    text-decoration: none;
 }
 
 footer {
     display: flex;
-    height: 50px;
+    height: 40px;
     font-size: 12px;
 }
 
 footer p {
     position: relative;
 }
+/*************
+*  GENERICS  *
+*************/
 
 .center {
     margin: 0 auto;
 }
 
 .inline {
-	display: inline-block;
+    display: inline-block;
 }
 
 .block {
-	display: block;
+    display: block;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px #888; 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #d9d9d9; 
+    -webkit-box-shadow: inset 0 0 2px #888; 
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #E9E9E8; 
+}
+
+/*****************
+*  PROJECT PAGE  *
+*****************/
+
+.user-input {
+    height: 34px;
+    width: 300px;
+    color: #555;
+    border-radius: 3px;
+    padding: 6px 10px;
+    border: 1px solid #CBCBCB;
+    background: #f9f9f9;
+    box-sizing: border-box;
+    box-shadow: inset 0 1px 5px #E9E9E8, 0 0 0 100px #fbfbfa inset;
+    -webkit-appearance: textfield;
+    user-select: text;
+    cursor: auto;
+}
+
+.user-input:focus {
+	outline: none;
+}
+
+.back {
+	width: 200px;
+	margin: 0 auto;
+}
+
+.project-page {
+	display: flex;
+	justify-content: space-between;
+}
+
+.project-section {
+	flex: 1;
+	position: absolute;
+	top: 80px;
+	left: 200px;
+}
+
+.comments-section {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.comments {
+	overflow-y: scroll;
+	flex: 1;
+	position: absolute;
+	top: 60px;
+	right: 200px;
+	height: 500px;
+	width: 540px;
+	padding: 20px;
+	border-radius: 5px;
+	border: 1px solid #f8f8f8;
+    background: #f9f9f9;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 1px #E9E9E8, 0 0 0 1000px #fbfbfa inset;
+    box-shadow: 0px 5px 0px 0px #f1f1f1;
+    -webkit-appearance: textfield;
+}
+
+.comment-form {
+	position: absolute;
+	bottom: 60px;
+	right: 200px;
+}
+
+.comment-textbox {
+    width: 500px;
+    height: 150px;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 14px;
+    margin: 20px;
+    color: #fff;
+    margin: auto;
+    background-color: #2ecc71;
+    box-shadow: 0px 5px 0px 0px #15B358;
+    outline: none;
+    border: none;
+}
+
+.comment-form .submit {
+	position: relative;
+	width: 200px;
+	margin: 18px auto;
+}
+
+.no-comments {
+	position: relative;
+	top: 45%;
+	text-align: center;
+}
+
+/************
+*  BUTTONS  *
+************/
 
 .btn {
     border-radius: 5px;
@@ -126,18 +247,4 @@ footer p {
 .purple {
     background-color: #9b59b6;
     box-shadow: 0px 4px 0px 0px #82409D;
-}
-
-.comment-box {
-	width: 400px;
-	height: 150px;
-	border-radius: 5px;
-    padding: 20px;
-    font-size: 14px;
-    margin: 20px;
-    color: #fff;
-    background-color: #2ecc71;
-    box-shadow: 0px 5px 0px 0px #15B358;
-    outline: none;
-    border: none;
 }

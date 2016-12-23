@@ -11,7 +11,7 @@ export default class Project extends Component {
 		this.state = { 
 			project: {},
 			items: [],
-			total: 0
+			total: '0'
 		};
 
 		Session.set('unsavedChanges', false);
@@ -83,7 +83,6 @@ export default class Project extends Component {
 	}
 
 	handleSaveItems(e) {
-		e.preventDefault();
 		Meteor.call( 'items.update', 
 			this.state.project._id, 
 			this.state.items, 
@@ -118,21 +117,15 @@ export default class Project extends Component {
 			.filter(comment => this.state.project._id === comment.projectId);
 		let total = this.state.total;
 		return (
-			<section>
-				<a href="javascript:history.back()">
-					<input
-						type="button"
-						className="btn orange"
-						value="Back" />
-				</a> 
-				{ project ? ( 
-					<ul>
-						<li> { project.name } </li>
-						<li> { project.createdAt ? project.createdAt.toString() : '' } </li>
-					</ul> )
-				: '' }
-				<form 
-					onSubmit={this.handleSaveItems} >
+			<section className="project-page">
+				<section className="project-section">
+					{ project ? ( 
+						<ul>
+							<li> { project.name } </li>
+							<li> { project.createdAt ? project.createdAt.toString() : '' } </li>
+						</ul> )
+					: '' }
+					<span> { total.toFixed(2) } </span>
 					{ this.state.items ? 
 						this.state.items.map((item, i) => (
 							<section key={item.id}>
@@ -152,25 +145,27 @@ export default class Project extends Component {
 					: '' }
 					{ this.props.currentUser ? 
 						(this.props.currentUser._id === project.owner ? 
-							<input
-								type="submit"
-								className="btn blue"
-								value="Save" />
+							<ProjectButtons 
+								owner={project.owner}
+								currentUser={this.props.currentUser}
+								createNewItem={this.createNewItem} 
+								toggleMakePublic={this.toggleMakePublic}
+								handleSaveItems={this.handleSaveItems} />
 						: '' )
 					: '' }
-				</form>
-				<span> { total ? total.toFixed(2) : '' } </span>
-				{ this.props.currentUser ? 
-					(this.props.currentUser._id === project.owner ? 
-						<ProjectButtons 
-							createNewItem={this.createNewItem} 
-							toggleMakePublic={this.toggleMakePublic} />
-					: '' )
-				: '' }
-				<Comments 
-					projectId={this.props.projectId}
-					currentUser={this.props.currentUser} 
-					comments={comments} />
+					<a href="javascript:history.back()">
+						<input
+							type="button"
+							className="btn orange block back"
+							value="Back" />
+					</a> 
+				</section>
+				<section className="comments-section">
+					<Comments 
+						projectId={this.props.projectId}
+						currentUser={this.props.currentUser} 
+						comments={comments} />
+				</section>
 			</section>
 		);
 	}

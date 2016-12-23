@@ -21,6 +21,7 @@ export default class Comments extends Component {
 		e.preventDefault();
 		if (this.state.text) {
 			Meteor.call('comments.insert', this.state.text, this.props.projectId);
+			this.setState({ text: '' });
 			ReactDOM.findDOMNode(this.refs.comment).value = '';
 		}
 	}
@@ -29,14 +30,20 @@ export default class Comments extends Component {
 		Meteor.call('comments.remove', commentId);
 	}
 
+	componentWillUpdate() {
+		ReactDOM.findDOMNode(this.refs.comments).scrollTop = ReactDOM.findDOMNode(this.refs.comments).scrollHeight;
+	}
+
 	render() {
 		return (
-			<section>
-				<div>
+			<div>
+				<section  
+					ref="comments"
+					className="comments">
 					{ (this.props.comments != '') ? (
 						<div>
 							{this.props.comments.map(comment => (
-								<section className="comments" 
+								<section 
 									key={comment._id} >
 									<Comment 
 										id={comment._id}
@@ -44,32 +51,36 @@ export default class Comments extends Component {
 										text={comment.text}
 										createdAt={comment.createdAt.toString()}
 										projectId={comment.projectId} />
-										{ this.props.currentUser === comment.owner ? 
-											<input
-												type="button"
-												className="btn red inline"
-												onClick={() => this.handleDeleteComment(comment._id)}
-												value="Delete" />
+										{ this.props.currentUser ? 
+											( this.props.currentUser._id === comment.owner ? 
+												<input
+													type="button"
+													className="btn red inline"
+													onClick={() => this.handleDeleteComment(comment._id)}
+													value="Delete" />
+											: '' ) 
 										: '' }
 								</section>
 							))}
 						</div>) 
-					: <div> No comments. </div> }
-				</div>
-				<h2> Add a comment </h2>
-				<form 
-					onSubmit={this.handleSubmitComment}>
-					<textarea
-						ref="comment"
-						className="comment-box"
-						value={this.state.value}
-						onChange={this.handleChange} />
-					<input 
-						type="submit" 
-						className="btn green block"
-						value="Submit" />
-				</form>
-			</section>
+					: <div className="no-comments"> No comments. </div> }
+				</section>
+				<section>
+					<form 
+						className="comment-form"
+						onSubmit={this.handleSubmitComment}>
+						<textarea
+							ref="comment"
+							className="comment-textbox"
+							value={this.state.value}
+							onChange={this.handleChange} />
+						<input 
+							type="submit" 
+							className="btn green block submit"
+							value="Submit" />
+					</form>
+				</section>
+			</div>
 		);
 	}
 }

@@ -17,18 +17,24 @@ if (Meteor.isServer) {
 
 Meteor.methods({
 	'projects.create' (name) {
+		check(name, String);
 		if (!this.userId) {
 			throw new Meteor.Error('error');
 		}
-		Projects.insert({
-			name: name,
-			createdAt: new Date(),
-			owner: this.userId,
-			username: Meteor.users.findOne(this.userId).username,
-			items: [],
-			private: true,
-			total: 0
-		});
+		const project = Projects.findOne({name: name});
+		if (!project) {
+			Projects.insert({
+				name: name,
+				createdAt: new Date(),
+				owner: this.userId,
+				username: Meteor.users.findOne(this.userId).username,
+				items: [],
+				private: true,
+				total: 0
+			});
+		} else {
+			throw new Meteor.Error('error');
+		}
 	},
 	'projects.remove' (projectId) {
 		const project = Projects.findOne(projectId);
