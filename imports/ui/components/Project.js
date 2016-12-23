@@ -46,6 +46,7 @@ export default class Project extends Component {
 				id: id,
 				name: '',
 				price: '0',
+				link: '',
 			}])
 		});
 		if (!Session.get('unSavedChanges')) {
@@ -63,7 +64,7 @@ export default class Project extends Component {
 		}
 	}
 
-	handleLinkChange(item, e) {
+	handleLinkChange(itemId, e) {
 		const items = this.state.items;
 		const index = items.indexOf(items.find(i => i.id === itemId));
 		items[index].link = e.target.value;
@@ -75,9 +76,9 @@ export default class Project extends Component {
 
 	handlePriceChange(itemId, e) {
 		const items = this.state.items;
-		const index = items.indexOf(items.find(i => i.id === itemId));
-		items[index].price = e.target.value;
-		this.handleGetTotal(items);
+			const index = items.indexOf(items.find(i => i.id === itemId));
+			items[index].price = e.target.value;
+			this.handleGetTotal(items);
 	}
 
 	handleRemoveItem(item) {
@@ -94,6 +95,10 @@ export default class Project extends Component {
 	}
 
 	handleSaveItems(e) {
+		if(isNaN(this.state.total)) {
+			// flash error
+			return;
+		}
 		Meteor.call( 'items.update', 
 			this.state.project._id, 
 			this.state.items, 

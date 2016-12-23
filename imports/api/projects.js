@@ -37,6 +37,7 @@ Meteor.methods({
 		}
 	},
 	'projects.remove' (projectId) {
+		check(projectId, String);
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
@@ -44,6 +45,8 @@ Meteor.methods({
 		Projects.remove(projectId);
 	},
 	'projects.privacy' (projectId, privacy) {
+		check(projectId, String);
+		check(privacy, Boolean);
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
@@ -52,6 +55,9 @@ Meteor.methods({
 			{ $set: { private: privacy } });
 	},
 	'items.update' (projectId, items, total) {
+		check(projectId, String);
+		check(items, array);
+		check(total, String);
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
@@ -60,6 +66,8 @@ Meteor.methods({
 			{ $set: { items: items, total: total } });
 	},
 	'items.remove' (projectId, itemId) {
+		check(projectId, String);
+		check(itemId, String);
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
@@ -68,6 +76,8 @@ Meteor.methods({
 			{ $pull: { items: { id: itemId } } });
 	},
 	'items.sum' (projectId, total) {
+		check(projectId, String);
+		check(total, String);
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
