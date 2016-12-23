@@ -13,18 +13,20 @@ class App extends Component {
 	render() {
 		if (this.props.loading) {
 			return (
-				<div>
+				<main>
 					<Header />
-					<main>
-						{this.props.main(this.props)} 
-					</main>
-						{ this.props.section ? 
-							<section>
-								{this.props.section(this.props)}
+						<div className="container">
+							<section className="main-content">
+								{this.props.main(this.props)} 
 							</section>
-						: '' }
+							{ this.props.section ? 
+								<aside>
+									{this.props.section(this.props)}
+								</aside>
+							: '' }
+						</div>
 					<Footer />
-				</div>
+				</main>
 			);
 		} else {
 			let opts = {

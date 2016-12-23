@@ -7,3 +7,22 @@ body {
 div {
 	margin: 20px;
 }
+
+.container {
+	display: flex;
+	flex-direction: row;
+}
+
+.main-content {
+	flex-grow: 1;
+}
+
+aside {
+	flex-grow: 3;
+}
+
+.list-of-projects {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}

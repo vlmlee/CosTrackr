@@ -12,6 +12,8 @@ if (Meteor.isServer) {
 
 Meteor.methods({
 	'comments.insert' (text, projectId) {
+		check(text, String);
+		check(projectId, String);
 		if (!this.userId) {
 			throw new Meteor.Error('error');
 		}

@@ -17,11 +17,12 @@ export default class Profile extends Component {
 
 	render() {
 		return (
-			<section> 
-				This is the profile page 
+			<section className="profile"> 
 				<div>
 					{this.props.username}
 				</div>
+
+				<CreateNewProjectForm currentUser={this.props.currentUser} />
 			</section>
 		);
 	}

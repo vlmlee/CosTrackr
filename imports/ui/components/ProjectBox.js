@@ -1,17 +1,40 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
-const ProjectBox = ({ id, name, createdAt, total }) => (
-	<ul>
-		<li>
-			<a href={"/project/"+id}>
-				{id}
-			</a>
-		</li>
-		<li>{name}</li>
-		<li>{createdAt ? createdAt.toString() : '' }</li>
-		<li>{total.toFixed(2)}</li>
-	</ul>
-);
+export default class ProjectBox extends Component {
+	constructor(props) {
+		super(props);
+		this.handleRemoveProject = this.handleRemoveProject.bind(this);
+	}
+
+	handleRemoveProject(projectId) {
+		Meteor.call('projects.remove', projectId);
+	}
+
+	render() {
+		return (
+			<section className="project-box">
+				<ul>
+					<li>
+						<a href={"/project/"+this.props.id}>
+							{this.props.id}
+						</a>
+					</li>
+					<li>{this.props.name}</li>
+					<li>{this.props.createdAt ? this.props.createdAt.toString() : '' }</li>
+					<li>{this.props.total.toFixed(2)}</li>
+				</ul>
+				{ this.props.currentUser ?
+					( this.props.currentUser._id === this.props.owner ? 
+						<input
+							type="button"
+							onClick={() => this.handleRemoveProject(this.props.id)}
+							value="Remove Project" />
+					: '' ) 
+				: '' }
+			</section>
+		);
+	}
+}
 
 ProjectBox.propTypes = {
 	id: PropTypes.string,
@@ -19,5 +42,3 @@ ProjectBox.propTypes = {
 	createdAt: PropTypes.object,
 	total: PropTypes.number,
 };
-
-export default ProjectBox;
