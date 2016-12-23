@@ -20,7 +20,7 @@ export default class ProjectBox extends Component {
 						</a>
 					</li>
 					<li>{this.props.name}</li>
-					<li>{this.props.createdAt ? this.props.createdAt.toString() : '' }</li>
+					<li>{this.props.createdAt ? this.props.createdAt.toISOString() : '' }</li>
 					<li>{this.props.total.toFixed(2)}</li>
 				</ul>
 				{ this.props.currentUser ?

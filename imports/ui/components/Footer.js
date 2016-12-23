@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const Footer = (props) => (<footer> This is the footer </footer>);
+const Footer = () => (<footer> <p className="center"> © 2016 Michael Lee</p> </footer>);
 
 export default Footer;

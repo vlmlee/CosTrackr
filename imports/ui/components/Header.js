@@ -6,7 +6,6 @@ export default class Header extends Component {
 		return (
 			<header>
 				<AccountsUIWrapper />
-				<span> Some stuff goes here </span>
 			</header>
 		);
 	}

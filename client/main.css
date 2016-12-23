@@ -4,17 +4,27 @@ body {
 	font-family: Fira Mono;
 }
 
-div {
-	margin: 20px;
+.app {
+	display: flex;
+	min-height: 100vh;
+  	flex-direction: column;
+}
+
+header {
+	display: flex;
+	justify-content: flex-end;
+	height: 200px;
 }
 
 .container {
+	flex: 1;
 	display: flex;
 	flex-direction: row;
 }
 
 .main-content {
 	flex-grow: 1;
+	min-width: 25%;
 }
 
 aside {
@@ -25,4 +35,21 @@ aside {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+}
+
+.project-box {
+	margin: 20px;
+}
+
+footer {
+	display: flex;
+	height: 50px;
+}
+
+footer p {
+	position: relative;
+}
+
+.center {
+	margin: 0 auto;
 }

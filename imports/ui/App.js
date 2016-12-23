@@ -13,7 +13,7 @@ class App extends Component {
 	render() {
 		if (this.props.loading) {
 			return (
-				<main>
+				<main className="app">
 					<Header />
 						<div className="container">
 							<section className="main-content">

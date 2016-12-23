@@ -14,6 +14,6 @@ export default class AccountUIWrapper extends Component {
 	}
 
 	render() {
-		return <span ref="container" />
+		return <div className="login-buttons-container"><span ref="container" /></div>
 	}
 }
