@@ -1,55 +1,126 @@
 /* CSS declarations go here */
 
 body {
-	font-family: Fira Mono;
+    font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+    ;
+    font-size: 14px;
+    color: #3f3f3f;
+    line-height: 1.5;
+    font-weight: 500;
+    text-rendering: optimizeLegibility;
+    text-rendering: geometricPrecision;
+    -moz-font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
 }
 
 .app {
-	display: flex;
-	min-height: 100vh;
-  	flex-direction: column;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 header {
-	display: flex;
-	justify-content: flex-end;
-	height: 200px;
+    display: flex;
+    height: 200px;
+    font-size: 12px;
 }
 
 .container {
-	flex: 1;
-	display: flex;
-	flex-direction: row;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
 }
 
 .main-content {
-	flex-grow: 1;
-	min-width: 25%;
+    flex-grow: 1;
+    min-width: 25%;
 }
 
 aside {
-	flex-grow: 3;
+    flex-grow: 3;
 }
 
 .list-of-projects {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .project-box {
-	margin: 20px;
+    margin: 20px;
 }
 
 footer {
-	display: flex;
-	height: 50px;
+    display: flex;
+    height: 50px;
+    font-size: 12px;
 }
 
 footer p {
-	position: relative;
+    position: relative;
 }
 
 .center {
-	margin: 0 auto;
+    margin: 0 auto;
+}
+
+.btn {
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    margin: 20px;
+    color: #fff;
+    display: inline-block;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+.btn:active {
+    transform: translate(0, 4px);
+    -webkit-transform: translate(0, 4px);
+    box-shadow: 0px 4px 0px 0px;
+}
+
+.blue {
+    background-color: #55acee;
+    box-shadow: 0px 4px 0px 0px #3C93D5;
+}
+
+.green {
+    background-color: #2ecc71;
+    box-shadow: 0px 4px 0px 0px #15B358;
+}
+
+.orange {
+    background-color: #e67e22;
+    box-shadow: 0px 4px 0px 0px #CD6509;
+}
+
+.red {
+    background-color: #e74c3c;
+    box-shadow: 0px 4px 0px 0px #CE3323;
+}
+
+.purple {
+    background-color: #9b59b6;
+    box-shadow: 0px 4px 0px 0px #82409D;
+}
+
+.comment-box {
+	width: 400px;
+	height: 150px;
+	border-radius: 5px;
+    padding: 20px;
+    font-size: 14px;
+    margin: 20px;
+    color: #fff;
+    background-color: #2ecc71;
+    box-shadow: 0px 5px 0px 0px #15B358;
+    outline: none;
+    border: none;
 }

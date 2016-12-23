@@ -27,6 +27,7 @@ export default class ProjectBox extends Component {
 					( this.props.currentUser._id === this.props.owner ? 
 						<input
 							type="button"
+							className="btn red"
 							onClick={() => this.handleRemoveProject(this.props.id)}
 							value="Remove Project" />
 					: '' ) 

@@ -4,10 +4,12 @@ const ProjectButtons = ({createNewItem, toggleMakePublic}) => (
 	<section>
 		<input
 			type="button" 
+			className="btn green"
 			onClick={ () => createNewItem() }
 			value="Add new input" />
 		<input
 			type="button"
+			className="btn purple"
 			onClick={ () => toggleMakePublic() }
 			value="Make Public" />
 	</section>

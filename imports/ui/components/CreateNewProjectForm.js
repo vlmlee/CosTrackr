@@ -36,6 +36,7 @@ export default class CreateNewProjectForm extends Component {
 							onChange={this.handleNameChange} />
 						<input 
 							type="submit" 
+							className="btn blue"
 							value="Create project" />
 					</form>
 				: '' }

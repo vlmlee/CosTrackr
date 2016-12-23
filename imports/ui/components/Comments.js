@@ -6,7 +6,7 @@ export default class Comments extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			text: "Type in a comment"
+			text: ''
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmitComment = this.handleSubmitComment.bind(this);
@@ -19,8 +19,10 @@ export default class Comments extends Component {
 
 	handleSubmitComment(e) {
 		e.preventDefault();
-		Meteor.call('comments.insert', this.state.text, this.props.projectId);
-		ReactDOM.findDOMNode(this.refs.comment).value = '';
+		if (this.state.text) {
+			Meteor.call('comments.insert', this.state.text, this.props.projectId);
+			ReactDOM.findDOMNode(this.refs.comment).value = '';
+		}
 	}
 
 	handleDeleteComment(commentId) {
@@ -43,6 +45,7 @@ export default class Comments extends Component {
 										projectId={comment.projectId} />
 									<input
 										type="button"
+										className="btn red"
 										onClick={() => this.handleDeleteComment(comment._id)}
 										value="Delete" />
 								</div>
@@ -56,9 +59,13 @@ export default class Comments extends Component {
 						onSubmit={this.handleSubmitComment}>
 						<textarea
 							ref="comment"
+							className="comment-box"
 							value={this.state.value}
 							onChange={this.handleChange} />
-						<input type="submit" value="Submit" />
+						<input 
+							type="submit" 
+							className="btn green"
+							value="Submit" />
 					</form>
 				</div>
 			</section>

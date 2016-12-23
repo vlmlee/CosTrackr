@@ -120,7 +120,10 @@ export default class Project extends Component {
 		return (
 			<section>
 				<a href="javascript:history.back()">
-					<i className="fa fa-chevron-circle-left fa-2x"></i>Back
+					<input
+						type="button"
+						className="btn orange"
+						value="Back" />
 				</a> 
 				{ project ? ( 
 					<ul>
@@ -142,6 +145,7 @@ export default class Project extends Component {
 									handlePriceChange={this.handlePriceChange} />
 								<input
 									type="button"
+									className="btn red"
 									onClick={() => this.handleRemoveItem(item)}
 									value="Delete" />
 							</section> ))
@@ -150,6 +154,7 @@ export default class Project extends Component {
 						(this.props.currentUser._id === project.owner ? 
 							<input
 								type="submit"
+								className="btn blue"
 								value="Save" />
 						: '' )
 					: '' }
