@@ -23,6 +23,10 @@ export default class Profile extends Component {
 				</h2>
 
 				<CreateNewProjectForm currentUser={this.props.currentUser} />
+
+				<h2> Bio </h2>
+				<h2> Personal Website </h2>
+				<h2> Joined: </h2>
 			</section>
 		);
 	}
