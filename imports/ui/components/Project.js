@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import Item from './Item.js'
+import ReactDOM from 'react-dom';
+import Item from './Item.js';
 import ProjectButtons from './ProjectButtons.js';
 import Comments from './Comments.js';
 import update from 'immutability-helper';
 import { Session } from 'meteor/session';
+import moment from 'moment';
 
 export default class Project extends Component {
 	constructor(props) {
@@ -118,6 +120,14 @@ export default class Project extends Component {
 		);
 	}
 
+	componentDidMount() {
+		ReactDOM.findDOMNode(this.refs.items).scrollTop = ReactDOM.findDOMNode(this.refs.items).scrollHeight;
+	}
+
+	componentWillUpdate() {
+		ReactDOM.findDOMNode(this.refs.items).scrollTop = ReactDOM.findDOMNode(this.refs.items).scrollHeight;
+	}
+
 	generateRandomId() {
 		let randomId = '';
         for (var i = 0; i < 16; i++) {
@@ -136,15 +146,24 @@ export default class Project extends Component {
 			<section className="project-page">
 				<section className="project-section">
 					{ project ? ( 
-						<ul>
-							<li> { project.name } </li>
-							<li> { project.createdAt ? project.createdAt.toString() : '' } </li>
-						</ul> )
+						<section>
+							<h1> { project.name } </h1>
+							<h3> { project.createdAt ? moment(project.createdAt.toISOString()).calendar() : '' } </h3>
+						</section> )
 					: '' }
-					<span> { total.toFixed(2) } </span>
-					{ this.state.items ? 
-						this.state.items.map((item, i) => (
-							<section key={item.id}>
+					<span className="total">
+					    <input 
+					    	type="text"
+					    	readOnly
+					    	value={total.toFixed(2)}  />
+					</span>
+					<section 
+						ref="items"
+						className="items">
+						{ this.state.items !== [] ?
+							this.state.items.map((item, i) => (
+							<div
+								key={item.id} >
 								<Item
 									id={item.id}
 									name={item.name}
@@ -159,24 +178,27 @@ export default class Project extends Component {
 									className="btn red inline"
 									onClick={() => this.handleRemoveItem(item)}
 									value="Delete" />
-							</section> ))
-					: '' }
-					{ this.props.currentUser ? 
-						(this.props.currentUser._id === project.owner ? 
-							<ProjectButtons 
-								owner={project.owner}
-								currentUser={this.props.currentUser}
-								createNewItem={this.createNewItem} 
-								toggleMakePublic={this.toggleMakePublic}
-								handleSaveItems={this.handleSaveItems} />
-						: '' )
-					: '' }
-					<a href="javascript:history.back()">
-						<input
-							type="button"
-							className="btn orange block back"
-							value="Back" />
-					</a> 
+							</div> ))
+						: <h3> Add an item! </h3> }
+					</section>
+					<section className="all-buttons">
+						{ this.props.currentUser ? 
+							(this.props.currentUser._id === project.owner ? 
+								<ProjectButtons 
+									owner={project.owner}
+									currentUser={this.props.currentUser}
+									createNewItem={this.createNewItem} 
+									toggleMakePublic={this.toggleMakePublic}
+									handleSaveItems={this.handleSaveItems} />
+							: '' )
+						: '' }
+						<a href="javascript:history.back()">
+							<input
+								type="button"
+								className="btn orange block back"
+								value="‹Back" />
+						</a> 
+					</section>
 				</section>
 				<section className="comments-section">
 					<Comments 

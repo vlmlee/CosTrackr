@@ -56,8 +56,7 @@ Meteor.methods({
 	},
 	'items.update' (projectId, items, total) {
 		check(projectId, String);
-		check(items, array);
-		check(total, String);
+		check(total, Number);
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');
@@ -77,7 +76,7 @@ Meteor.methods({
 	},
 	'items.sum' (projectId, total) {
 		check(projectId, String);
-		check(total, String);
+		check(total, Number);
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
 			throw new Meteor.Error('error');

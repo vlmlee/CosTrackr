@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 
 const ProjectButtons = ({ owner, currentUser, createNewItem, toggleMakePublic, handleSaveItems }) => (
-	<section>
+	<div>
 		{ currentUser ? 
 			( currentUser._id === owner ? 
-				<div>
+				<section className="project-buttons">
 					<input
 						type="submit"
 						className="btn blue inline"
@@ -20,10 +20,10 @@ const ProjectButtons = ({ owner, currentUser, createNewItem, toggleMakePublic, h
 						className="btn purple"
 						onClick={ () => toggleMakePublic() }
 						value="Make Public" />
-				</div> 
+				</section> 
 			: '' )
 		: '' }
-	</section>
+	</div>
 );
 
 ProjectButtons.propTypes = {

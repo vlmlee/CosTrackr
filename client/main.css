@@ -26,8 +26,9 @@ body {
 
 header {
     display: flex;
-    height: 200px;
+    height: 150px;
     font-size: 12px;
+    margin-bottom: 30px;
 }
 
 .container {
@@ -55,13 +56,17 @@ aside {
     margin: 20px;
 }
 
+h1 {
+	font-size: 36px;
+}
+
 a {
     text-decoration: none;
 }
 
 footer {
     display: flex;
-    height: 40px;
+    height: 30px;
     font-size: 12px;
 }
 
@@ -88,6 +93,10 @@ footer p {
     width: 10px;
 }
 
+.items::-webkit-scrollbar {
+    width: 0px;
+}
+
 ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px #888; 
     -webkit-border-radius: 10px;
@@ -109,6 +118,18 @@ footer p {
 *  PROJECT PAGE  *
 *****************/
 
+
+ .total input {
+ 	position: fixed;
+	top: 105px;
+	left: 490px;
+	font-size: 26px;
+	padding-right: 10px;
+    text-align: end; 
+    border: none;
+    overflow-x: hidden;
+ }
+
 .input-user {
     height: 34px;
     width: 285px;
@@ -128,6 +149,11 @@ footer p {
 	outline: none;
 }
 
+.items {
+	max-height: 500px;
+	overflow-y: scroll;
+}
+
 .name {
 	margin: 5px 5px 5px 0;
 }
@@ -139,11 +165,6 @@ footer p {
 .link {
 	display: block;
 	width: 580px;
-}
-
-.back {
-	width: 200px;
-	margin: 0 auto;
 }
 
 .project-page {
@@ -184,11 +205,12 @@ footer p {
 
 .comment-form {
 	position: absolute;
-	bottom: 60px;
-	right: 200px;
+	bottom: 275px;
+	right: 560px;
 }
 
 .comment-textbox {
+	position: fixed;
     width: 500px;
     height: 150px;
     border-radius: 5px;
@@ -196,7 +218,6 @@ footer p {
     font-size: 14px;
     margin: 20px;
     color: #fff;
-    margin: auto;
     background-color: #2ecc71;
     box-shadow: 0px 5px 0px 0px #15B358;
     outline: none;
@@ -206,6 +227,8 @@ footer p {
 .comment-form .submit {
 	position: relative;
 	width: 200px;
+	top: 205px;
+	left: 190px;
 	margin: 18px auto;
 }
 
@@ -223,7 +246,7 @@ footer p {
     border-radius: 5px;
     padding: 10px 20px;
     font-size: 14px;
-    margin: 20px;
+    margin: 20px 20px 20px 0;
     color: #fff;
     text-decoration: none;
     outline: none;
@@ -235,6 +258,17 @@ footer p {
     transform: translate(0, 4px);
     -webkit-transform: translate(0, 4px);
     box-shadow: 0px 4px 0px 0px;
+}
+
+.project-buttons {
+	display: flex;
+	margin-left: 20px; 
+	justify-content: center;
+}
+
+.back {
+	width: 200px;
+	margin: 20px auto;
 }
 
 .blue {
@@ -260,4 +294,10 @@ footer p {
 .purple {
     background-color: #9b59b6;
     box-shadow: 0px 4px 0px 0px #82409D;
+}
+
+.all-buttons {
+	position: fixed;
+	bottom: 80px;
+	left: 288px;
 }

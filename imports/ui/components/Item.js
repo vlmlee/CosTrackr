@@ -13,7 +13,7 @@ const Item = ({ id, name, price, link, handleNameChange, handlePriceChange, hand
 				onChange={handleNameChange.bind(this, id)}
 				placeholder="Enter an item" /> }
 
-		{ price ? 
+		{ price !== 0 ? 
 			<input 
 				className="input-user price"
 				pattern="[0-9]"
@@ -21,6 +21,7 @@ const Item = ({ id, name, price, link, handleNameChange, handlePriceChange, hand
 				defaultValue={parseInt(price)} /> :
 			<input
 				className="input-user price"
+				pattern="[0-9]"
 				onChange={handlePriceChange.bind(this, id)}
 				placeholder="Enter a price" /> }
 
