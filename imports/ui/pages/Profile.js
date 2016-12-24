@@ -18,9 +18,9 @@ export default class Profile extends Component {
 	render() {
 		return (
 			<section className="profile"> 
-				<div>
+				<h2>
 					{this.props.username}
-				</div>
+				</h2>
 
 				<CreateNewProjectForm currentUser={this.props.currentUser} />
 			</section>

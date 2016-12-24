@@ -12,6 +12,7 @@
     "react": "^15.4.1",
     "react-addons-pure-render-mixin": "^15.4.1",
     "react-dom": "^15.4.1",
-    "react-mounter": "^1.2.0"
+    "react-mounter": "^1.2.0",
+    "sweetalert": "^1.1.3"
   }
 }

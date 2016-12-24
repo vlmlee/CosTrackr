@@ -33,10 +33,11 @@ export default class CreateNewProjectForm extends Component {
 						onSubmit={this.createNewProject}>
 						<input
 							ref="createProject"
+							className="input-create-project"
 							onChange={this.handleNameChange} />
 						<input 
 							type="submit" 
-							className="btn blue"
+							className="btn blue button-create-project"
 							value="Create project" />
 					</form>
 				: '' }

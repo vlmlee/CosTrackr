@@ -1,10 +1,17 @@
+/*
+*   Costrakr
+*   © 2016 Michael Lee
+*  
+*   Note: the more specific the CSS, the lower down it is.
+*/
+
+
 /*********
 *  MAIN  *
 *********/
 
 body {
     font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
-    ;
     font-size: 14px;
     color: #3f3f3f;
     line-height: 1.5;
@@ -38,12 +45,13 @@ header {
 }
 
 .main-content {
-    flex-grow: 1;
-    min-width: 25%;
+    flex: 1;
+    min-width: 30%;
 }
 
 aside {
-    flex-grow: 3;
+    flex: 2;
+
 }
 
 .list-of-projects {
@@ -57,7 +65,7 @@ aside {
 }
 
 h1 {
-	font-size: 36px;
+    font-size: 36px;
 }
 
 a {
@@ -73,6 +81,8 @@ footer {
 footer p {
     position: relative;
 }
+
+
 /*************
 *  GENERICS  *
 *************/
@@ -98,175 +108,39 @@ footer p {
 }
 
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px #888; 
+    -webkit-box-shadow: inset 0 0 6px #888;
     -webkit-border-radius: 10px;
     border-radius: 10px;
 }
 
 .items::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px #888; 
+    -webkit-box-shadow: inset 0 0 6px #888;
     -webkit-border-radius: 10px;
     border-radius: 10px;
 }
- 
+
 ::-webkit-scrollbar-thumb {
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    background: #d9d9d9; 
-    -webkit-box-shadow: inset 0 0 2px #888; 
+    background: #d9d9d9;
+    -webkit-box-shadow: inset 0 0 2px #888;
 }
 
 .items::-webkit-scrollbar-thumb {
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    background: #d9d9d9; 
-    -webkit-box-shadow: inset 0 0 2px #888; 
+    background: #d9d9d9;
+    -webkit-box-shadow: inset 0 0 2px #888;
 }
 
 ::-webkit-scrollbar-thumb:window-inactive {
-	background: #E9E9E8; 
+    background: #E9E9E8;
 }
 
 .items::-webkit-scrollbar-thumb:window-inactive {
-	background: #E9E9E8; 
+    background: #E9E9E8;
 }
 
-/*****************
-*  PROJECT PAGE  *
-*****************/
-
- .total input {
- 	position: fixed;
-	top: 88px;
-	left: 390px;
-	font-size: 36px;
-	padding-right: 10px;
-    text-align: end; 
-    border: none;
-    overflow-x: hidden;
- }
-
- .add-item-prompt {
- 	text-align: center;
- 	margin-top: 135px;
- 	font-size: 14px;
- }
-
-.input-user {
-    height: 34px;
-    width: 285px;
-    color: #555;
-    border-radius: 3px;
-    padding: 6px 10px;
-    border: 1px solid #CBCBCB;
-    background: #f9f9f9;
-    box-sizing: border-box;
-    box-shadow: inset 0 1px 5px #E9E9E8, 0 0 0 100px #fbfbfa inset;
-    -webkit-appearance: textfield;
-    user-select: text;
-    cursor: auto;
-}
-
-.input-user:focus {
-	outline: none;
-}
-
-.items {
-	height: 500px;
-	width: 580px;
-	overflow-y: scroll;
-}
-
-.name {
-	margin: 5px 5px 5px 0;
-}
-
-.price {
-	margin: 5px 0 5px 5px;
-}
-
-.link {
-	display: block;
-	width: 580px;
-}
-
-.item-index {
-	font-size: 28px;
-	float: right;
-	margin-right: 30px;
-	margin-top: 5px;
-}
-
-.project-page {
-	display: flex;
-	justify-content: space-between;
-}
-
-.project-section {
-	flex: 1;
-	position: absolute;
-	top: 80px;
-	left: 200px;
-}
-
-.comments-section {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-}
-
-.comments {
-	overflow-y: scroll;
-	flex: 1;
-	position: absolute;
-	top: 60px;
-	right: 200px;
-	height: 500px;
-	width: 540px;
-	padding: 20px;
-	border-radius: 5px;
-	border: 1px solid #f8f8f8;
-    background: #f9f9f9;
-    box-sizing: border-box;
-    box-shadow: inset 0 0 1px #E9E9E8, 0 0 0 1000px #fbfbfa inset;
-    box-shadow: 0px 5px 0px 0px #f1f1f1;
-    -webkit-appearance: textfield;
-}
-
-.comment-form {
-	position: absolute;
-	bottom: 275px;
-	right: 560px;
-}
-
-.comment-textbox {
-	position: fixed;
-    width: 500px;
-    height: 150px;
-    border-radius: 5px;
-    padding: 20px;
-    font-size: 14px;
-    margin: 20px;
-    color: #fff;
-    background-color: #2ecc71;
-    box-shadow: 0px 5px 0px 0px #15B358;
-    outline: none;
-    border: none;
-}
-
-.comment-form .submit {
-	position: relative;
-	width: 200px;
-	top: 205px;
-	left: 190px;
-	margin: 18px auto;
-}
-
-.no-comments {
-	position: relative;
-	top: 45%;
-	text-align: center;
-}
 
 /************
 *  BUTTONS  *
@@ -291,15 +165,15 @@ footer p {
 }
 
 .project-buttons {
-	display: flex;
-	margin-left: 20px; 
-	margin-bottom: -8px;
-	justify-content: center;
+    display: flex;
+    margin-left: 20px;
+    margin-bottom: -8px;
+    justify-content: center;
 }
 
 .back {
-	width: 200px;
-	margin: 0 auto 8px;
+    width: 200px;
+    margin: 0 auto 8px;
 }
 
 .blue {
@@ -328,7 +202,188 @@ footer p {
 }
 
 .all-buttons {
-	position: fixed;
-	bottom: 80px;
-	left: 288px;
+    position: fixed;
+    bottom: 80px;
+    left: 288px;
+}
+
+
+/*****************
+*  PROFILE PAGE  *
+*****************/
+
+.profile {
+    text-align: center;
+}
+
+.profile h2 {
+    font-size: 28px;
+}
+
+
+/*****************
+*  PROJECT PAGE  *
+*****************/
+
+.total input {
+    position: fixed;
+    top: 88px;
+    left: 390px;
+    font-size: 36px;
+    padding-right: 10px;
+    text-align: end;
+    border: none;
+    overflow-x: hidden;
+}
+
+.add-item-prompt {
+    text-align: center;
+    margin-top: 135px;
+    font-size: 20px;
+}
+
+.input-user {
+    height: 34px;
+    width: 285px;
+    color: #555;
+    border-radius: 3px;
+    padding: 6px 10px;
+    border: 1px solid #CBCBCB;
+    background: #f9f9f9;
+    box-sizing: border-box;
+    box-shadow: inset 0 1px 5px #E9E9E8, 0 0 0 100px #fbfbfa inset;
+    -webkit-appearance: textfield;
+    user-select: text;
+    cursor: auto;
+}
+
+.input-user:focus {
+    outline: none;
+}
+
+.items {
+    height: 500px;
+    width: 580px;
+    overflow-y: scroll;
+}
+
+.name {
+    margin: 5px 5px 5px 0;
+}
+
+.price {
+    margin: 5px 0 5px 5px;
+}
+
+.link {
+    display: block;
+    width: 580px;
+}
+
+.item-index {
+    font-size: 28px;
+    float: right;
+    margin-right: 30px;
+    margin-top: 5px;
+}
+
+.project-page {
+    display: flex;
+    justify-content: space-between;
+}
+
+.project-section {
+    flex: 1;
+    position: absolute;
+    top: 80px;
+    left: 200px;
+}
+
+.comments-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.comments {
+    overflow-y: scroll;
+    flex: 1;
+    position: absolute;
+    top: 60px;
+    right: 200px;
+    height: 500px;
+    width: 540px;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #f8f8f8;
+    background: #f9f9f9;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 1px #E9E9E8, 0 0 0 1000px #fbfbfa inset;
+    box-shadow: 0px 5px 0px 0px #f1f1f1;
+    -webkit-appearance: textfield;
+}
+
+.comment-form {
+    position: absolute;
+    bottom: 275px;
+    right: 560px;
+}
+
+.comment-textbox {
+    position: fixed;
+    width: 500px;
+    height: 150px;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 14px;
+    margin: 20px;
+    color: #fff;
+    background-color: #2ecc71;
+    box-shadow: 0px 5px 0px 0px #15B358;
+    outline: none;
+    border: none;
+}
+
+.comment-form .submit {
+    position: relative;
+    width: 200px;
+    top: 205px;
+    left: 190px;
+    margin: 18px auto;
+}
+
+.no-comments {
+    position: relative;
+    top: 45%;
+    text-align: center;
+    font-size: 20px;
+}
+
+
+/************************
+*  CREATE PROJECT FORM  *
+************************/
+
+.input-create-project {
+    height: 38px;
+    width: 285px;
+    color: #555;
+    border-radius: 5px 0 0 5px;
+    padding: 6px 10px;
+    border: 1px solid #CBCBCB;
+    background: #f9f9f9;
+    box-sizing: border-box;
+    box-shadow: 1px 3px 0px 0px #E9E9E8;
+    -webkit-appearance: textfield;
+    user-select: text;
+    cursor: auto;
+    text-align: right;
+}
+
+.input-create-project:focus {
+    outline: none;
+}
+
+.button-create-project {
+    border-radius: 0 5px 5px 0;
 }

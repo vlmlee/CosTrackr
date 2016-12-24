@@ -14,7 +14,7 @@ class App extends Component {
 		if (this.props.loading) {
 			return (
 				<main className="app">
-					<Header />
+					<Header currentUser={this.props.currentUser} />
 						<div className="container">
 							<section className="main-content">
 								{this.props.main(this.props)} 
