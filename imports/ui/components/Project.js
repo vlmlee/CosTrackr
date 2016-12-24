@@ -41,6 +41,14 @@ export default class Project extends Component {
 		}
 	}
 
+	componentDidMount() {
+		ReactDOM.findDOMNode(this.refs.itemsList).scrollTop = ReactDOM.findDOMNode(this.refs.itemsList).scrollHeight;
+	}
+
+	componentWillUpdate() {
+		ReactDOM.findDOMNode(this.refs.itemsList).scrollTop = ReactDOM.findDOMNode(this.refs.itemsList).scrollHeight;
+	}
+
 	createNewItem() {
 		let id = this.generateRandomId();
 		this.setState({ 
@@ -51,7 +59,12 @@ export default class Project extends Component {
 				link: '',
 			}])
 		});
-		if (!Session.get('unSavedChanges')) {
+		Meteor.call( 'items.update', 
+			this.state.project._id, 
+			this.state.items, 
+			this.state.total 
+		);
+		if (!Session.get('unsavedChanges')) {
 			Session.set('unsavedChanges', true);
 		}
 	}
@@ -61,7 +74,7 @@ export default class Project extends Component {
 		const index = items.indexOf(items.find(i => i.id === itemId));
 		items[index].name = e.target.value;
 		this.setState({ items: items });
-		if (!Session.get('unSavedChanges')) {
+		if (!Session.get('unsavedChanges')) {
 			Session.set('unsavedChanges', true);
 		}
 	}
@@ -71,16 +84,16 @@ export default class Project extends Component {
 		const index = items.indexOf(items.find(i => i.id === itemId));
 		items[index].link = e.target.value;
 		this.setState({ items: items });
-		if (!Session.get('unSavedChanges')) {
+		if (!Session.get('unsavedChanges')) {
 			Session.set('unsavedChanges', true);
 		}
 	}
 
 	handlePriceChange(itemId, e) {
 		const items = this.state.items;
-			const index = items.indexOf(items.find(i => i.id === itemId));
-			items[index].price = e.target.value;
-			this.handleGetTotal(items);
+		const index = items.indexOf(items.find(i => i.id === itemId));
+		items[index].price = e.target.value;
+		this.handleGetTotal(items);
 	}
 
 	handleRemoveItem(item) {
@@ -91,22 +104,25 @@ export default class Project extends Component {
 	handleGetTotal(items) {
 		let total = items.reduce((a, b) => a + Number(b["price"]), 0);
 		this.setState({ items: items, total: total });
-		if (!Session.get('unSavedChanges')) {
-			Session.set('unsavedChanges', true);
-		}
-	}
-
-	handleSaveItems(e) {
-		if(isNaN(this.state.total)) {
-			// flash error
-			return;
-		}
 		Meteor.call( 'items.update', 
 			this.state.project._id, 
 			this.state.items, 
 			this.state.total 
 		);
-		Session.set('unsavedChanges', false);
+		if (!Session.get('unsavedChanges')) {
+			Session.set('unsavedChanges', true);
+		}
+	}
+
+	handleSaveItems(e) {
+		Meteor.call( 'items.update', 
+			this.state.project._id, 
+			this.state.items, 
+			this.state.total 
+		);
+		if (Session.get('unsavedChanges')) {
+			Session.set('unsavedChanges', false);
+		}
 		alert('Saved!');
 	}
 
@@ -118,14 +134,6 @@ export default class Project extends Component {
 			this.state.project._id, 
 			project.private
 		);
-	}
-
-	componentDidMount() {
-		ReactDOM.findDOMNode(this.refs.items).scrollTop = ReactDOM.findDOMNode(this.refs.items).scrollHeight;
-	}
-
-	componentWillUpdate() {
-		ReactDOM.findDOMNode(this.refs.items).scrollTop = ReactDOM.findDOMNode(this.refs.items).scrollHeight;
 	}
 
 	generateRandomId() {
@@ -158,9 +166,10 @@ export default class Project extends Component {
 					    	value={total.toFixed(2)}  />
 					</span>
 					<section 
-						ref="items"
+						ref="itemsList"
 						className="items">
-						{ this.state.items !== [] ?
+						{ this.state.items.length === 0 ? <h1 className="add-item-prompt">Add an item below.</h1> : '' }
+						{ this.state.items != [] ?
 							this.state.items.map((item, i) => (
 							<div
 								key={item.id} >
@@ -178,8 +187,11 @@ export default class Project extends Component {
 									className="btn red inline"
 									onClick={() => this.handleRemoveItem(item)}
 									value="Delete" />
+								<div className="item-index">
+									{ this.state.items.indexOf(item) + 1 }
+								</div>
 							</div> ))
-						: <h3> Add an item! </h3> }
+						: ''}
 					</section>
 					<section className="all-buttons">
 						{ this.props.currentUser ? 

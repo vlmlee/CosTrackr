@@ -27,8 +27,11 @@ const ProjectButtons = ({ owner, currentUser, createNewItem, toggleMakePublic, h
 );
 
 ProjectButtons.propTypes = {
+	owner: PropTypes.string.isRequired,
+	currentUser: PropTypes.object.isRequired,
 	createNewItem: PropTypes.func.isRequired,
 	toggleMakePublic: PropTypes.func.isRequired,
+	handleSaveItems: PropTypes.func.isRequired,
 };
 
 export default ProjectButtons;
