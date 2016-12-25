@@ -10,7 +10,8 @@ export default class ListOfProjects extends Component {
 		} else {
 			offset = 4;
 		}
-		let numberOfEmptyBoxes = offset - this.props.projects.length % offset;
+		let numberOfEmptyBoxes = (offset - this.props.projects.length % offset === offset) ? 0 
+			: (offset - this.props.projects.length % offset);
 		for (i = 0; i < numberOfEmptyBoxes; i++) {
 			emptyArray.push('');
 		}
