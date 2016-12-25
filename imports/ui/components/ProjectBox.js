@@ -4,11 +4,6 @@ import moment from 'moment';
 export default class ProjectBox extends Component {
 	constructor(props) {
 		super(props);
-		this.handleRemoveProject = this.handleRemoveProject.bind(this);
-	}
-
-	handleRemoveProject(projectId) {
-		Meteor.call('projects.remove', projectId);
 	}
 
 	render() {
@@ -29,7 +24,7 @@ export default class ProjectBox extends Component {
 						<input
 							type="button"
 							className="btn red button-project-box"
-							onClick={() => this.handleRemoveProject(this.props.id)}
+							onClick={() => this.props.handleRemoveProject(this.props.id)}
 							value="Remove Project" />
 					: '' ) 
 				: '' }

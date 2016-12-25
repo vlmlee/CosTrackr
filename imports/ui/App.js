@@ -15,8 +15,7 @@ class App extends Component {
 			return (
 				<main className="app">
 					<Header 
-						currentUser={this.props.currentUser}
-						projects={this.props.projects} />
+						currentUser={this.props.currentUser} />
 						<div 
 							id="container"
 							className="container">
