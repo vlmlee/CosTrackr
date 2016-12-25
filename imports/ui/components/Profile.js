@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import CreateNewProjectForm from '../components/CreateNewProjectForm.js';
+import CreateNewProjectForm from './CreateNewProjectForm.js';
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -19,7 +19,7 @@ export default class Profile extends Component {
 		return (
 			<section className="profile"> 
 				<h2>
-					{this.props.username}
+					{this.props.currentUser.username}
 				</h2>
 
 				<CreateNewProjectForm currentUser={this.props.currentUser} />
@@ -33,7 +33,7 @@ export default class Profile extends Component {
 }
 
 Profile.propTypes = {
-	username: PropTypes.string.isRequired,
+	currentUser: PropTypes.object.isRequired,
 };
 
 // description
