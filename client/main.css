@@ -232,7 +232,11 @@ footer p {
 .button-project-box {
     margin: 10px 20px;
 }
-
+.empty-box {
+    width: 226px;
+    height: 183px;
+    margin: 20px;
+}
 
 /*****************
 *  PROFILE PAGE  *
