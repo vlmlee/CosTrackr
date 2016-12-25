@@ -224,6 +224,8 @@ header {
 }
 
 .project-box {
+    width: 184px;
+    height: 141px;
     margin: 20px;
     padding: 20px;
     border-radius: 5px;
