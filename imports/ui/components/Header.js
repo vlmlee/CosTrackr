@@ -5,7 +5,16 @@ export default class Header extends Component {
 	render() {
 		return (
 			<header>
-				<AccountsUIWrapper />
+				<div className="header-container">
+					<AccountsUIWrapper />
+					<span> <a href="/profile">Profile</a></span>
+					<span> Settings </span>
+					<span> <a href="/projects">Projects</a></span>
+					<input
+						readOnly
+						className="input-user search"
+						value="Search" />
+				</div>
 			</header>
 		);
 	}

@@ -29,7 +29,7 @@ Meteor.methods({
 				owner: this.userId,
 				username: Meteor.users.findOne(this.userId).username,
 				items: [],
-				private: true,
+				private: false,
 				total: 0
 			});
 		} else {

@@ -33,7 +33,7 @@ const Item = ({ id, name, price, link, handleNameChange, handlePriceChange, hand
 			<input
 				className="input-user link"
 				onChange={handleLinkChange.bind(this, id)}
-				placeholder="Enter a url" /> }
+				placeholder="Enter an url to the item" /> }
 	</section>
 );
 
