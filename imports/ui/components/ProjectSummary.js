@@ -10,16 +10,16 @@ export default class ProjectSummary extends Component {
 	render() {
 		return (
 			<div>
-				{ this.props.project.name }
-				{ this.props.project.createdAt }
-				<ul>
-					{ this.props.project.items.map(item => (
+				<p>{ this.props.project.name }</p>
+				<p>{ this.props.project.createdAt.toString() }</p>
+				{ this.props.project.items.map(item => (
+					<ul>
 						<li>{item.name}</li>
 						<li>{item.price}</li>
 						<li>{item.link}</li>
-					  )) 
-					}
-				</ul>
+					</ul>
+				  )) 
+				}
 				<button onClick={() => this.refs.modal.show()}>
 					Open modal
 				</button>
@@ -32,7 +32,3 @@ export default class ProjectSummary extends Component {
 		);
 	}
 }
-
-ProjectSummary.proptypes = {
-	project: Proptypes.object.isRequired,
-};

@@ -163,7 +163,7 @@ export default class Project extends Component {
 					    <input 
 					    	type="text"
 					    	readOnly
-					    	value={total.toFixed(2)}  />
+					    	value={total.toString()}  />
 					</span>
 					<section 
 						ref="itemsList"
