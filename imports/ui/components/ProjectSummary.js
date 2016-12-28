@@ -23,12 +23,29 @@ export default class ProjectSummary extends Component {
 				<button onClick={() => this.refs.modal.show()}>
 					Open modal
 				</button>
-				<SkyLight hideOverlayClicked
-				ref="modal"
-				title="Simple modal">
+				<SkyLight 
+					hideOverlayClicked
+					dialogStyles={styles}
+					ref="modal"
+					title="Simple modal" >
 					<ProjectEdit />
 				</SkyLight>
 			</div>
 		);
 	}
 }
+
+const styles = {
+	overlayStyles: {
+		 
+	},
+	dialogStyles: {
+
+	},
+	title: {
+
+	},
+	closeButtonStyle: {
+
+	}
+};

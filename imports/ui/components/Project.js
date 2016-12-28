@@ -5,6 +5,8 @@ import ProjectButtons from './ProjectButtons.js';
 import Comments from './Comments.js';
 import update from 'immutability-helper';
 import { Session } from 'meteor/session';
+import ProjectEdit from './ProjectEdit.js';
+import SkyLight from 'react-skylight';
 import moment from 'moment';
 
 export default class Project extends Component {
@@ -152,66 +154,23 @@ export default class Project extends Component {
 		let total = this.state.total;
 		return (
 			<section className="project-page">
-				<section className="project-section">
-					{ project ? ( 
-						<section>
-							<h1> { project.name } </h1>
-							<h3> { project.createdAt ? moment(project.createdAt.toISOString()).calendar() : '' } </h3>
-						</section> )
-					: '' }
-					<span className="total">
-					    <input 
-					    	type="text"
-					    	readOnly
-					    	value={total.toString()}  />
-					</span>
-					<section 
-						ref="itemsList"
-						className="items">
-						{ this.state.items.length === 0 ? <h1 className="add-item-prompt">Add an item below.</h1> : '' }
-						{ this.state.items != [] ?
-							this.state.items.map((item, i) => (
-							<div
-								key={item.id} >
-								<Item
-									id={item.id}
-									name={item.name}
-									price={item.price}
-									link={item.link}
-									projectId={project._id}
-									handleNameChange={this.handleNameChange}
-									handlePriceChange={this.handlePriceChange}
-									handleLinkChange={this.handleLinkChange} />
-								<input
-									type="button"
-									className="btn red inline"
-									onClick={() => this.handleRemoveItem(item)}
-									value="Delete" />
-								<div className="item-index">
-									{ this.state.items.indexOf(item) + 1 }
-								</div>
-							</div> ))
-						: ''}
-					</section>
-					<section className="all-buttons">
-						{ this.props.currentUser ? 
-							(this.props.currentUser._id === project.owner ? 
-								<ProjectButtons 
-									owner={project.owner}
-									currentUser={this.props.currentUser}
-									createNewItem={this.createNewItem} 
-									toggleMakePublic={this.toggleMakePublic}
-									handleSaveItems={this.handleSaveItems} />
-							: '' )
-						: '' }
-						<a href="javascript:history.back()">
-							<input
-								type="button"
-								className="btn orange block back"
-								value="‹Back" />
-						</a> 
-					</section>
-				</section>
+				<input
+					type="button"
+					onClick={() => this.refs.modal.show()} />
+				<SkyLight 
+					hideOverlayClicked
+					dialogStyles={modalStyles}
+					ref="modal"
+					title="Simple modal" >
+					<ProjectEdit 
+						project={project} />
+				</SkyLight>
+				<a href="javascript:history.back()">
+					<input
+						type="button"
+						className="btn orange block back"
+						value="‹Back" />
+				</a> 
 				<section className="comments-section">
 					<Comments 
 						projectId={this.props.projectId}
@@ -228,4 +187,19 @@ Project.propTypes = {
 	projects: PropTypes.array.isRequired,
 	comments: PropTypes.array.isRequired,
 	currentUser: PropTypes.object,
+};
+
+const modalStyles = {
+	overlayStyles: {
+		 
+	},
+	dialogStyles: {
+
+	},
+	title: {
+
+	},
+	closeButtonStyle: {
+
+	}
 };
