@@ -1,5 +1,6 @@
 import React, { Component, Proptypes } from 'react';
-import ProjectEdit from './ProjectEdit.js'
+import ProjectEdit from './ProjectEdit.js';
+import SkyLight from 'react-skylight';
 
 export default class ProjectSummary extends Component {
 	constructor(props) {
@@ -19,7 +20,14 @@ export default class ProjectSummary extends Component {
 					  )) 
 					}
 				</ul>
-				<ProjectEdit /> /* modal */
+				<button onClick={() => this.refs.modal.show()}>
+					Open modal
+				</button>
+				<SkyLight hideOverlayClicked
+				ref="modal"
+				title="Simple modal">
+					<ProjectEdit />
+				</SkyLight>
 			</div>
 		);
 	}
