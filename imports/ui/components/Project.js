@@ -7,7 +7,6 @@ import update from 'immutability-helper';
 import { Session } from 'meteor/session';
 import ProjectEdit from './ProjectEdit.js';
 import SkyLight from 'react-skylight';
-import moment from 'moment';
 
 export default class Project extends Component {
 	constructor(props) {
@@ -156,6 +155,8 @@ export default class Project extends Component {
 			<section className="project-page">
 				<input
 					type="button"
+					className="btn blue"
+					value="Open Modal"
 					onClick={() => this.refs.modal.show()} />
 				<SkyLight 
 					hideOverlayClicked

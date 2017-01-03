@@ -1,4 +1,5 @@
 import React, { Component, Proptypes } from 'react';
+import moment from 'moment';
 
 export default class ProjectEdit extends Component {
 	constructor(props) {
@@ -19,7 +20,7 @@ export default class ProjectEdit extends Component {
 				    <input 
 				    	type="text"
 				    	readOnly
-				    	value={total.toFixed(2)}  />
+				    	value={project.total.toFixed(2)}  />
 				</span>
 				<section 
 					ref="itemsList"
