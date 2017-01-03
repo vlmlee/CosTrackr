@@ -1,9 +1,11 @@
 import React, { Component, Proptypes } from 'react';
+import ProjectButtons from './ProjectButtons.js';
+import Item from './Item.js';
 import moment from 'moment';
 
 export default class ProjectEdit extends Component {
 	constructor(props) {
-		super(props);	
+		super(props);
 	}
 	
 	render() {
@@ -20,14 +22,14 @@ export default class ProjectEdit extends Component {
 				    <input 
 				    	type="text"
 				    	readOnly
-				    	value={project.total.toFixed(2)}  />
+				    	value={this.props.total.toFixed(2)}  />
 				</span>
 				<section 
 					ref="itemsList"
 					className="items">
-					{ this.state.items.length === 0 ? <h1 className="add-item-prompt">Add an item below.</h1> : '' }
-					{ this.state.items != [] ?
-						this.state.items.map((item, i) => (
+					{ this.props.items.length === 0 ? <h1 className="add-item-prompt">Add an item below.</h1> : '' }
+					{ this.props.items != [] ?
+						this.props.items.map((item, i) => (
 						<div
 							key={item.id} >
 							<Item
@@ -36,16 +38,16 @@ export default class ProjectEdit extends Component {
 								price={item.price}
 								link={item.link}
 								projectId={project._id}
-								handleNameChange={this.handleNameChange}
-								handlePriceChange={this.handlePriceChange}
-								handleLinkChange={this.handleLinkChange} />
+								handleNameChange={this.props.handleNameChange}
+								handlePriceChange={this.props.handlePriceChange}
+								handleLinkChange={this.props.handleLinkChange} />
 							<input
 								type="button"
 								className="btn red inline"
-								onClick={() => this.handleRemoveItem(item)}
+								onClick={() => this.props.handleRemoveItem(item)}
 								value="Delete" />
 							<div className="item-index">
-								{ this.state.items.indexOf(item) + 1 }
+								{ this.props.items.indexOf(item) + 1 }
 							</div>
 						</div> ))
 					: ''}
@@ -56,9 +58,9 @@ export default class ProjectEdit extends Component {
 							<ProjectButtons 
 								owner={project.owner}
 								currentUser={this.props.currentUser}
-								createNewItem={this.createNewItem} 
-								toggleMakePublic={this.toggleMakePublic}
-								handleSaveItems={this.handleSaveItems} />
+								createNewItem={this.props.createNewItem} 
+								toggleMakePublic={this.props.toggleMakePublic}
+								handleSaveItems={this.props.handleSaveItems} />
 						: '' )
 					: '' }
 				</section>

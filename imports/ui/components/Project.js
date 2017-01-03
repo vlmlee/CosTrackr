@@ -29,25 +29,15 @@ export default class Project extends Component {
 	}
 
 	componentWillMount() {
-		let items = [];
 		const project = this.props.projects
 			.find(project => this.props.projectId === project._id);
 		if (project) {
-			items = project.items;
 			this.setState({ 
 				project: project, 
 				items: project.items, 
-				total: items.reduce((a, b) => a + Number(b["price"]), 0), 
+				total: project.items.reduce((a, b) => a + Number(b["price"]), 0), 
 			});
 		}
-	}
-
-	componentDidMount() {
-		ReactDOM.findDOMNode(this.refs.itemsList).scrollTop = ReactDOM.findDOMNode(this.refs.itemsList).scrollHeight;
-	}
-
-	componentWillUpdate() {
-		ReactDOM.findDOMNode(this.refs.itemsList).scrollTop = ReactDOM.findDOMNode(this.refs.itemsList).scrollHeight;
 	}
 
 	createNewItem() {
@@ -147,6 +137,15 @@ export default class Project extends Component {
 	}
 
 	render() {
+		const modalStyles = {
+			position: 'fixed',
+			height: '80%',
+    		width: '60%',
+    		top: '30%',
+    		left: '45%',
+		    zIndex: 99,
+		    backgroundColor: 'rgba(255, 255, 255,0.8)'
+		};
 		let project = this.state.project;
 		let comments = this.props.comments
 			.filter(comment => this.state.project._id === comment.projectId);
@@ -156,15 +155,24 @@ export default class Project extends Component {
 				<input
 					type="button"
 					className="btn blue"
-					value="Open Modal"
+					value="Edit"
 					onClick={() => this.refs.modal.show()} />
 				<SkyLight 
 					hideOverlayClicked
 					dialogStyles={modalStyles}
-					ref="modal"
-					title="Simple modal" >
+					ref="modal" >
 					<ProjectEdit 
-						project={project} />
+						project={project}
+						items={this.state.items}
+						total={this.state.total}
+						currentUser={this.props.currentUser}
+						handleNameChange={this.handleNameChange}
+						handlePriceChange={this.handlePriceChange}
+						handleLinkChange={this.handleLinkChange}
+						createNewItem={this.createNewItem} 
+						handleRemoveItem={this.handleRemoveItem}
+						handleSaveItems={this.handleSaveItems}
+						toggleMakePublic={this.toggleMakePublic} />
 				</SkyLight>
 				<a href="javascript:history.back()">
 					<input
@@ -188,19 +196,4 @@ Project.propTypes = {
 	projects: PropTypes.array.isRequired,
 	comments: PropTypes.array.isRequired,
 	currentUser: PropTypes.object,
-};
-
-const modalStyles = {
-	overlayStyles: {
-		 
-	},
-	dialogStyles: {
-
-	},
-	title: {
-
-	},
-	closeButtonStyle: {
-
-	}
 };
