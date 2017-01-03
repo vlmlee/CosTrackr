@@ -9,7 +9,10 @@ export default class ProjectEdit extends Component {
 	}
 	
 	render() {
-		let project = this.props.project;
+		let project = this.props.project,
+			total = this.props.total,
+			items = this.props.items,
+			currentUser = this.props.currentUser;
 		return (
 			<section className="project-section">
 				{ project ? ( 
@@ -22,14 +25,14 @@ export default class ProjectEdit extends Component {
 				    <input 
 				    	type="text"
 				    	readOnly
-				    	value={this.props.total.toFixed(2)}  />
+				    	value={total.toFixed(2)}  />
 				</span>
 				<section 
 					ref="itemsList"
 					className="items">
-					{ this.props.items.length === 0 ? <h1 className="add-item-prompt">Add an item below.</h1> : '' }
-					{ this.props.items != [] ?
-						this.props.items.map((item, i) => (
+					{ items.length === 0 ? <h1 className="add-item-prompt">Add an item below.</h1> : '' }
+					{ items != [] ?
+						items.map((item, i) => (
 						<div
 							key={item.id} >
 							<Item
@@ -47,17 +50,17 @@ export default class ProjectEdit extends Component {
 								onClick={() => this.props.handleRemoveItem(item)}
 								value="Delete" />
 							<div className="item-index">
-								{ this.props.items.indexOf(item) + 1 }
+								{ items.indexOf(item) + 1 }
 							</div>
 						</div> ))
 					: ''}
 				</section>
 				<section className="all-buttons">
-					{ this.props.currentUser ? 
-						(this.props.currentUser._id === project.owner ? 
+					{ currentUser ? 
+						(currentUser._id === project.owner ? 
 							<ProjectButtons 
 								owner={project.owner}
-								currentUser={this.props.currentUser}
+								currentUser={currentUser}
 								createNewItem={this.props.createNewItem} 
 								toggleMakePublic={this.props.toggleMakePublic}
 								handleSaveItems={this.props.handleSaveItems} />

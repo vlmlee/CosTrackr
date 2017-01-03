@@ -146,25 +146,40 @@ export default class Project extends Component {
 		    zIndex: 99,
 		    backgroundColor: 'rgba(255, 255, 255,0.8)'
 		};
-		let project = this.state.project;
-		let comments = this.props.comments
-			.filter(comment => this.state.project._id === comment.projectId);
-		let total = this.state.total;
+		let project = this.state.project,
+			comments = this.props.comments
+				.filter(comment => this.state.project._id === comment.projectId),
+			items = this.state.items,
+			total = this.state.total;
 		return (
 			<section className="project-page">
+				<h1>{ project.name }</h1>
+				<ul>
+					{ items ? items.map(item => (
+						<div 
+							key={item.id}>
+							<li>{ item.name }</li>
+							<li>{ item.price }</li>
+							<li>{ item.link }</li>
+						</div>
+					)) : '' }
+				</ul>
+				<h2>{ total }</h2>
+				<div>
 				<input
 					type="button"
 					className="btn blue"
 					value="Edit"
 					onClick={() => this.refs.modal.show()} />
+				</div>
 				<SkyLight 
 					hideOverlayClicked
 					dialogStyles={modalStyles}
 					ref="modal" >
 					<ProjectEdit 
 						project={project}
-						items={this.state.items}
-						total={this.state.total}
+						items={items}
+						total={total}
 						currentUser={this.props.currentUser}
 						handleNameChange={this.handleNameChange}
 						handlePriceChange={this.handlePriceChange}
