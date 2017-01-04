@@ -1,9 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Item from './Item.js';
-import ProjectButtons from './ProjectButtons.js';
 import Comments from './Comments.js';
-import update from 'immutability-helper';
 import { Session } from 'meteor/session';
 import ProjectEdit from './ProjectEdit.js';
 import SkyLight from 'react-skylight';
@@ -166,11 +163,11 @@ export default class Project extends Component {
 				</ul>
 				<h2>{ total }</h2>
 				<div>
-				<input
-					type="button"
-					className="btn blue"
-					value="Edit"
-					onClick={() => this.refs.modal.show()} />
+					<input
+						type="button"
+						className="btn blue"
+						value="Edit"
+						onClick={() => this.refs.modal.show()} />
 				</div>
 				<SkyLight 
 					hideOverlayClicked

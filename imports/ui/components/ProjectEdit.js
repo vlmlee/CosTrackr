@@ -15,11 +15,15 @@ export default class ProjectEdit extends Component {
 			currentUser = this.props.currentUser;
 		return (
 			<section className="project-section">
-				{ project ? ( 
-					<section>
+				{ project ? 
+					( <section>
 						<h1> { project.name } </h1>
-						<h3> { project.createdAt ? moment(project.createdAt.toISOString()).calendar() : '' } </h3>
-					</section> )
+						<h3> 
+							{ project.createdAt ? 
+								moment(project.createdAt.toISOString()).calendar() 
+							: '' } 
+						</h3>
+					  </section> )
 				: '' }
 				<span className="total">
 				    <input 
@@ -30,7 +34,11 @@ export default class ProjectEdit extends Component {
 				<section 
 					ref="itemsList"
 					className="items">
-					{ items.length === 0 ? <h1 className="add-item-prompt">Add an item below.</h1> : '' }
+					{ items.length === 0 ? 
+						<h1 className="add-item-prompt">
+							Add an item below.
+						</h1> 
+					: '' }
 					{ items != [] ?
 						items.map((item, i) => (
 						<div
@@ -71,3 +79,10 @@ export default class ProjectEdit extends Component {
 		);
 	}
 }
+
+ProjectEdit.propTypes = {
+	project: PropTypes.object.isRequired,
+	total: PropTypes.string.isRequired,
+	items: PropTypes.array.isRequired,
+	currentUser: Proptypes.object.isRequired,
+};
