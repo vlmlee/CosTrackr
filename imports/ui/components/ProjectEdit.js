@@ -1,4 +1,4 @@
-import React, { Component, Proptypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ProjectButtons from './ProjectButtons.js';
 import Item from './Item.js';
 import moment from 'moment';
@@ -84,5 +84,5 @@ ProjectEdit.propTypes = {
 	project: PropTypes.object.isRequired,
 	total: PropTypes.string.isRequired,
 	items: PropTypes.array.isRequired,
-	currentUser: Proptypes.object.isRequired,
+	currentUser: PropTypes.object.isRequired,
 };
