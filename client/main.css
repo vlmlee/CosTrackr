@@ -331,6 +331,16 @@ header {
 .project-page {
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
+}
+
+.project-page ul {
+    margin: 0 20px;
+}
+
+.project-page ul li {
+    display: inline-block;
+    margin: 10px;
 }
 
 .project-section {

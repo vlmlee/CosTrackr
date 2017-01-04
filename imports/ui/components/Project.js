@@ -157,7 +157,9 @@ export default class Project extends Component {
 							key={item.id}>
 							<li>{ item.name }</li>
 							<li>{ item.price }</li>
-							<li>{ item.link }</li>
+							<li>
+								<a href={ 'https://' + item.link }>{ item.link }</a>
+							</li>
 						</div>
 					)) : '' }
 				</ul>
