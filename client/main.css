@@ -343,6 +343,11 @@ header {
     margin: 10px;
 }
 
+.project-summary {
+    display: flex;
+    flex-direction: column;
+}
+
 .project-section {
     flex: 1;
     position: absolute;

@@ -16,7 +16,7 @@ class App extends Component {
 				<main className="app">
 					<Header 
 						currentUser={this.props.currentUser} />
-						<div 
+						<section 
 							id="container"
 							className="container">
 							<section className="main-content">
@@ -27,7 +27,7 @@ class App extends Component {
 									{this.props.section(this.props)}
 								</aside>
 							: '' }
-						</div>
+						</section>
 					<Footer />
 				</main>
 			);

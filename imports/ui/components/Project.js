@@ -150,27 +150,35 @@ export default class Project extends Component {
 			total = this.state.total;
 		return (
 			<section className="project-page">
-				<h1>{ project.name }</h1>
-				<ul>
-					{ items ? items.map(item => (
-						<div 
-							key={item.id}>
-							<li>{ item.name }</li>
-							<li>{ item.price }</li>
-							<li>
-								<a href={ 'https://' + item.link }>{ item.link }</a>
-							</li>
-						</div>
-					)) : '' }
-				</ul>
-				<h2>{ total }</h2>
-				<div>
-					<input
-						type="button"
-						className="btn blue"
-						value="Edit"
-						onClick={() => this.refs.modal.show()} />
-				</div>
+				<section className="project-summary">
+					<h1>{ project.name }</h1>
+					<ul>
+						{ items ? items.map(item => (
+							<div 
+								key={item.id}>
+								<li>{ item.name }</li>
+								<li>{ item.price }</li>
+								<li>
+									<a href={ 'https://' + item.link }>{ item.link }</a>
+								</li>
+							</div>
+						)) : '' }
+					</ul>
+					<h2>{ total }</h2>
+					<div>
+						<input
+							type="button"
+							className="btn blue"
+							value="Edit"
+							onClick={() => this.refs.modal.show()} />
+					</div>
+					<a href="javascript:history.back()">
+						<input
+							type="button"
+							className="btn orange block back"
+							value="‹Back" />
+					</a>
+				</section>
 				<SkyLight 
 					hideOverlayClicked
 					dialogStyles={modalStyles}
@@ -187,13 +195,7 @@ export default class Project extends Component {
 						handleRemoveItem={this.handleRemoveItem}
 						handleSaveItems={this.handleSaveItems}
 						toggleMakePublic={this.toggleMakePublic} />
-				</SkyLight>
-				<a href="javascript:history.back()">
-					<input
-						type="button"
-						className="btn orange block back"
-						value="‹Back" />
-				</a> 
+				</SkyLight> 
 				<section className="comments-section">
 					<Comments 
 						projectId={this.props.projectId}
