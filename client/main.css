@@ -328,7 +328,7 @@ header {
     margin-top: 5px;
 }
 
-.project-page {
+/*.project-page {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -341,7 +341,7 @@ header {
 .project-page ul li {
     display: inline-block;
     margin: 10px;
-}
+}*/
 
 .project-summary {
     display: flex;
@@ -439,4 +439,19 @@ header {
 
 .input-create-project:focus {
     outline: none;
+}
+
+/*************
+*  SETTINGS  *
+*************/
+
+.settings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*width: 80%;*/
+}
+
+.settings input {
+    width: 300px;
 }

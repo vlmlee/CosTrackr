@@ -8,7 +8,7 @@ export default class Header extends Component {
 				<div className="header-container">
 					<AccountsUIWrapper />
 					<span> <a href="/profile">Profile</a></span>
-					<span> Settings </span>
+					<span> <a href="/settings">Settings</a> </span>
 					<span> <a href="/projects">Projects</a></span>
 				</div>
 			</header>

@@ -46,7 +46,7 @@ export default class Comments extends Component {
 					className="comments">
 					{ (this.props.comments != '') ? (
 						<div>
-							{this.props.comments.map(comment => (
+							{ this.props.comments.map(comment => (
 								<section 
 									key={comment._id} >
 									<Comment 

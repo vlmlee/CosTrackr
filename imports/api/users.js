@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
+import { Accounts } from 'meteor/accounts-base';
 
 if (Meteor.isServer) {
 	Meteor.publish('directory', function publishUsers() {
@@ -22,4 +23,29 @@ Meteor.methods({
 		}
 		return false;
 	},
+	'users.changeUsername' (id, username) {
+		check(id, String);
+		check(username, String);
+		Meteor.users.update(id, {
+			$set: {
+				username: username
+			}
+		});
+	},
+	'users.changePassword' (id, password) {
+		check(id, String);
+		check(password, String);
+		Accounts.setPassword(id, password);
+	},
+	'users.changeEmail' (id, email) {
+		check(id, String);
+		check(id, String);
+		// validate email
+
+		Meteor.users.update(id, {
+			$set: {
+				'emails.0.address': email 
+			}
+		});
+	}
 });
