@@ -56,7 +56,6 @@ export default class ListOfProjects extends Component {
 	}
 
 	render() {
-		console.log(this.state.projects);
 		return (
 			<div>
 				<SearchBar 

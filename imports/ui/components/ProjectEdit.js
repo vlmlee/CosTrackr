@@ -82,7 +82,7 @@ export default class ProjectEdit extends Component {
 
 ProjectEdit.propTypes = {
 	project: PropTypes.object.isRequired,
-	total: PropTypes.string.isRequired,
+	total: PropTypes.number.isRequired,
 	items: PropTypes.array.isRequired,
 	currentUser: PropTypes.object.isRequired,
 };

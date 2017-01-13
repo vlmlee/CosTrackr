@@ -56,9 +56,8 @@ App.propTypes = {
 export default AppContainer = createContainer(props => {
 	const subProjects = Meteor.subscribe('projects'),
 		subComments = Meteor.subscribe('comments'),
-		userSubs = Meteor.subscribe('directory');
-	const loading = subProjects.ready() 
-		&& subComments.ready()
+		userSubs = Meteor.subscribe('directory'),
+		loading = subProjects.ready() && subComments.ready()
 		&& subComments.ready();
 
 	return {

@@ -212,6 +212,64 @@ header {
     margin: 0 auto;
 }
 
+/*****************
+*  LANDING PAGE  *
+*****************/
+
+.landing-page h1 {
+    margin: 20px auto 20px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.landing-page img {
+    display: flex;
+    margin: 80px auto 50px;
+}
+
+.landing-page a {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.login-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: 0 auto;
+}
+
+.login-btn {
+    margin: 10px;
+    padding: 10px;
+    height: 30px;
+    border: 1px solid #fff;
+    outline: none;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    transition: border 1s ease-in;
+}
+
+.input-btn {
+    padding-left: 20px;
+}
+
+.input-btn:hover {
+    border: 1px solid #aaa;
+}
+
+.submit-btn {
+    height: 50px;
+    font-weight: 500;
+    background-color: #eabce9;
+}
+
+.submit-btn:hover {
+    border: 1px solid #aaa;
+}
+
 /******************
 *  PROJECTS LIST  *
 ******************/

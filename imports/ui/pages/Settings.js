@@ -60,26 +60,32 @@ export default class Settings extends Component {
 				<h1>Show</h1>
 				<input 
 					type="text"
+					className="input-btn"
 					onChange={this.setNewUsername}
 					placeholder="New username" />
 				<input
 					type="button"
+					className="submit-btn"
 					onSubmit={() => this.handleChangeUsername}
 					value="Change username" />
 				<input 
 					type="email"
+					className="input-btn"
 					onChange={this.setNewEmail}
 					placeholder="New email" />
 				<input
 					type="button"
+					className="submit-btn"
 					onSubmit={() => this.handleChangeEmail}
 					value="Change email" />
 				<input 
 					type="password"
+					className="input-btn"
 					onChange={this.setNewPassword}
 					placeholder="New password" />
 				<input
 					type="button"
+					className="submit-btn"
 					onSubmit={() => this.handleChangePassword}
 					value="Change password" />
 			</section>
