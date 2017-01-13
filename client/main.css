@@ -207,9 +207,30 @@ header {
     box-shadow: 1px 1px 0 0 #eee;
 }
 
+.login-buttons-container {
+    float: right;
+}
+
 .header-container {
+    clear: left;
     width: 80%;
     margin: 0 auto;
+}
+
+.user-link a {
+    color: #3f3f3f;
+}
+
+.user-link {
+    display: inline-block;
+    padding: 21px;
+    border-bottom: 2px solid #eee;
+    transition: border 0.2s ease-in, background-color 0.2s ease-in, color 0.2s ease-in;
+}
+
+.user-link:hover {
+    background-color: #fff;
+    border-bottom: 2px solid #2fed71;
 }
 
 /*****************
@@ -249,7 +270,7 @@ header {
     outline: none;
     background-color: #f9f9f9;
     border-radius: 8px;
-    transition: border 1s ease-in;
+    transition: border 0.5s ease-in;
 }
 
 .input-btn {

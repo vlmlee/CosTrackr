@@ -8,9 +8,9 @@ export default class Header extends Component {
 				{ this.props.currentUser ? 
 					<div className="header-container">
 						<AccountsUIWrapper />
-						<span> <a href="/profile">Profile</a></span>
-						<span> <a href="/settings">Settings</a> </span>
-						<span> <a href="/projects">Projects</a></span>
+						<div className="user-link"> <a href="/profile">Profile</a></div>
+						<div className="user-link"> <a href="/settings">Settings</a> </div>
+						<div className="user-link last-link"> <a href="/projects">Projects</a></div>
 					</div>
 				: '' }
 			</header>
