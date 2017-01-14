@@ -13,10 +13,17 @@ export default class LandingPage extends Component {
 		};
 
 		this.handleCreateForm = this.handleCreateForm.bind(this);
+		this.keyPressEnter = this.keyPressEnter.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
 		this.handleChangeUsername = this.handleChangeUsername.bind(this);
 		this.handleChangePassword = this.handleChangePassword.bind(this);
 	}
+
+	keyPressEnter(e) {
+		if (e.key === 'Enter') {
+			this.handleLogin();
+		}
+ 	}
 
 	handleLogin() {
 		Meteor.loginWithPassword(this.state.username, this.state.password, (err) => {
@@ -67,6 +74,7 @@ export default class LandingPage extends Component {
 							className="login-btn input-btn"
 							type="password"
 							onChange={this.handleChangePassword}
+							onKeyPress={this.keyPressEnter}
 							placeholder="Password"
 							value={this.state.password} />
 						<input
