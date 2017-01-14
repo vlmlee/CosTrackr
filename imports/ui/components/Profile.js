@@ -7,27 +7,39 @@ export default class Profile extends Component {
 		super(props);
 		this.state = {
 			exist: false,
+			bio: '',
+			website: '',
+			joined: ''
 		};
 	}
 
-	componentWillMount() {
-		let exist = Meteor.users.findOne({username: 'Lee'});
-		this.setState({ exist: exist });
+	handleEditBio() {
+		Meteor.call('profile.changeBio');
 	}
 
 	render() {
 		return (
 			<section className="profile"> 
-				<h2>
+				<section className="profile-picture">
+				</section>
+				<p className="profile-name">
 					{this.props.currentUser.username}
-				</h2>
+				</p>
+				<p className="profile-location">
+				</p>
 
 				<CreateNewProjectForm 
 					currentUser={this.props.currentUser} />
 
-				<h2> Bio </h2>
-				<h2> Personal Website </h2>
-				<h2> Joined: </h2>
+				<p onClick={this.handleEditBio} > 
+					<span>
+						Edit
+					</span> 
+					Bio 
+				</p>
+				<p> Personal Website </p>
+				<p> Joined:
+				</p>
 			</section>
 		);
 	}

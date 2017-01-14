@@ -67,7 +67,7 @@ export default class ListOfProjects extends Component {
 								key={project._id}
 								id={project._id}
 								name={project.name}
-								owner={project.owner}
+								owner={project.username}
 								createdAt={project.createdAt}
 								total={project.total}
 								currentUser={this.props.currentUser}
@@ -81,7 +81,7 @@ export default class ListOfProjects extends Component {
 								key={project._id}
 								id={project._id}
 								name={project.name}
-								owner={project.owner}
+								owner={project.username}
 								createdAt={project.createdAt}
 								total={project.total}
 								currentUser={this.props.currentUser}

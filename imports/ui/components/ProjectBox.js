@@ -7,26 +7,37 @@ export default class ProjectBox extends Component {
 	}
 
 	render() {
+		console.log(this.props.currentUser.username, this.props.owner);
 		return (
 			<section className="project-box">
-				<ul>
-					<li>
-						<a href={"/project/"+this.props.id}>
-							{this.props.id}
-						</a>
-					</li>
-					<li>{this.props.name}</li>
-					<li>{this.props.createdAt ? moment(this.props.createdAt.toISOString()).format('MMM Do YY') : '' }</li>
-					<li>{this.props.total.toFixed(2)}</li>
-				</ul>
+				<section className="project-box-date">{this.props.createdAt ? moment(this.props.createdAt.toISOString())
+					.format('MMM Do YYYY') : '' }
+				</section>
+				<section className="project-box-total">
+					{this.props.total.toFixed(2)}
+				</section>
+				<p className="project-box-name">
+					{this.props.name}
+				</p>
+				<p className="project-box-owner">by {this.props.owner} </p>
 				{ this.props.currentUser ?
-					( this.props.currentUser._id === this.props.owner ? 
-						<input
-							type="button"
-							className="btn red button-project-box"
-							onClick={() => this.props.handleRemoveProject(this.props.id)}
-							value="Remove Project" />
-					: '' ) 
+					( this.props.currentUser.username === this.props.owner ? (
+						<div>
+							<a  className="project-box-link view" 
+								href={"/project/"+this.props.id} >
+								View
+							</a>
+							<a  className="project-box-link remove"
+								href=""
+								onClick={() => 
+									this.props.handleRemoveProject(this.props.id)} >
+								Remove
+							</a>
+						</div> )
+					: <a  className="project-box-link view-center" 
+						  href={"/project/"+this.props.id}>
+						View
+					  </a> )
 				: '' }
 			</section>
 		);

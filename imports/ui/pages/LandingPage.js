@@ -1,4 +1,5 @@
-import React, { Component} from 'react';
+import React, { Component, PropTypes } from 'react';
+import { Accounts } from 'meteor/accounts-base';
 
 export default class LandingPage extends Component {
 	constructor(props) {
@@ -17,6 +18,9 @@ export default class LandingPage extends Component {
 		this.handleLogin = this.handleLogin.bind(this);
 		this.handleChangeUsername = this.handleChangeUsername.bind(this);
 		this.handleChangePassword = this.handleChangePassword.bind(this);
+		this.handleChangeConfirmPassword = this.handleChangeConfirmPassword.bind(this);
+		this.handleCreateForm = this.handleCreateForm.bind(this);
+		this.handleCreateUser = this.handleCreateUser.bind(this);
 	}
 
 	keyPressEnter(e) {
@@ -44,7 +48,8 @@ export default class LandingPage extends Component {
 	}
 
 	handleChangeConfirmPassword(e) {
-		this.setState({ confirmPassword: e.target.value });
+		let password = e.target.value
+		this.setState({ confirmPassword: password });
 	}
 
 	handleCreateForm() {
@@ -52,7 +57,16 @@ export default class LandingPage extends Component {
 	}
 
 	handleCreateUser() {
-
+		if (this.state.password === this.state.confirmPassword) {
+			Accounts.createUser({ username: this.state.username, 
+				password: this.state.password }, (err) => {
+				if (err) {
+					this.setState({ password: '', confirmPassword: '', error: err.message });
+				}
+			});
+		} else {
+			this.setState({ error: 'Passwords are not the same.'})
+		}
 	}
 
 	render() {
@@ -92,22 +106,24 @@ export default class LandingPage extends Component {
 							className="login-btn input-btn"
 							type="text"
 							onChange={this.handleChangeUsername}
-							placeholder="Choose a Username" />
+							placeholder="Choose a Username"
+							value={this.state.username} />
 						<input
 							className="login-btn input-btn"
 							type="password"
 							onChange={this.handleChangePassword}
-							placeholder="New Password" />
+							placeholder="New Password"
+							value={this.state.password} />
 						<input
 							className="login-btn input-btn"
 							type="password"
 							onChange={this.handleChangeConfirmPassword}
 							placeholder="Confirm Password"
-							value="" />
+							value={this.state.confirmPassword} />
 						<input
 							className="login-btn submit-btn"
 							type="submit"
-							onClick={() => this.handleCreateUser}
+							onClick={this.handleCreateUser}
 							value="Create Account" />
 						<a href="/" onClick={this.handleCreateForm} > 
 							Sign In

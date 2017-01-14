@@ -49,15 +49,5 @@ Meteor.methods({
 				'emails.0.address': email 
 			}
 		});
-	},
-	'users.login' (username, password) {
-		check(username, String);
-		check(password, String);
-		Meteor.loginWithPassword({username: username}, password, (err) => {
-			if (err) {
-				throw err;
-			}
-			FlowRouter.go('profile');
-		});
 	}
 });
