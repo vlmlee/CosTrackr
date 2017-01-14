@@ -16,7 +16,7 @@ export default class ProjectBox extends Component {
 						</a>
 					</li>
 					<li>{this.props.name}</li>
-					<li>{this.props.createdAt ? moment(this.props.createdAt.toISOString()).format('l @ LT') : '' }</li>
+					<li>{this.props.createdAt ? moment(this.props.createdAt.toISOString()).format('MMM Do YY') : '' }</li>
 					<li>{this.props.total.toFixed(2)}</li>
 				</ul>
 				{ this.props.currentUser ?

@@ -27,7 +27,6 @@ export default class ListOfProjects extends Component {
 	}
 
 	fillEmptyRow() {
-		console.log('hi');
 		let emptyArray = [],
 			offset = (this.props.pageId === 'main') ? 4 : 3,
 			numberOfEmptyBoxes = this.state.search ? 

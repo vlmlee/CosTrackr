@@ -7,14 +7,45 @@ export default class LandingPage extends Component {
 		this.state = {
 			username: '',
 			password: '',
-			login: true
+			confirmPassword: '',
+			error: '',
+			loginForm: true
 		};
 
 		this.handleCreateForm = this.handleCreateForm.bind(this);
+		this.handleLogin = this.handleLogin.bind(this);
+		this.handleChangeUsername = this.handleChangeUsername.bind(this);
+		this.handleChangePassword = this.handleChangePassword.bind(this);
+	}
+
+	handleLogin() {
+		Meteor.loginWithPassword(this.state.username, this.state.password, (err) => {
+			if (err) {
+				this.setState({ password: '', error: err.message });
+			}
+		});
+	}
+
+	handleChangeUsername(e) {
+		let username = e.target.value;
+		this.setState({ username: username });
+	}
+
+	handleChangePassword(e) {
+		let password = e.target.value;
+		this.setState({ password: password });
+	}
+
+	handleChangeConfirmPassword(e) {
+		this.setState({ confirmPassword: e.target.value });
 	}
 
 	handleCreateForm() {
-		this.setState({ login: !this.state.login });
+		this.setState({ loginForm: !this.state.loginForm });
+	}
+
+	handleCreateUser() {
+
 	}
 
 	render() {
@@ -23,22 +54,25 @@ export default class LandingPage extends Component {
 				className="landing-page">
 				<img src="logo.svg" />
 				<h1>Track your costs.</h1>
-				{ this.state.login ? 
+				{ this.state.loginForm ? 
 					<section
 						className="login-buttons">
 						<input
 							className="login-btn input-btn"
 							type="text"
-							onChange=""
-							placeholder="Username" />
+							onChange={this.handleChangeUsername}
+							placeholder="Username"
+							value={this.state.username} />
 						<input
 							className="login-btn input-btn"
 							type="password"
-							onChange=""
-							placeholder="Password" />
+							onChange={this.handleChangePassword}
+							placeholder="Password"
+							value={this.state.password} />
 						<input
 							className="login-btn submit-btn"
 							type="submit"
+							onClick={this.handleLogin}
 							value="Sign In" />
 						<a href="/" onClick={this.handleCreateForm} > 
 							Create an Account 
@@ -49,28 +83,32 @@ export default class LandingPage extends Component {
 						<input
 							className="login-btn input-btn"
 							type="text"
-							onChange=""
+							onChange={this.handleChangeUsername}
 							placeholder="Choose a Username" />
 						<input
 							className="login-btn input-btn"
 							type="password"
-							onChange=""
+							onChange={this.handleChangePassword}
 							placeholder="New Password" />
 						<input
 							className="login-btn input-btn"
 							type="password"
-							onChange=""
+							onChange={this.handleChangeConfirmPassword}
 							placeholder="Confirm Password"
 							value="" />
 						<input
 							className="login-btn submit-btn"
 							type="submit"
+							onClick={() => this.handleCreateUser}
 							value="Create Account" />
 						<a href="/" onClick={this.handleCreateForm} > 
 							Sign In
 						</a>
 					</section>
 				}
+				<section className="login-error">
+					{ this.state.error }
+				</section>
 			</section>
 		);
 	}

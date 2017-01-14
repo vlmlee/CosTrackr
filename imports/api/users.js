@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Accounts } from 'meteor/accounts-base';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+
 
 if (Meteor.isServer) {
 	Meteor.publish('directory', function publishUsers() {
@@ -46,6 +48,16 @@ Meteor.methods({
 			$set: {
 				'emails.0.address': email 
 			}
+		});
+	},
+	'users.login' (username, password) {
+		check(username, String);
+		check(password, String);
+		Meteor.loginWithPassword({username: username}, password, (err) => {
+			if (err) {
+				throw err;
+			}
+			FlowRouter.go('profile');
 		});
 	}
 });

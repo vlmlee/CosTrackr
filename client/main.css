@@ -293,6 +293,11 @@ header {
     border: 1px solid #aaa;
 }
 
+.login-error {
+    color: red;
+    text-align: center;
+}
+
 /******************
 *  PROJECTS LIST  *
 ******************/
