@@ -22,7 +22,8 @@ export default class Profile extends Component {
 					{this.props.currentUser.username}
 				</h2>
 
-				<CreateNewProjectForm currentUser={this.props.currentUser} />
+				<CreateNewProjectForm 
+					currentUser={this.props.currentUser} />
 
 				<h2> Bio </h2>
 				<h2> Personal Website </h2>

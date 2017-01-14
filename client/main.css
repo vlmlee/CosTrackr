@@ -35,7 +35,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: row;
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -209,6 +209,7 @@ header {
 
 .login-buttons-container {
     float: right;
+    padding-top: 21px;
 }
 
 .header-container {
@@ -284,6 +285,7 @@ header {
 .submit-btn {
     height: 50px;
     font-weight: 500;
+    color: #3f3f3f;
     background-color: #eabce9;
 }
 
@@ -313,8 +315,15 @@ header {
 }
 
 .search {
-    margin-top: -45px;
+    margin-top: -46px;
+    margin-right: 175px;
     float: right;
+}
+
+@media (max-width: 900px) {
+    .search {
+        display: none;
+    }
 }
 
 .button-project-box {
@@ -333,6 +342,7 @@ header {
 .profile {
     text-align: center;
     margin-top: 50px;
+    margin-left: 20px;
 }
 
 .profile h2 {
@@ -500,24 +510,23 @@ header {
 ************************/
 
 .input-create-project {
-    height: 38px;
+    height: 34px;
     width: 285px;
     color: #555;
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 6px 10px;
-    margin-right: 5px;
     border: 1px solid #CBCBCB;
-    background: #f9f9f9;
+    background: #fefefe;
     box-sizing: border-box;
-    box-shadow: 2px 3px 0 #E9E9E8;
+    box-shadow: inset 0 1px 5px #fefefe, 0 0 0 10px #fefefa inset;
     -webkit-appearance: textfield;
     user-select: text;
     cursor: auto;
-    text-align: right;
 }
 
 .input-create-project:focus {
     outline: none;
+    border: 1px solid #CBCBCB;
 }
 
 /*************

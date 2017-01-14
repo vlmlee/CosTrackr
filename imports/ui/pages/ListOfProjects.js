@@ -27,9 +27,10 @@ export default class ListOfProjects extends Component {
 	}
 
 	fillEmptyRow() {
-		let emptyArray = [];
-		let offset = (this.props.pageId === 'main') ? 5 : 4;
-		let numberOfEmptyBoxes = this.state.search ? 
+		console.log('hi');
+		let emptyArray = [],
+			offset = (this.props.pageId === 'main') ? 4 : 3,
+			numberOfEmptyBoxes = this.state.search ? 
 			((offset - this.state.projects.length % offset === offset) ? 0 
 				: (offset - this.state.projects.length % offset)) :
 			((offset - this.props.projects.length % offset === offset) ? 0 
@@ -37,7 +38,7 @@ export default class ListOfProjects extends Component {
 		for (i = 0; i < numberOfEmptyBoxes; i++) {
 			emptyArray.push('');
 		}
-		return emptyArray.map((each,i) => 
+		return emptyArray.map((each, i) => 
 			<div 
 				key={i} 
 				className="empty-box">
@@ -60,7 +61,7 @@ export default class ListOfProjects extends Component {
 			<div>
 				<SearchBar 
 					handleSearch={this.handleSearch} />
-				{this.state.search ?
+				{ this.state.search ?
 					<section className="list-of-projects"> 
 						{ this.state.projects.map(project => (
 							<ProjectBox 
@@ -86,7 +87,7 @@ export default class ListOfProjects extends Component {
 								total={project.total}
 								currentUser={this.props.currentUser}
 								handleRemoveProject={this.handleRemoveProject} />
-						))}
+						)) }
 						{this.fillEmptyRow()}
 					</section> 
 				}
