@@ -7,7 +7,6 @@ export default class ProjectBox extends Component {
 	}
 
 	render() {
-		console.log(this.props.currentUser.username, this.props.owner);
 		return (
 			<section className="project-box">
 				<section className="project-box-date">{this.props.createdAt ? moment(this.props.createdAt.toISOString())

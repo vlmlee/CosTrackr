@@ -144,8 +144,7 @@ footer p {
 }
 
 .btn:active {
-    transform: translate(0, 4px);
-    -webkit-transform: translate(0, 4px);
+    border: 1px solid #eda6eb;
 }
 
 .project-buttons {
@@ -390,12 +389,6 @@ header {
     right: 20px;
 }
 
-.search {
-    margin-top: -55px;
-    margin-right: 175px;
-    float: right;
-}
-
 @media (max-width: 900px) {
     .search {
         display: none;
@@ -437,11 +430,6 @@ header {
     background-color: white;
     margin: 0 auto;
     border-radius: 5px;
-}
-
-.button-create-project {
-    margin: 20px auto;
-    background-color: #eabce9;
 }
 
 /*****************
@@ -583,21 +571,30 @@ header {
     font-size: 20px;
 }
 
+.search {
+    margin-top: -55px;
+    margin-right: 175px;
+    float: right;
+    border: 1px solid #e4e4e4;
+}
+
+.search:focus {
+    border: 1px solid #CBCBCB;
+}
 
 /************************
 *  CREATE PROJECT FORM  *
 ************************/
 
 .input-create-project {
-    height: 34px;
+    height: 40px;
     width: 285px;
     color: #555;
     border-radius: 3px;
-    padding: 6px 10px;
-    border: 1px solid #CBCBCB;
+    padding: 10px 10px;
+    border: 1px solid #e9e9e9;
     background: #fefefe;
     box-sizing: border-box;
-    box-shadow: inset 0 1px 5px #fefefe, 0 0 1px 10px #fffffa inset;
     -webkit-appearance: textfield;
     user-select: text;
     cursor: auto;
@@ -606,6 +603,14 @@ header {
 .input-create-project:focus {
     outline: none;
     border: 1px solid #CBCBCB;
+}
+
+.button-create-project {
+    margin: 20px auto;
+    padding: 12px 20px;
+    background-color: #eabce9;
+    border: 1px solid #eee;
+    color: #3f3f3f;
 }
 
 /*************

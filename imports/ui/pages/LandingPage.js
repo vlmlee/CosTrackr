@@ -14,7 +14,8 @@ export default class LandingPage extends Component {
 		};
 
 		this.handleCreateForm = this.handleCreateForm.bind(this);
-		this.keyPressEnter = this.keyPressEnter.bind(this);
+		this.keyPressEnterLogin = this.keyPressEnterLogin.bind(this);
+		this.keyPressEnterCreateUser = this.keyPressEnterCreateUser.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
 		this.handleChangeUsername = this.handleChangeUsername.bind(this);
 		this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -23,9 +24,15 @@ export default class LandingPage extends Component {
 		this.handleCreateUser = this.handleCreateUser.bind(this);
 	}
 
-	keyPressEnter(e) {
+	keyPressEnterLogin(e) {
 		if (e.key === 'Enter') {
 			this.handleLogin();
+		}
+ 	}
+
+ 	keyPressEnterCreateUser(e) {
+ 		if (e.key === 'Enter') {
+			this.handleCreateUser();
 		}
  	}
 
@@ -88,7 +95,7 @@ export default class LandingPage extends Component {
 							className="login-btn input-btn"
 							type="password"
 							onChange={this.handleChangePassword}
-							onKeyPress={this.keyPressEnter}
+							onKeyPress={this.keyPressEnterLogin}
 							placeholder="Password"
 							value={this.state.password} />
 						<input
@@ -118,6 +125,7 @@ export default class LandingPage extends Component {
 							className="login-btn input-btn"
 							type="password"
 							onChange={this.handleChangeConfirmPassword}
+							onKeyPress={this.keyPressEnterCreateUser}
 							placeholder="Confirm Password"
 							value={this.state.confirmPassword} />
 						<input
