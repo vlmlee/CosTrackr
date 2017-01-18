@@ -38,8 +38,7 @@ export default class Profile extends Component {
 					Bio 
 				</p>
 				<p> Personal Website </p>
-				<p> Joined:
-				</p>
+				<p> Joined: </p>
 			</section>
 		);
 	}

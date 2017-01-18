@@ -28,9 +28,11 @@ Meteor.methods({
 				createdAt: new Date(),
 				owner: this.userId,
 				username: Meteor.users.findOne(this.userId).username,
+				description: '',
 				items: [],
 				private: false,
-				total: 0
+				total: 0,
+				stars: [],
 			});
 		} else {
 			throw new Meteor.Error('error');
@@ -53,6 +55,18 @@ Meteor.methods({
 		}
 		Projects.update(projectId, 
 			{ $set: { private: privacy } });
+	},
+	'projects.star' (projectId, username) {
+		check(projectId, String);
+		check(username, String);
+
+		const project = Projects.findOne(projectId);
+
+		if (project.stars.indexOf(username) === -1) {
+			Projects.insert(projectId, 
+				{ $push: { stars: username } }
+			);
+		}
 	},
 	'items.update' (projectId, items, total) {
 		check(projectId, String);
