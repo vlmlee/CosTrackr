@@ -63,7 +63,7 @@ Meteor.methods({
 		const project = Projects.findOne(projectId);
 
 		if (project.stars.indexOf(username) === -1) {
-			Projects.insert(projectId, 
+			Projects.update(projectId, 
 				{ $push: { stars: username } }
 			);
 		}

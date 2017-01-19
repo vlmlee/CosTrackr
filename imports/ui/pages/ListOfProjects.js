@@ -47,8 +47,8 @@ export default class ListOfProjects extends Component {
 
 	handleSearch(e) {
 		if (e.target.value) {
-			const regex = e.target.value.toLowerCase();
-			const searchProjects = this.props.projects.filter(project => project.name.toLowerCase().includes(regex));
+			const regex = e.target.value.toLowerCase(),
+				searchProjects = this.props.projects.filter(project => project.name.toLowerCase().includes(regex));
 			this.setState({ search: true, projects: searchProjects });
 		} else {
 			this.setState({ search: false });
@@ -69,7 +69,9 @@ export default class ListOfProjects extends Component {
 								name={project.name}
 								owner={project.username}
 								createdAt={project.createdAt}
+								stars={project.stars.length}
 								total={project.total}
+								items={project.items}
 								currentUser={this.props.currentUser}
 								handleRemoveProject={this.handleRemoveProject} />
 						))}
@@ -83,7 +85,9 @@ export default class ListOfProjects extends Component {
 								name={project.name}
 								owner={project.username}
 								createdAt={project.createdAt}
+								stars={project.stars.length}
 								total={project.total}
+								items={project.items}
 								currentUser={this.props.currentUser}
 								handleRemoveProject={this.handleRemoveProject} />
 						)) }

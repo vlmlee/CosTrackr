@@ -309,6 +309,26 @@ header {
     overflow-y: auto;
 }
 
+.star {
+    height: 40px;
+    width: 40px;
+    position: relative;
+    bottom: 122px;
+    left: -50px;
+    z-index: 1;
+}
+
+.star-count {
+    font-family: Consolas;
+    font-size: 15px;
+    color: #4a4a4a;
+    font-weight: bold;
+    position: relative;
+    bottom: 135px;
+    left: -25px;
+    z-index: 2;
+}
+
 .project-box {
     width: 184px;
     height: 141px;
@@ -360,7 +380,7 @@ header {
 .project-box-owner {
     width: 100%;
     position: relative;
-    top: 12px;
+    bottom: 30px;
     text-align: center;
     border-bottom: 1px solid #eaeaea;
     padding-bottom: 5px;
@@ -370,7 +390,7 @@ header {
 
 .project-box-link {
     position: relative;
-    top: 25px;
+    bottom: 20px;
     font-size: 12px;
 }
 

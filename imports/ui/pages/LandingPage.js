@@ -80,7 +80,7 @@ export default class LandingPage extends Component {
 		return (
 			<section
 				className="landing-page">
-				<img src="logo.svg" />
+				<img src="images/logo.svg" />
 				<h1>Track your costs.</h1>
 				{ this.state.loginForm ? 
 					<section

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ProjectShow from './ProjectShow.js';
 import moment from 'moment';
 import SkyLight from 'react-skylight';
 
@@ -11,19 +12,21 @@ export default class ProjectBox extends Component {
 		const modalStyles = {
 			position: 'fixed',
 			height: 'auto',
-			'min-height': '80%',
+			minHeight: '80%',
     		width: '60%',
     		top: '30%',
-    		left: '45%',
+    		left: '43.5%',
 		    zIndex: 99,
-		    'border-radius': '5px',
+		    borderRadius: '5px',
 		    padding: '30px',
-		    backgroundColor: 'rgba(255, 255, 255, 1)'
+		    backgroundColor: 'rgba(244, 244, 244, 1)'
 		};
+		let date = this.props.createdAt ? moment(this.props.createdAt.toISOString())
+					.format('MMM Do YYYY') : '';
 		return (
 			<section className="project-box">
-				<section className="project-box-date">{this.props.createdAt ? moment(this.props.createdAt.toISOString())
-					.format('MMM Do YYYY') : '' }
+				<section className="project-box-date">
+					{ date }
 				</section>
 				<section className="project-box-total">
 					{this.props.total.toFixed(2)}
@@ -31,6 +34,14 @@ export default class ProjectBox extends Component {
 				<p className="project-box-name">
 					{this.props.name}
 				</p>
+				<section>
+					<span className="star-count">
+						{this.props.stars}
+					</span>
+					<img 
+						className="star"
+						src={'images/star.svg'} />
+				</section>
 				<p className="project-box-owner">by {this.props.owner} </p>
 				{ this.props.currentUser ?
 					( this.props.currentUser.username === this.props.owner ? (
@@ -44,7 +55,15 @@ export default class ProjectBox extends Component {
 								hideOverlayClicked
 								dialogStyles={modalStyles}
 								ref="modal" >
-								<h1>Hello</h1>
+								<ProjectShow 
+									id={this.props.id}
+									name={this.props.name}
+									owner={this.props.owner}
+									createdAt={date}
+									items={this.props.items}
+									stars={this.props.stars}
+									total={this.props.total}
+									currentUser={this.props.currentUser} />
 							</SkyLight>
 							<a  className="project-box-link remove"
 								href=""
@@ -69,5 +88,3 @@ ProjectBox.propTypes = {
 	createdAt: PropTypes.object,
 	total: PropTypes.number,
 };
-
-// href={"/project/"+this.props.id}
