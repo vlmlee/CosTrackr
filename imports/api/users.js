@@ -39,11 +39,6 @@ Meteor.methods({
 		check(password, String);
 		Accounts.setPassword(id, password);
 	},
-	'users.checkPassword' (user, password) {
-		check(password, String);
-		let match = Accounts._checkPassword(user._id, password);
-		return match.error === null;
-	},
 	'users.changeEmail' (id, email) {
 		check(id, String);
 		check(id, String);

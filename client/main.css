@@ -84,6 +84,10 @@ footer p {
     display: block;
 }
 
+.push-down {
+    margin: 20px auto;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -156,31 +160,6 @@ footer p {
 .back {
     width: 200px;
     margin: 0 auto 8px;
-}
-
-.blue {
-    background-color: #55acee;
-    box-shadow: 0 4px 0 #3C93D5;
-}
-
-.green {
-    background-color: #2ecc71;
-    box-shadow: 0 4px 0 #15B358;
-}
-
-.orange {
-    background-color: #e67e22;
-    box-shadow: 0 4px 0 #CD6509;
-}
-
-.red {
-    background-color: #e74c3c;
-    box-shadow: 0 4px 0 #CE3323;
-}
-
-.purple {
-    background-color: #9b59b6;
-    box-shadow: 0 4px 0 #82409D;
 }
 
 .all-buttons {
@@ -431,6 +410,7 @@ header {
     height: 78%;
     padding: 30px;
     border-radius: 10px;
+    min-width: 285px;
 }
 
 .profile-name {
@@ -447,7 +427,7 @@ header {
 }
 
 .profile-bio {
-    margin: 5px auto;
+    margin: 10px auto;
     max-width: 265px;
     word-wrap: break-word;
     text-overflow: auto;
@@ -478,6 +458,7 @@ header {
     border-radius: 3px;
     border: 1px solid #e9e9e9;
     background-color: #fefefe;
+    margin-top: 10px;
     padding: 10px;
     width: 265px;
     outline: none;
@@ -509,6 +490,12 @@ header {
     background-color: white;
     margin: 0 auto;
     border-radius: 5px;
+}
+
+.profile-has-not {
+    font-size: 12px;
+    color: #999;
+    font-style: italic;
 }
 
 /*****************
@@ -588,6 +575,24 @@ header {
     position: absolute;
     top: 80px;
     left: 200px;
+}
+
+/*****************
+*  PROJECT SHOW  *
+*****************/
+
+.star-btn {
+    background-color: #f1c40f;
+    color: #2f2f2f;
+    font-style: italic;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    margin: 20px 20px 20px 0;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    box-shadow: none;
 }
 
 .comments-section {

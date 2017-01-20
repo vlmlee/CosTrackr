@@ -21,15 +21,19 @@ export default class ProjectShow extends Component {
 			<section>
 				<h1>{this.props.project.name}</h1>
 				<p>{this.props.date}</p>
+				<span> By: <a href={'/profiles/' + this.props.project.username}>
+					{ this.props.project.username }
+					</a>
+				</span>
 				<p>{this.props.project.description}</p>
 				{ this.props.project.stars
 					.indexOf(this.props.currentUser.username) === -1 ?
 					<input type="button"
-						className="btn"
+						className="star-btn"
 						onClick={this.handleStarProject}
 						value="star" />
 				: <input type="button"
-						className="btn"
+						className="star-btn"
 						onClick={this.handleUnstarProject}
 						value="unstar" /> }
 				{ this.props.currentUser.username === this.props.project.username ? 

@@ -8,6 +8,7 @@ export default class Profile extends Component {
 		super(props);
 		this.state = {
 			exist: false,
+			user: '',
 			bio: '',
 			website: '',
 			joined: '',
@@ -26,12 +27,41 @@ export default class Profile extends Component {
 	}
 
 	componentWillMount() {
-		const user = this.props.currentUser;
+		const user = this.props.users
+			.filter(user => user.username === this.props.username);
 		this.setState({ 
-			joined: user.createdAt,
-			bio: user.profile.bio,
-			website: user.profile.website,
+			user: user[0],
+			joined: user[0].createdAt,
+			bio: user[0].profile.bio,
+			website: user[0].profile.website,
 		 });
+	}
+
+	shouldComponentUpdate(nextProps, nextState) {
+		if (this.state.user.username !== this.props.currentUser.username) {
+			return true;
+		} else if (this.state.user !== nextState.user || 
+			this.state.editBio !== nextState.editBio || 
+			this.state.editWebsite !== nextState.editWebsite ||
+			this.state.bio !== nextState.bio || 
+			this.state.website !== nextState.website) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	componentWillUpdate(nextProps, nextState) {
+		const user = this.props.users
+			.filter(user => user.username === this.props.currentUser.username);
+		if (user[0] !== nextState.user) {
+			this.setState({
+				user: user[0],
+				joined: user[0].createdAt,
+				bio: user[0].profile.bio,
+				website: user[0].profile.website,
+			});
+		}
 	}
 
 	handleEditBio() {
@@ -79,7 +109,7 @@ export default class Profile extends Component {
 		if (e.key === 'Enter') {
 			if (e.target.value.length > 80) {
 				this.setState({ error: 'You are using too many characters!'});
-			} else if (e.target.value.length === 0) {
+			} else if (e.target.value.trim().length === 0) {
 				this.setState({ website: '', editWebsite: false });
 				Meteor.call('users.updateWebsite', this.props.currentUser._id, '');
 			} else if (e.target.value.search(/^http[s]?\:\/\//) === -1) {
@@ -99,17 +129,16 @@ export default class Profile extends Component {
 				<section className="profile-picture">
 				</section>
 				<p className="profile-name">
-					{this.props.currentUser.username}
+					{this.state.user.username}
 				</p>
 				<p className="profile-joined"> 
 					Joined: {moment(this.state.joined.toISOString())
 						.format('MMM Do, YYYY')} 
 				</p>
-				<p className="profile-location">
-				</p>
-
-				<CreateNewProjectForm 
-					currentUser={this.props.currentUser} />
+				{ this.props.currentUser.username === this.state.user.username ?
+					<CreateNewProjectForm 
+						currentUser={this.props.currentUser} />
+				: '' }
 
 				{ this.state.editBio ? 
 					<div>
@@ -126,11 +155,11 @@ export default class Profile extends Component {
 					</div>
 				: <div className="profile-bio" > 
 					{ this.state.bio === '' ? 
-						(this.props.currentUser.username === this.props.username ? 
+						(this.props.currentUser.username === this.state.user.username ? 
 							<span className="profile-bio">
 								Tell us about yourself.&nbsp;
 							</span> 
-						: <span>This user hasn't written a bio yet.</span>)
+						: <span className="profile-has-not">This user hasn't written a bio yet.</span>)
 					: ( <div>
 							<p className="profile-website-personal">
 								About me:
@@ -138,10 +167,12 @@ export default class Profile extends Component {
 							<span>{ this.state.bio }</span>
 						</div> ) }
 					<span className="edit-bio">
-						<a href=""
-							onClick={this.handleEditBio} >
-						Edit
-						</a>
+						{ this.props.currentUser.username === this.state.user.username ?
+							<a href=""
+								onClick={this.handleEditBio} >
+							Edit
+							</a>
+						: <div className="push-down"> </div> }
 					</span> 
 				</div> }
 
@@ -160,11 +191,11 @@ export default class Profile extends Component {
 					</div>
 				: <div className="profile-website">
 					{ this.state.website === '' ? 
-						( this.props.currentUser.username === this.props.username ? 
+						( this.props.currentUser.username === this.state.user.username ? 
 							<span className="profile-website">
-								Enter your personal website here.&nbsp;
+								Add your personal website here.&nbsp;
 							</span> 
-						: <span>This user hasn't added a website yet.</span> )
+						: <span className="profile-has-not">This user hasn't added a website yet.</span> )
 					: ( <div className="profile-website">
 							<p className="profile-website-personal">
 								My personal website:
@@ -174,10 +205,12 @@ export default class Profile extends Component {
 							</a>
 						</div> ) }
 					<span className="edit-website">
-						<a href=""
-							onClick={this.handleEditWebsite} >
-							Edit
-						</a>
+						{ this.props.currentUser.username === this.state.user.username ?
+							<a href=""
+								onClick={this.handleEditWebsite} >
+								Edit
+							</a>
+						: <div className="push-down"> </div> }
 					</span>
 				</div> } 
 			</section>

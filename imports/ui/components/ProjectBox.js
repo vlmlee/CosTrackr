@@ -40,7 +40,9 @@ export default class ProjectBox extends Component {
 						{this.props.project.stars.length}
 					</p>
 				</section>
-				<p className="project-box-owner">by {this.props.project.username} </p>
+				<p className="project-box-owner">by <a href={'/profiles/' + this.props.project.username}>
+					{this.props.project.username}</a>
+				</p>
 				{ this.props.currentUser ?
 					( this.props.currentUser.username === this.props.project.username ? (<div>
 							<a className="project-box-link view" 
