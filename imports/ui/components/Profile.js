@@ -128,7 +128,7 @@ export default class Profile extends Component {
 					{ this.state.bio === '' ? 
 						(this.props.currentUser.username === this.props.username ? 
 							<span className="profile-bio">
-								Tell us about yourself.
+								Tell us about yourself.&nbsp;
 							</span> 
 						: <span>This user hasn't written a bio yet.</span>)
 					: ( <div>
@@ -162,7 +162,7 @@ export default class Profile extends Component {
 					{ this.state.website === '' ? 
 						( this.props.currentUser.username === this.props.username ? 
 							<span className="profile-website">
-								Enter your personal website here.
+								Enter your personal website here.&nbsp;
 							</span> 
 						: <span>This user hasn't added a website yet.</span> )
 					: ( <div className="profile-website">

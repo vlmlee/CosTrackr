@@ -126,7 +126,6 @@ footer p {
     background: #E9E9E8;
 }
 
-
 /************
 *  BUTTONS  *
 ************/
@@ -465,8 +464,6 @@ header {
 }
 
 .edit-bio {
-    position: relative;
-    left: 5px;
     opacity: 0;
     font-size: 8px;
     transition: opacity 0.2s ease-in;
@@ -487,8 +484,6 @@ header {
 }
 
 .edit-website {
-    position: relative;
-    left: 5px;
     opacity: 0;
     font-size: 8px;
     transition: opacity 0.2s ease-in;
@@ -694,7 +689,7 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 40px;
 }
 
 .settings h1 {
@@ -712,6 +707,10 @@ header {
     transition: border 0.5s ease-in;
 }
 
+.settings-current-btn {
+    margin-bottom: -30px;
+}
+
 .settings input:hover {
     border: 1px solid #aaa;
 }
@@ -727,9 +726,20 @@ header {
     border: 1px solid #fff;
     background-color: #59ABE3;
     color: #fafafa;
+    outline: none;
     transition: border 0.2s ease-in;
 }
 
 .settings-submit-btn:hover {
     border: 1px solid #59ABE3;
 }  
+
+.settings-error {
+    color: red;
+    margin-top: 30px;
+}
+
+.settings-success {
+    color: green;
+    margin-top: 30px;
+}
