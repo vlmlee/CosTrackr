@@ -53,7 +53,11 @@ export default class ListOfProjects extends Component {
 				: this.props.projects;
 		if (e.target.value) {
 			const regex = e.target.value.toLowerCase(),
+<<<<<<< HEAD
 				searchProjects = projects
+=======
+				searchProjects = this.props.projects
+>>>>>>> 90d0eb644755ddebedf65d07b95f2b3cb55446a0
 					.filter(project => project.name.toLowerCase().includes(regex));
 			this.setState({ search: true, projects: searchProjects });
 		} else {
