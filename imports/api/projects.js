@@ -68,6 +68,18 @@ Meteor.methods({
 			);
 		}
 	},
+	'projects.unstar' (projectId, username) {
+		check(projectId, String);
+		check(username, String);
+
+		const project = Projects.findOne(projectId);
+
+		if (project.stars.indexOf(username) !== -1) {
+			Projects.update(projectId, 
+				{ $pull: { stars: username } }
+			);
+		}
+	},
 	'items.update' (projectId, items, total) {
 		check(projectId, String);
 		check(total, Number);

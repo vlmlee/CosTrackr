@@ -632,6 +632,10 @@ header {
     margin-top: 100px;
 }
 
+.settings h1 {
+    font-size: 30px;
+}
+
 .settings-input-btn {
     border-radius: 5px;
     height: 10px;
