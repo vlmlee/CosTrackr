@@ -48,5 +48,25 @@ Meteor.methods({
 				'emails.0.address': email 
 			}
 		});
+	},
+	'users.updateBio' (id, bio) {
+		check(id, String);
+		check(bio, String);
+
+		Meteor.users.update(id, {
+			$set: {
+				'profile.bio': bio
+			}
+		});
+	},
+	'users.updateWebsite' (id, website) {
+		check(id, String);
+		check(website, String);
+
+		Meteor.users.update(id, {
+			$set: {
+				'profile.website': website
+			}
+		});
 	}
 });

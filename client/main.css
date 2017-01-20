@@ -448,7 +448,7 @@ header {
 }
 
 .profile-bio {
-    margin: 10px auto;
+    margin: 5px auto;
     max-width: 265px;
     word-wrap: break-word;
     text-overflow: auto;
@@ -500,6 +500,12 @@ header {
 
 .profile-website:hover .edit-website {
     opacity: 1.0;
+}
+
+.profile-website-personal {
+    margin-top: 5px;
+    font-size: 10px;
+    font-weight: bold;
 }
 
 .profile-picture {
@@ -668,7 +674,7 @@ header {
 }
 
 .button-create-project {
-    margin: 20px auto;
+    margin: 15px auto;
     padding: 12px 20px;
     background-color: #59ABE3;
     border: 1px solid #eee;

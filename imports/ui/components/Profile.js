@@ -8,8 +8,8 @@ export default class Profile extends Component {
 		super(props);
 		this.state = {
 			exist: false,
-			bio: 'My Bio',
-			website: 'My Personal Website',
+			bio: '',
+			website: '',
 			joined: '',
 			editBio: false,
 			editWebsite: false,
@@ -26,7 +26,12 @@ export default class Profile extends Component {
 	}
 
 	componentWillMount() {
-		this.setState({ joined: this.props.currentUser.createdAt });
+		const user = this.props.currentUser;
+		this.setState({ 
+			joined: user.createdAt,
+			bio: user.profile.bio,
+			website: user.profile.website,
+		 });
 	}
 
 	handleEditBio() {
@@ -34,7 +39,10 @@ export default class Profile extends Component {
 	}
 
 	handleCancelEditBio() {
-		this.setState({ bio: this.state.bio, editBio: false });
+		this.setState({ 
+			bio: this.props.currentUser.profile.bio, 
+			editBio: false 
+		});
 	}
 
 	handleChangeBio(e) {
@@ -46,7 +54,7 @@ export default class Profile extends Component {
 			if (e.target.value.length > 140) {
 				this.setState({ error: 'You are using too many characters!'});
 			} else {
-				Meteor.call('profile.updateBio', this.props.currentUser.username, e.target.value);
+				Meteor.call('users.updateBio', this.props.currentUser._id, e.target.value);
 				this.setState({ editBio: false });
 			}
 		}
@@ -57,19 +65,29 @@ export default class Profile extends Component {
 	}
 
 	handleCancelEditWebsite() {
-		this.setState({ editWebsite: false });
+		this.setState({ 
+			website: this.props.currentUser.profile.website, 
+			editWebsite: false 
+		});
 	}
 
 	handleChangeWebsite(e) {
 		this.setState({ website: e.target.value });
 	}
 
-	handleUpdateWebsite() {
-		if (e.keypress === 'Enter') {
+	handleUpdateWebsite(e) {
+		if (e.key === 'Enter') {
 			if (e.target.value.length > 80) {
 				this.setState({ error: 'You are using too many characters!'});
+			} else if (e.target.value.length === 0) {
+				this.setState({ website: '', editWebsite: false });
+				Meteor.call('users.updateWebsite', this.props.currentUser._id, '');
+			} else if (e.target.value.search(/^http[s]?\:\/\//) === -1) {
+				let url = 'https://' + e.target.value;
+				Meteor.call('users.updateWebsite', this.props.currentUser._id, url);
+				this.setState({ website: url, editWebsite: false });
 			} else {
-				Meteor.call('profile.updateWebsite', this.props.currentUser.username, e.target.value);
+				Meteor.call('users.updateWebsite', this.props.currentUser._id, e.target.value);
 				this.setState({ editWebsite: false });
 			}
 		}
@@ -98,7 +116,8 @@ export default class Profile extends Component {
 						<textarea
 							className="profile-bio-input"
 							value={this.state.bio}
-							onChange={this.handleChangeBio} />
+							onChange={this.handleChangeBio}
+							onKeyPress={this.handleUpdateBio} />
 						<a href=""
 							className="cancel-bio"
 							onClick={this.handleCancelEditBio} >
@@ -106,7 +125,18 @@ export default class Profile extends Component {
 						</a> 
 					</div>
 				: <div className="profile-bio" > 
-					{this.state.bio}
+					{ this.state.bio === '' ? 
+						(this.props.currentUser.username === this.props.username ? 
+							<span className="profile-bio">
+								Tell us about yourself.
+							</span> 
+						: <span>This user hasn't written a bio yet.</span>)
+					: ( <div>
+							<p className="profile-website-personal">
+								About me:
+							</p>
+							<span>{ this.state.bio }</span>
+						</div> ) }
 					<span className="edit-bio">
 						<a href=""
 							onClick={this.handleEditBio} >
@@ -120,7 +150,8 @@ export default class Profile extends Component {
 						<input
 							className="profile-website-input"
 							type="text"
-							onChange={this.handleChangeWebsite} />
+							onChange={this.handleChangeWebsite}
+							onKeyPress={this.handleUpdateWebsite} />
 						<a href=""
 							className="cancel-bio"
 							onClick={this.handleCancelEditWebsite} >
@@ -128,19 +159,27 @@ export default class Profile extends Component {
 						</a> 
 					</div>
 				: <div className="profile-website">
-					{ this.state.website !== 'My Personal Website' ? 
-						<a href={'https://' + this.state.website}>
-							{this.state.website}
-						</a>
-					: ( this.state.website ) }
+					{ this.state.website === '' ? 
+						( this.props.currentUser.username === this.props.username ? 
+							<span className="profile-website">
+								Enter your personal website here.
+							</span> 
+						: <span>This user hasn't added a website yet.</span> )
+					: ( <div className="profile-website">
+							<p className="profile-website-personal">
+								My personal website:
+							</p>
+							<a href={ this.state.website }>
+								{this.state.website}
+							</a>
+						</div> ) }
 					<span className="edit-website">
 						<a href=""
 							onClick={this.handleEditWebsite} >
-						Edit
+							Edit
 						</a>
-					</span> 
-					</div>
-				}
+					</span>
+				</div> } 
 			</section>
 		);
 	}
@@ -149,7 +188,3 @@ export default class Profile extends Component {
 Profile.propTypes = {
 	currentUser: PropTypes.object.isRequired,
 };
-
-// description
-// personal website
-// optinal twitter, github, dribbble

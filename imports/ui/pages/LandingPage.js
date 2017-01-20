@@ -65,8 +65,14 @@ export default class LandingPage extends Component {
 
 	handleCreateUser() {
 		if (this.state.password === this.state.confirmPassword) {
-			Accounts.createUser({ username: this.state.username, 
-				password: this.state.password }, (err) => {
+			Accounts.createUser({ 
+				username: this.state.username, 
+				password: this.state.password, 
+				profile: {
+					bio: '',
+					website: ''
+				},
+			}, (err) => {
 				if (err) {
 					this.setState({ password: '', confirmPassword: '', error: err.message });
 				}

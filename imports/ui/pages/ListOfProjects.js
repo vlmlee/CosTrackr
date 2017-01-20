@@ -24,8 +24,7 @@ export default class ListOfProjects extends Component {
 
 	handleRemoveProject(projectId) {
 		Meteor.call('projects.remove', projectId);
-		const projects = this.state.projects
-			.filter(project => project._id !== projectId);
+		const projects = this.state.projects.filter(project => project._id !== projectId);
 		this.setState({ projects: projects });
 	}
 
@@ -64,9 +63,8 @@ export default class ListOfProjects extends Component {
 	render() {
 		let projects = this.props.pageId === 'section' ? ( 
 			this.state.search ? this.state.projects 
-				: this.props.projects
-					.filter(project => project.username === this.props.username)
-			) : (this.state.search ? this.state.projects : this.props.projects);
+				: this.props.projects.filter(project => project.username === this.props.username)) 
+			: (this.state.search ? this.state.projects : this.props.projects);
 		return (
 			<div>
 				<SearchBar 
@@ -81,7 +79,7 @@ export default class ListOfProjects extends Component {
 								comments={this.props.comments}
 								currentUser={this.props.currentUser}
 								handleRemoveProject={this.handleRemoveProject} />
-						))}
+						)) }
 						{this.fillEmptyRow()}
 					</section>
 					: <section className="list-of-projects"> 
