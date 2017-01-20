@@ -9,6 +9,7 @@ export default class Settings extends Component {
 			username: '',
 			password: '',
 			email: '',
+			error: '',
 		};
 
 		this.setNewUsername = this.setNewUsername.bind(this);
@@ -17,7 +18,6 @@ export default class Settings extends Component {
 		this.handleChangePassword = this.handleChangePassword.bind(this);
 		this.setNewEmail = this.setNewEmail.bind(this);
 		this.handleChangeEmail = this.handleChangePassword.bind(this);
-		this.addAmazonAffiliate = this.addAmazonAffiliate.bind(this);
 	}
 
 	setNewUsername(e) {
@@ -25,8 +25,8 @@ export default class Settings extends Component {
 	}
 
 	handleChangeUsername() {
-		if (this.state.username && this.state.username !== Meteor.user().username) {
-			Meteor.call('users.changeUsername', Meteor.user()._id, this.state.username);
+		if (this.state.username && this.state.username !== this.props.currentUser.username) {
+			Meteor.call('users.changeUsername', this.props.currentUser._id, this.state.username);
 		}
 	}
 
@@ -36,7 +36,7 @@ export default class Settings extends Component {
 
 	handleChangePassword() {
 		if (this.state.password) {
-			Meteor.call('users.changePassword', Meteor.user()._id, password);
+			Meteor.call('users.changePassword', this.props.currentUser._id, this.state.password);
 		}
 	}
 
@@ -45,13 +45,9 @@ export default class Settings extends Component {
 	}
 
 	handleChangeEmail() {
-		if (this.state.email && this.state.email !== Meteor.user().email) {
-			Meteor.call('users.changeEmail', Meteor.user()._id, this.state.email);
+		if (this.state.email && this.state.email !== this.props.currentUser.email) {
+			Meteor.call('users.changeEmail', this.props.currentUser._id, this.state.email);
 		}
-	}
-
-	addAmazonAffiliate() {
-
 	}
 
 	render() {
@@ -66,7 +62,7 @@ export default class Settings extends Component {
 				<input
 					type="button"
 					className="settings-submit-btn"
-					onSubmit={() => this.handleChangeUsername}
+					onSubmit={this.handleChangeUsername}
 					value="Change username" />
 				<input 
 					type="email"
@@ -76,7 +72,7 @@ export default class Settings extends Component {
 				<input
 					type="button"
 					className="settings-submit-btn"
-					onSubmit={() => this.handleChangeEmail}
+					onSubmit={this.handleChangeEmail}
 					value="Change email" />
 				<input 
 					type="password"
@@ -86,8 +82,12 @@ export default class Settings extends Component {
 				<input
 					type="button"
 					className="settings-submit-btn"
-					onSubmit={() => this.handleChangePassword}
+					onSubmit={this.handleChangePassword}
 					value="Change password" />
+
+				<p className="settings-error"> 
+					{this.state.error} 
+				</p>
 			</section>
 		);
 	}

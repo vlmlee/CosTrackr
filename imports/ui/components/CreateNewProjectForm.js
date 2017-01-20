@@ -34,7 +34,8 @@ export default class CreateNewProjectForm extends Component {
 						<input
 							ref="createProject"
 							className="input-create-project"
-							onChange={this.handleNameChange} />
+							onChange={this.handleNameChange}
+							placeholder="Enter the title of your project" />
 						<input 
 							type="submit" 
 							className="button-create-project btn"

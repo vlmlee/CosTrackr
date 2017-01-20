@@ -435,12 +435,71 @@ header {
 }
 
 .profile-name {
-    padding-top: 10px;
-    font-size: 20px;
+    padding: 10px 0;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: bold;
 }
 
-.profile-location {
+.profile-joined {
+    font-size: 10px;
+    margin: -10px 0 5px 0;
+    font-style: italic;
+}
 
+.profile-bio {
+    margin: 10px auto;
+    max-width: 265px;
+    word-wrap: break-word;
+    text-overflow: auto;
+}
+
+.profile-bio-input {
+    border-radius: 3px;
+    border: 1px solid #e9e9e9;
+    background-color: #fefefe;
+    padding: 10px;
+    width: 265px;
+    height: 150px;
+    outline: none;
+}
+
+.edit-bio {
+    position: relative;
+    left: 5px;
+    opacity: 0;
+    font-size: 8px;
+    transition: opacity 0.2s ease-in;
+}
+
+.cancel-bio {
+    position: relative;
+    font-size: 8px;
+}
+
+.profile-website-input {
+    border-radius: 3px;
+    border: 1px solid #e9e9e9;
+    background-color: #fefefe;
+    padding: 10px;
+    width: 265px;
+    outline: none;
+}
+
+.edit-website {
+    position: relative;
+    left: 5px;
+    opacity: 0;
+    font-size: 8px;
+    transition: opacity 0.2s ease-in;
+}
+
+.profile-bio:hover .edit-bio {
+    opacity: 1.0;
+}
+
+.profile-website:hover .edit-website {
+    opacity: 1.0;
 }
 
 .profile-picture {

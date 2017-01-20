@@ -42,8 +42,7 @@ Meteor.methods({
 	'users.changeEmail' (id, email) {
 		check(id, String);
 		check(id, String);
-		// validate email
-
+		
 		Meteor.users.update(id, {
 			$set: {
 				'emails.0.address': email 

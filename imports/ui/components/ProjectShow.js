@@ -35,15 +35,15 @@ export default class ProjectShow extends Component {
 				{ this.props.currentUser.username === this.props.project.username ? 
 					<a href={"/project/"+this.props.id}>Edit project</a>
 				: '' }
-				{ this.props.project.items.length ? (
+				{ this.props.project.items ? (
 					<div>
-						{this.props.project.items.map(item => {
+						{this.props.project.items.map(item => (
 							<ul key={item._id}>
 								<li> {item.name} </li>
 								<li> {item.price} </li>
-								<li> {item.url} </li>
+								<li> {item.link} </li>
 							</ul>
-						})} 
+						))} 
 					</div>)
 				: <h2>No current items.</h2> }
 				<Comments 

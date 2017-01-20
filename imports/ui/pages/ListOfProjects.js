@@ -48,11 +48,13 @@ export default class ListOfProjects extends Component {
 	}
 
 	handleSearch(e) {
+		const projects = this.props.pageId === 'section' ? 
+			this.props.projects.filter(project => project.username === this.props.username)
+				: this.props.projects;
 		if (e.target.value) {
 			const regex = e.target.value.toLowerCase(),
-				searchProjects = this.props.projects
-					.filter(project => project.username === this.props.username 
-						&& project.name.toLowerCase().includes(regex));
+				searchProjects = projects
+					.filter(project => project.name.toLowerCase().includes(regex));
 			this.setState({ search: true, projects: searchProjects });
 		} else {
 			this.setState({ search: false });
@@ -64,7 +66,7 @@ export default class ListOfProjects extends Component {
 			this.state.search ? this.state.projects 
 				: this.props.projects
 					.filter(project => project.username === this.props.username)
-			) : this.props.projects;
+			) : (this.state.search ? this.state.projects : this.props.projects);
 		return (
 			<div>
 				<SearchBar 

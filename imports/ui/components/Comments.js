@@ -61,7 +61,6 @@ export default class Comments extends Component {
 											( this.props.currentUser._id === comment.owner ? 
 												<input
 													type="button"
-													className="btn red inline"
 													onClick={() => this.handleDeleteComment(comment._id)}
 													value="Delete" />
 											: '' ) 
@@ -82,7 +81,7 @@ export default class Comments extends Component {
 							onChange={this.handleChange} />
 						<input 
 							type="submit" 
-							className="btn green block submit"
+							className="submit"
 							value="Submit" />
 					</form>
 				</section>
