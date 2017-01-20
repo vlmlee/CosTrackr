@@ -611,9 +611,14 @@ header {
 .button-create-project {
     margin: 20px auto;
     padding: 12px 20px;
-    background-color: #39A5C3;
+    background-color: #59ABE3;
     border: 1px solid #eee;
     color: #fff;
+    transition: border 0.2s ease-in;
+}
+
+.button-create-project:hover {
+    border: 1px solid #59ABE3;
 }
 
 /*************
@@ -624,9 +629,38 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /*width: 80%;*/
+    margin-top: 100px;
 }
 
-.settings input {
+.settings-input-btn {
+    border-radius: 5px;
+    height: 10px;
     width: 300px;
+    margin: 40px 20px 20px 20px;
+    padding: 20px;
+    border: 1px solid #f9f9f9;
+    outline: none;
+    transition: border 0.5s ease-in;
 }
+
+.settings input:hover {
+    border: 1px solid #aaa;
+}
+
+.settings input:focus {
+    border: 1px solid #ccc;
+}
+
+.settings-submit-btn {
+    width: 342px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    background-color: #59ABE3;
+    color: #fafafa;
+    transition: border 0.2s ease-in;
+}
+
+.settings-submit-btn:hover {
+    border: 1px solid #59ABE3;
+}  

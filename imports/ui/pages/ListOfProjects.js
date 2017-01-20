@@ -60,7 +60,6 @@ export default class ListOfProjects extends Component {
 	}
 
 	render() {
-		console.log(this.state.projects);
 		let projects = this.props.pageId === 'section' ? ( 
 			this.state.search ? this.state.projects 
 				: this.props.projects
