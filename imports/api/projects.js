@@ -16,12 +16,12 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-	'projects.create' (name) {
+	'projects.create' (name, userId) {
 		check(name, String);
 		if (!this.userId) {
 			throw new Meteor.Error('error');
 		}
-		const project = Projects.findOne({name: name});
+		const project = Projects.findOne({name: name, owner: userId});
 		if (!project) {
 			Projects.insert({
 				name: name,

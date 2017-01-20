@@ -39,14 +39,16 @@ export default class Comments extends Component {
 	}
 
 	render() {
+		let comments = this.props.comments
+				.filter(comment => this.props.projectId === comment.projectId)
 		return (
 			<div>
 				<section  
 					ref="comments"
 					className="comments">
-					{ (this.props.comments != '') ? (
+					{ (comments != '') ? (
 						<div>
-							{ this.props.comments.map(comment => (
+							{ comments.map(comment => (
 								<section 
 									key={comment._id} >
 									<Comment 
@@ -93,4 +95,3 @@ Comments.propTypes = {
 	projectId: PropTypes.string.isRequired,
 	comments: PropTypes.array.isRequired,
 }
-

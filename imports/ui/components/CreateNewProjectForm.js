@@ -19,7 +19,7 @@ export default class CreateNewProjectForm extends Component {
 	createNewProject(e) {
 		e.preventDefault();
 		if (this.state.name !== '') {
-			Meteor.call('projects.create', this.state.name);
+			Meteor.call('projects.create', this.state.name, this.props.currentUser._id);
 			ReactDOM.findDOMNode(this.refs.createProject).value = '';
 			this.setState({ name: '' });
 		}

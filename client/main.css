@@ -305,28 +305,27 @@ header {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 50px;
     overflow-y: auto;
 }
 
-.star {
+.star-count {
+    position: relative;
+    right: 40px;
+    bottom: 125px;
+    font-family: Consolas;
+    font-size: 12px;
     height: 40px;
     width: 40px;
-    position: relative;
-    bottom: 122px;
-    left: -50px;
-    z-index: 1;
+    color: #4a4a4a;
+    background-image: url('/images/star.svg');
+    font-weight: bold;
+    z-index: 2;
 }
 
-.star-count {
-    font-family: Consolas;
-    font-size: 15px;
-    color: #4a4a4a;
-    font-weight: bold;
-    position: relative;
-    bottom: 135px;
-    left: -25px;
-    z-index: 2;
+.star-count-number {
+    text-align: center;
+    padding-top: 14px;
 }
 
 .project-box {
@@ -390,7 +389,7 @@ header {
 
 .project-box-link {
     position: relative;
-    bottom: 20px;
+    bottom: 17px;
     font-size: 12px;
 }
 
@@ -538,21 +537,14 @@ header {
 }
 
 .comments {
-    overflow-y: scroll;
+    overflow-y: auto;
     flex: 1;
-    position: absolute;
-    top: 60px;
+/*    top: 60px;
     right: 200px;
-    height: 500px;
-    width: 540px;
+    height: 500px;*/
+    /*width: 540px;*/
     padding: 20px;
-    border-radius: 5px;
-    border: 1px solid #f8f8f8;
-    background: #f9f9f9;
-    box-sizing: border-box;
-    box-shadow: inset 0 0 1px #E9E9E8, 0 0 0 1000px #fbfbfa inset;
-    box-shadow: 0 5px 0 #f1f1f1;
-    -webkit-appearance: textfield;
+    /*background: #f9f9f9;*/
 }
 
 .comment-form {
@@ -562,25 +554,16 @@ header {
 }
 
 .comment-textbox {
-    position: fixed;
-    width: 500px;
-    height: 150px;
     border-radius: 5px;
     padding: 20px;
     font-size: 14px;
     margin: 20px;
-    color: #fff;
-    background-color: #2ecc71;
-    box-shadow: 0 5px 0 #15B358;
     outline: none;
     border: none;
 }
 
 .comment-form .submit {
-    position: relative;
     width: 200px;
-    top: 205px;
-    left: 190px;
     margin: 18px auto;
 }
 
@@ -592,7 +575,7 @@ header {
 }
 
 .search {
-    margin-top: -67px;
+    margin-top: -95px;
     margin-right: 175px;
     float: right;
     border: 1px solid #e4e4e4;

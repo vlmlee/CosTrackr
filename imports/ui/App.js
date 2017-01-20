@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-
 import { Projects } from '../api/projects.js';
 import { Comments } from '../api/comments.js';
-
 import AccountsUIWrapper from './components/AccountsUIWrapper.js';
 import Header from './components/Header.js';
 import Footer from './components/Footer.js';
@@ -32,8 +30,8 @@ class App extends Component {
 				</main>
 			);
 		} else {
-			let opts = {
-				lines: 20, 
+			const opts = {
+				lines: 20,
 				length: 2,
 				width: 2,
 				radius: 42,

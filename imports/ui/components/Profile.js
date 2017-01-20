@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import moment from 'moment';
 import CreateNewProjectForm from './CreateNewProjectForm.js';
 
 export default class Profile extends Component {
@@ -7,10 +8,14 @@ export default class Profile extends Component {
 		super(props);
 		this.state = {
 			exist: false,
-			bio: '',
-			website: '',
+			bio: 'Bio',
+			website: 'Personal Website',
 			joined: ''
 		};
+	}
+
+	componentWillMount() {
+		this.setState({ joined: this.props.currentUser.createdAt });
 	}
 
 	handleEditBio() {
@@ -32,13 +37,14 @@ export default class Profile extends Component {
 					currentUser={this.props.currentUser} />
 
 				<p onClick={this.handleEditBio} > 
-					<span>
+					<span className="edit-bio">
 						Edit
 					</span> 
-					Bio 
+					{this.state.bio}
 				</p>
 				<p> Personal Website </p>
-				<p> Joined: </p>
+				<p> Joined: {moment(this.state.joined.toISOString())
+					.format('MMM Do, YYYY')} </p>
 			</section>
 		);
 	}
@@ -51,4 +57,3 @@ Profile.propTypes = {
 // description
 // personal website
 // optinal twitter, github, dribbble
-

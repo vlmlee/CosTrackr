@@ -15,20 +15,23 @@ export default class ListOfProjects extends Component {
 	}
 
 	componentWillMount() {
-		const projectList = this.props.projects;
+		const projectList = this.props.pageId === 'section' ? 
+			this.props.projects
+				.filter(project => project.username === this.props.username) 
+			: this.props.projects;
 		this.setState({ projects: projectList });
 	}
 
 	handleRemoveProject(projectId) {
 		Meteor.call('projects.remove', projectId);
-		const projects = this.props.projects
+		const projects = this.state.projects
 			.filter(project => project._id !== projectId);
 		this.setState({ projects: projects });
 	}
 
 	fillEmptyRow() {
 		let emptyArray = [],
-			offset = (this.props.pageId === 'main') ? 4 : 3,
+			offset = (this.props.pageId === 'section') ? 3 : 5,
 			numberOfEmptyBoxes = this.state.search ? 
 			((offset - this.state.projects.length % offset === offset) ? 0 
 				: (offset - this.state.projects.length % offset)) :
@@ -37,18 +40,19 @@ export default class ListOfProjects extends Component {
 		for (i = 0; i < numberOfEmptyBoxes; i++) {
 			emptyArray.push('');
 		}
-		return emptyArray.map((each, i) => 
-			<div 
-				key={i} 
+		return emptyArray.map((each, index) => 
+			<section key={index} 
 				className="empty-box">
-			</div>
+			</section>
 		);
 	}
 
 	handleSearch(e) {
 		if (e.target.value) {
 			const regex = e.target.value.toLowerCase(),
-				searchProjects = this.props.projects.filter(project => project.name.toLowerCase().includes(regex));
+				searchProjects = this.props.projects
+					.filter(project => project.username === this.props.username 
+						&& project.name.toLowerCase().includes(regex));
 			this.setState({ search: true, projects: searchProjects });
 		} else {
 			this.setState({ search: false });
@@ -56,38 +60,36 @@ export default class ListOfProjects extends Component {
 	}
 
 	render() {
+		console.log(this.state.projects);
+		let projects = this.props.pageId === 'section' ? ( 
+			this.state.search ? this.state.projects 
+				: this.props.projects
+					.filter(project => project.username === this.props.username)
+			) : this.props.projects;
 		return (
 			<div>
 				<SearchBar 
 					handleSearch={this.handleSearch} />
 				{ this.state.search ?
 					<section className="list-of-projects"> 
-						{ this.state.projects.map(project => (
+						{ projects.map(project => (
 							<ProjectBox 
 								key={project._id}
 								id={project._id}
-								name={project.name}
-								owner={project.username}
-								createdAt={project.createdAt}
-								stars={project.stars.length}
-								total={project.total}
-								items={project.items}
+								project={project}
+								comments={this.props.comments}
 								currentUser={this.props.currentUser}
 								handleRemoveProject={this.handleRemoveProject} />
 						))}
 						{this.fillEmptyRow()}
 					</section>
 					: <section className="list-of-projects"> 
-						{ this.props.projects.map(project => (
+						{ projects.map(project => (
 							<ProjectBox 
 								key={project._id}
 								id={project._id}
-								name={project.name}
-								owner={project.username}
-								createdAt={project.createdAt}
-								stars={project.stars.length}
-								total={project.total}
-								items={project.items}
+								project={project}
+								comments={this.props.comments}
 								currentUser={this.props.currentUser}
 								handleRemoveProject={this.handleRemoveProject} />
 						)) }
@@ -101,5 +103,6 @@ export default class ListOfProjects extends Component {
 
 ListOfProjects.propTypes = {
 	projects: PropTypes.array.isRequired,
+	comments: PropTypes.array.isRequired,
 	currentUser: PropTypes.object,
 };

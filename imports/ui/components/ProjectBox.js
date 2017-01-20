@@ -20,33 +20,30 @@ export default class ProjectBox extends Component {
 		    borderRadius: '5px',
 		    padding: '30px',
 		    backgroundColor: 'rgba(244, 244, 244, 1)'
-		};
-		let date = this.props.createdAt ? moment(this.props.createdAt.toISOString())
-					.format('MMM Do YYYY') : '';
+		},
+		date = this.props.project.createdAt ? 
+			moment(this.props.project.createdAt.toISOString())
+			.format('MMM Do YYYY') : '';
 		return (
 			<section className="project-box">
 				<section className="project-box-date">
-					{ date }
+					{date}
 				</section>
 				<section className="project-box-total">
-					{this.props.total.toFixed(2)}
+					{this.props.project.total.toFixed(2)}
 				</section>
 				<p className="project-box-name">
-					{this.props.name}
+					{this.props.project.name}
 				</p>
-				<section>
-					<span className="star-count">
-						{this.props.stars}
-					</span>
-					<img 
-						className="star"
-						src={'images/star.svg'} />
+				<section className="star-count">
+					<p className="star-count-number">
+						{this.props.project.stars.length}
+					</p>
 				</section>
-				<p className="project-box-owner">by {this.props.owner} </p>
+				<p className="project-box-owner">by {this.props.project.username} </p>
 				{ this.props.currentUser ?
-					( this.props.currentUser.username === this.props.owner ? (
-						<div>
-							<a  className="project-box-link view" 
+					( this.props.currentUser.username === this.props.project.username ? (<div>
+							<a className="project-box-link view" 
 								onClick={() => this.refs.modal.show()}
 								href="" >
 								View
@@ -57,25 +54,36 @@ export default class ProjectBox extends Component {
 								ref="modal" >
 								<ProjectShow 
 									id={this.props.id}
-									name={this.props.name}
-									owner={this.props.owner}
-									createdAt={date}
-									items={this.props.items}
-									stars={this.props.stars}
-									total={this.props.total}
+									date={date}
+									project={this.props.project}
+									comments={this.props.comments}
 									currentUser={this.props.currentUser} />
 							</SkyLight>
-							<a  className="project-box-link remove"
+							<a className="project-box-link remove"
 								href=""
 								onClick={() => 
 									this.props.handleRemoveProject(this.props.id)} >
 								Remove
 							</a>
 						</div> )
-					: <a  className="project-box-link view-center" 
-						  href={"/project/"+this.props.id}>
-						View
-					  </a> )
+						: <div>
+							<a className="project-box-link view-center" 
+								onClick={() => this.refs.modal.show()}
+								href="" >
+								View
+							</a>
+							<SkyLight 
+								hideOverlayClicked
+								dialogStyles={modalStyles}
+								ref="modal" >
+								<ProjectShow 
+									id={this.props.id}
+									date={date}
+									project={this.props.project}
+									comments={this.props.comments}
+									currentUser={this.props.currentUser} />
+							</SkyLight>
+						</div> )
 				: '' }
 			</section>
 		);
@@ -84,7 +92,7 @@ export default class ProjectBox extends Component {
 
 ProjectBox.propTypes = {
 	id: PropTypes.string,
-	name: PropTypes.string,
-	createdAt: PropTypes.object,
-	total: PropTypes.number,
+	project: PropTypes.object.isRequired,
+	comments: PropTypes.array.isRequired,
+	currentUser: PropTypes.object,
 };
