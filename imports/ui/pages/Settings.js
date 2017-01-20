@@ -80,7 +80,6 @@ export default class Settings extends Component {
 	}
 
 	render() {
-		console.log(this.state);
 		return(
 			<section className="settings">
 				<h1>Change Settings</h1>

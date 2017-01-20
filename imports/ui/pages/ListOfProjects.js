@@ -29,13 +29,18 @@ export default class ListOfProjects extends Component {
 	}
 
 	fillEmptyRow() {
+		let projects = this.props.pageId === 'section' ? 
+			( this.state.search ? this.state.projects 
+				: this.props.projects.filter(project => project.username === this.props.username) ) 
+		: (this.state.search ? this.state.projects : this.props.projects);
+
 		let emptyArray = [],
 			offset = (this.props.pageId === 'section') ? 3 : 5,
 			numberOfEmptyBoxes = this.state.search ? 
-			((offset - this.state.projects.length % offset === offset) ? 0 
-				: (offset - this.state.projects.length % offset)) :
-			((offset - this.props.projects.length % offset === offset) ? 0 
-				: (offset - this.props.projects.length % offset));
+			((offset - projects.length % offset === offset) ? 0 
+				: (offset - projects.length % offset)) :
+			((offset - projects.length % offset === offset) ? 0 
+				: (offset - projects.length % offset));
 		for (i = 0; i < numberOfEmptyBoxes; i++) {
 			emptyArray.push('');
 		}
@@ -61,10 +66,10 @@ export default class ListOfProjects extends Component {
 	}
 
 	render() {
-		let projects = this.props.pageId === 'section' ? ( 
-			this.state.search ? this.state.projects 
-				: this.props.projects.filter(project => project.username === this.props.username)) 
-			: (this.state.search ? this.state.projects : this.props.projects);
+		let projects = this.props.pageId === 'section' ? 
+			( this.state.search ? this.state.projects 
+				: this.props.projects.filter(project => project.username === this.props.username) ) 
+		: (this.state.search ? this.state.projects : this.props.projects);
 		return (
 			<div>
 				<SearchBar 
