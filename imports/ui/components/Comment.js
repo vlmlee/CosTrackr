@@ -12,7 +12,7 @@ const Comment = ({ username, createdAt, text}) => (
 Comment.propTypes = {
 	username: PropTypes.string.isRequired,
 	text: PropTypes.string.isRequired,
-	createdAt: PropTypes.string.isRequired,
+	createdAt: PropTypes.object.isRequired,
 };
 
 export default Comment;

@@ -156,7 +156,7 @@ export default class Profile extends Component {
 				: <div className="profile-bio" > 
 					{ this.state.bio === '' ? 
 						(this.props.currentUser._id === this.state.user._id ? 
-							<span className="profile-bio">
+							<span className="profile-has-not">
 								Tell us about yourself.&nbsp;
 							</span> 
 						: <span className="profile-has-not">This user hasn't written a bio yet.</span>)
@@ -192,7 +192,7 @@ export default class Profile extends Component {
 				: <div className="profile-website">
 					{ this.state.website === '' ? 
 						( this.props.currentUser._id === this.state.user._id ? 
-							<span className="profile-website">
+							<span className="profile-has-not">
 								Add your personal website here.&nbsp;
 							</span> 
 						: <span className="profile-has-not">This user hasn't added a website yet.</span> )

@@ -56,7 +56,7 @@ export default class Comments extends Component {
 									id={comment._id}
 									username={comment.username}
 									text={comment.text}
-									createdAt={comment.createdAt.toString()}
+									createdAt={comment.createdAt}
 									projectId={comment.projectId} />
 									{ this.props.currentUser ? 
 										( this.props.currentUser._id === comment.owner ? 

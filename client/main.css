@@ -785,6 +785,11 @@ header {
     width: 80px;
     height: 100px;
     margin: 18px auto;
+    transition: border 0.2s ease-in;
+}
+
+.comment-submit-btn:hover {
+    border: 1px solid #69B3E5;
 }
 
 .no-comments {
