@@ -15,7 +15,6 @@ class App extends Component {
 					<Header 
 						currentUser={this.props.currentUser} />
 						<section 
-							id="container"
 							className="container">
 							<section className="main-content">
 								{this.props.main(this.props)} 

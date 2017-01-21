@@ -52,25 +52,25 @@ export default class ProjectShow extends Component {
 				}
 				<section className="project-show-contents">
 					<section className="project-show-items"> 
+						<div>
+							<section className="project-show-labels">
+								<span className="project-show-list-item"> &nbsp; Item </span>
+								<span className="project-show-price"> Price &nbsp; </span>
+							</section>
+						</div>
 						{ this.props.project.items ? (
-							<div>
-								<section className="project-show-labels">
-									<span className="project-show-list-item"> &nbsp; Item </span>
-									<span className="project-show-price"> Price &nbsp; </span>
+							this.props.project.items.map((item, index) => (
+								<section key={index}
+									className="project-show-item">
+									{ item.name !== '' ? 
+										<span className="project-show-item-name">{index + 1}) {item.name} </span>
+									: '' }
+									{ item.price !== '0' ?
+										<span className="project-show-item-price"> {item.price} </span>
+									: '' }
+									<p className="project-show-item-link"> {item.link} </p>
 								</section>
-								{this.props.project.items.map((item, index) => (
-									<section key={item._id}
-										className="project-show-item">
-										{ item.name !== '' ? 
-											<span className="project-show-item-name">{index + 1}) {item.name} </span>
-										: '' }
-										{ item.price !== '0' ?
-											<span className="project-show-item-price"> {item.price} </span>
-										: '' }
-										<p className="project-show-item-link"> {item.link} </p>
-									</section>
-								))} 
-							</div>)
+							)) )
 						: <h2>No current items.</h2> }
 					</section>
 					<Comments 

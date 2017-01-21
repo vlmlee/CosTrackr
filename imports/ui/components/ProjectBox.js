@@ -79,6 +79,7 @@ export default class ProjectBox extends Component {
 								dialogStyles={modalStyles}
 								ref="modal" >
 								<ProjectShow 
+									key={this.props.id}
 									id={this.props.id}
 									date={date}
 									project={this.props.project}

@@ -16,6 +16,7 @@ export default class LandingPage extends Component {
 		this.handleCreateForm = this.handleCreateForm.bind(this);
 		this.keyPressEnterLogin = this.keyPressEnterLogin.bind(this);
 		this.keyPressEnterCreateUser = this.keyPressEnterCreateUser.bind(this);
+		this.handleDefaultSrc = this.handleDefaultSrc.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
 		this.handleChangeUsername = this.handleChangeUsername.bind(this);
 		this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -36,6 +37,10 @@ export default class LandingPage extends Component {
 		}
  	}
 
+ 	handleDefaultSrc(e) {
+ 		e.target.src = '/images/logo.png';
+ 	}
+
 	handleLogin() {
 		Meteor.loginWithPassword(this.state.username, this.state.password, (err) => {
 			if (err) {
@@ -45,17 +50,17 @@ export default class LandingPage extends Component {
 	}
 
 	handleChangeUsername(e) {
-		let username = e.target.value;
+		const username = e.target.value;
 		this.setState({ username: username });
 	}
 
 	handleChangePassword(e) {
-		let password = e.target.value;
+		const password = e.target.value;
 		this.setState({ password: password });
 	}
 
 	handleChangeConfirmPassword(e) {
-		let password = e.target.value
+		const password = e.target.value
 		this.setState({ confirmPassword: password });
 	}
 
@@ -86,7 +91,7 @@ export default class LandingPage extends Component {
 		return (
 			<section
 				className="landing-page">
-				<img src="images/logo.png" />
+				<img onError={this.handleDefaultSrc} src="images/logo.png" alt="logo" />
 				<h1>Track your costs.</h1>
 				{ this.state.loginForm ? 
 					<section

@@ -8,15 +8,15 @@ export default class Settings extends Component {
 		this.state = {
 			username: '',
 			currentPassword: '',
-			password: '',
-			passwordConfirm: '',
+			newPassword: '',
+			confirmPassword: '',
 			email: '',
 			success: '',
 			error: '',
 		};
 
-		this.setNewUsername = this.setNewUsername.bind(this);
 		this.handleChangeUsername = this.handleChangeUsername.bind(this);
+		this.handleSetNewUsername = this.handleSetNewUsername.bind(this);
 		this.handleCurrentPassword = this.handleCurrentPassword.bind(this);
 		this.handleNewPassword = this.handleNewPassword.bind(this);
 		this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
@@ -25,17 +25,17 @@ export default class Settings extends Component {
 		this.handleChangeEmail = this.handleChangePassword.bind(this);
 	}
 
-	setNewUsername(e) {
+	handleChangeUsername(e) {
 		if (this.state.success !== '') {
 			this.setState({ success: '' });
 		}
 		this.setState({ username: e.target.value });
 	}
 
-	handleChangeUsername() {
+	handleSetNewUsername() {
 		if (this.state.username && (this.state.username !== this.props.currentUser.username)) {
 			Meteor.call('users.changeUsername', this.props.currentUser._id, this.state.username);
-			this.setState({ error: '', username: '', success: 'Username changed successfully!' });
+			this.setState({ username: '', error: '', success: 'Username changed successfully!' });
 		} else {
 			this.setState({ error: 'Invalid name!'});
 		}
@@ -49,23 +49,23 @@ export default class Settings extends Component {
 	}
 
 	handleNewPassword(e) {
-		this.setState({ password: e.target.value });
+		this.setState({ newPassword: e.target.value });
 	}
 
 	handleConfirmPassword(e) {
-		this.setState({ passwordConfirm: e.target.value });
+		this.setState({ confirmPassword: e.target.value });
 	}
 
 	handleChangePassword() {
-		if ((this.state.password === this.state.passwordConfirm) && this.state.currentPassword) {
-			Accounts.changePassword(this.state.currentPassword, this.state.password, (err) => {
+		if ((this.state.newPassword === this.state.confirmPassword) && this.state.currentPassword) {
+			Accounts.changePassword(this.state.currentPassword, this.state.newPassword, (err) => {
 				if (err) { 
 					this.setState({ error: err.reason, success: ''});
 				} else {
 					this.setState({ error: '', success: 'Password changed successfully!'});
 				}
 			});
-			this.setState({ password: '', passwordConfirm: '', currentPassword: '' });
+			this.setState({ newPassword: '', confirmPassword: '', currentPassword: '' });
 		}
 	}
 
@@ -86,13 +86,13 @@ export default class Settings extends Component {
 				<input 
 					type="text"
 					className="settings-input-btn"
-					onChange={this.setNewUsername}
+					onChange={this.handleChangeUsername}
 					placeholder="New username"
 					value={this.state.username} />
 				<input
 					type="button"
 					className="settings-submit-btn"
-					onClick={this.handleChangeUsername}
+					onClick={this.handleSetNewUsername}
 					value="Change username" />
 				<input 
 					type="email"
@@ -116,26 +116,27 @@ export default class Settings extends Component {
 					className="settings-input-btn settings-current-btn"
 					onChange={this.handleNewPassword}
 					placeholder="New password"
-					value={this.state.password} />
+					value={this.state.newNassword} />
 				<input 
 					type="password"
 					className="settings-input-btn"
 					onChange={this.handleConfirmPassword}
 					placeholder="Reenter new password"
-					value={this.state.passwordConfirm} />
+					value={this.state.confirmPassword} />
 				<input
 					type="button"
 					className="settings-submit-btn"
 					onClick={this.handleChangePassword}
 					value="Change password" />
 
-				<p className="settings-error"> 
-					{this.state.error} 
-				</p>
-
-				<p className="settings-success">
-					{this.state.success}
-				</p>
+				<section className="settings-messages">
+					<p className="settings-error"> 
+						{this.state.error} 
+					</p>
+					<p className="settings-success">
+						{this.state.success}
+					</p>
+				</section>
 			</section>
 		);
 	}

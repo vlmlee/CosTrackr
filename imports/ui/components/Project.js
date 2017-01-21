@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Comments from './Comments.js';
 import { Session } from 'meteor/session';
-import ProjectEdit from './ProjectEdit.js';
+import ProjectButtons from './ProjectButtons.js';
+import Item from './Item.js';
 import SkyLight from 'react-skylight';
+import moment from 'moment';
 
 export default class Project extends Component {
 	constructor(props) {
@@ -58,8 +59,8 @@ export default class Project extends Component {
 	}
 
 	handleNameChange(itemId, e) {
-		const items = this.state.items;
-		const index = items.indexOf(items.find(i => i.id === itemId));
+		const items = this.state.items,
+			index = items.indexOf(items.find(i => i.id === itemId));
 		items[index].name = e.target.value;
 		this.setState({ items: items });
 		if (!Session.get('unsavedChanges')) {
@@ -68,8 +69,8 @@ export default class Project extends Component {
 	}
 
 	handleLinkChange(itemId, e) {
-		const items = this.state.items;
-		const index = items.indexOf(items.find(i => i.id === itemId));
+		const items = this.state.items,
+			index = items.indexOf(items.find(i => i.id === itemId));
 		items[index].link = e.target.value;
 		this.setState({ items: items });
 		if (!Session.get('unsavedChanges')) {
@@ -78,19 +79,19 @@ export default class Project extends Component {
 	}
 
 	handlePriceChange(itemId, e) {
-		const items = this.state.items;
-		const index = items.indexOf(items.find(i => i.id === itemId));
+		const items = this.state.items,
+			index = items.indexOf(items.find(i => i.id === itemId));
 		items[index].price = e.target.value;
 		this.handleGetTotal(items);
 	}
 
 	handleRemoveItem(item) {
-		let items = this.state.items.filter(i => i !== item);
+		const items = this.state.items.filter(i => i !== item);
 		this.handleGetTotal(items);
 	}
 
 	handleGetTotal(items) {
-		let total = items.reduce((a, b) => a + Number(b["price"]), 0);
+		const total = items.reduce((a, b) => a + Number(b["price"]), 0);
 		this.setState({ items: items, total: total });
 		Meteor.call( 'items.update', 
 			this.state.project._id, 
@@ -134,73 +135,78 @@ export default class Project extends Component {
 	}
 
 	render() {
-		const modalStyles = {
-			position: 'fixed',
-			height: '80%',
-    		width: '60%',
-    		top: '30%',
-    		left: '45%',
-		    zIndex: 99,
-		    backgroundColor: 'rgba(255, 255, 255,0.8)'
-		};
 		let project = this.state.project,
-			comments = this.props.comments
-				.filter(comment => this.state.project._id === comment.projectId),
 			items = this.state.items,
 			total = this.state.total;
 		return (
 			<section className="project-page">
-				<section className="project-summary">
+				<section className="project-section">
 					<h1>{ project.name }</h1>
-					<ul>
-						{ items ? items.map(item => (
-							<div 
-								key={item.id}>
-								<li>{ item.name }</li>
-								<li>{ item.price }</li>
-								<li>
-									<a href={ 'https://' + item.link }>{ item.link }</a>
-								</li>
-							</div>
-						)) : '' }
-					</ul>
-					<h2>{ total }</h2>
-					<div>
-						<input
-							type="button"
-							className="btn blue"
-							value="Edit"
-							onClick={() => this.refs.modal.show()} />
-					</div>
 					<a href="javascript:history.back()">
 						<input
 							type="button"
 							className="btn orange block back"
 							value="‹Back" />
 					</a>
-				</section>
-				<SkyLight 
-					hideOverlayClicked
-					dialogStyles={modalStyles}
-					ref="modal" >
-					<ProjectEdit 
-						project={project}
-						items={items}
-						total={total}
-						currentUser={this.props.currentUser}
-						handleNameChange={this.handleNameChange}
-						handlePriceChange={this.handlePriceChange}
-						handleLinkChange={this.handleLinkChange}
-						createNewItem={this.createNewItem} 
-						handleRemoveItem={this.handleRemoveItem}
-						handleSaveItems={this.handleSaveItems}
-						toggleMakePublic={this.toggleMakePublic} />
-				</SkyLight> 
-				<section className="comments-section">
-					<Comments 
-						projectId={this.props.projectId}
-						currentUser={this.props.currentUser} 
-						comments={comments} />
+					{ project ? 
+						( <section>
+							<h3> 
+								{ project.createdAt ? 
+									moment(project.createdAt.toISOString()).calendar() 
+								: '' } 
+							</h3>
+						  </section> )
+					: '' }
+					<span className="total">
+					    <input 
+					    	type="text"
+					    	readOnly
+					    	value={total.toFixed(2)}  />
+					</span>
+					<section 
+						ref="itemsList"
+						className="items">
+						{ items.length === 0 ? 
+							<h1 className="add-item-prompt">
+								Add an item below.
+							</h1> 
+						: '' }
+						{ items.length !== 0 ?
+							items.map((item, i) => (
+							<div
+								key={item.id} >
+								<Item
+									id={item.id}
+									name={item.name}
+									price={item.price}
+									link={item.link}
+									projectId={project._id}
+									handleNameChange={this.handleNameChange}
+									handlePriceChange={this.handlePriceChange}
+									handleLinkChange={this.handleLinkChange} />
+								<input
+									type="button"
+									className="btn red inline"
+									onClick={() => this.handleRemoveItem(item)}
+									value="Delete" />
+								<div className="item-index">
+									{ items.indexOf(item) + 1 }
+								</div>
+							</div> ))
+						: ''}
+					</section>
+					<section className="all-buttons">
+						{ this.props.currentUser ? 
+							(this.props.currentUser._id === project.owner ? 
+								<ProjectButtons 
+									owner={project.owner}
+									currentUser={this.props.currentUser}
+									createNewItem={this.createNewItem} 
+									toggleMakePublic={this.toggleMakePublic}
+									handleSaveItems={this.handleSaveItems} />
+							: '' )
+						: '' }
+					</section>
 				</section>
 			</section>
 		);
@@ -210,6 +216,5 @@ export default class Project extends Component {
 Project.propTypes = {
 	projectId: PropTypes.string.isRequired,
 	projects: PropTypes.array.isRequired,
-	comments: PropTypes.array.isRequired,
-	currentUser: PropTypes.object,
+	currentUser: PropTypes.object.isRequired,
 };

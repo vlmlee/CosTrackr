@@ -165,9 +165,6 @@ footer p {
 }
 
 .all-buttons {
-    position: fixed;
-    bottom: 80px;
-    left: 288px;
 }
 
 /***********
@@ -584,9 +581,6 @@ header {
 
 .project-section {
     flex: 1;
-    position: absolute;
-    top: 80px;
-    left: 200px;
 }
 
 /*****************
@@ -920,12 +914,22 @@ header {
     border: 1px solid #59ABE3;
 }  
 
+.settings-message p {
+    margin-top: 30px;
+}
 .settings-error {
     color: red;
-    margin-top: 30px;
 }
 
 .settings-success {
     color: green;
-    margin-top: 30px;
+}
+
+/**************
+*  NOT FOUND  *
+**************/
+
+.not-found {
+    text-align: center;
+    font-size: 50px;
 }
