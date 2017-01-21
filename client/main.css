@@ -223,7 +223,8 @@ header {
 
 .landing-page img {
     display: flex;
-    margin: 80px auto 50px;
+    margin: 80px auto;
+    height: 120px;
 }
 
 .landing-page a {
@@ -492,6 +493,15 @@ header {
     background-color: white;
     margin: 0 auto;
     border-radius: 5px;
+    transition: box-shadow 0.2s ease-in;
+    background-image: url('/images/user.png');
+    background-size: 95% 95%;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+}
+
+.profile-picture:hover {
+    box-shadow: 0 0 0 2px #eee; 
 }
 
 .profile-has-not {
@@ -594,12 +604,18 @@ header {
     margin: 20px 20px 20px 0;
     text-decoration: none;
     outline: none;
-    border: none;
+    border: 1px solid #fff;
     box-shadow: none;
+    transition: border 0.2s ease-in;
+}
+
+.star-btn:hover {
+    border: 1px solid #f1c40f;
 }
 
 .project-show-name {
     font-family: Rubik;
+    font-size: 30px;
 }
 
 .project-show-total-label {
@@ -646,6 +662,11 @@ header {
     padding: 9px 10px 9px 10px;
     border-radius: 5px;
     font-style: italic;
+    transition: border 0.2s ease-in;
+}
+
+.project-show-edit-project:hover {
+    border: 1px solid #777;
 }
 
 .project-show-description {
