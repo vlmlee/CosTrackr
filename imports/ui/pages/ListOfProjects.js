@@ -17,7 +17,7 @@ export default class ListOfProjects extends Component {
 	componentWillMount() {
 		const projectList = this.props.pageId === 'section' ? 
 			this.props.projects
-				.filter(project => project.username === this.props.username) 
+				.filter(project => project.owner === this.props.id) 
 			: this.props.projects;
 		this.setState({ projects: projectList });
 	}
@@ -31,7 +31,7 @@ export default class ListOfProjects extends Component {
 	fillEmptyRow() {
 		let projects = this.props.pageId === 'section' ? 
 			( this.state.search ? this.state.projects 
-				: this.props.projects.filter(project => project.username === this.props.username) ) 
+				: this.props.projects.filter(project => project.owner === this.props.id) ) 
 		: (this.state.search ? this.state.projects : this.props.projects);
 
 		let emptyArray = [],
@@ -53,7 +53,7 @@ export default class ListOfProjects extends Component {
 
 	handleSearch(e) {
 		const projects = this.props.pageId === 'section' ? 
-			this.props.projects.filter(project => project.username === this.props.username)
+			this.props.projects.filter(project => project.owner === this.props.id)
 				: this.props.projects;
 		if (e.target.value) {
 			const regex = e.target.value.toLowerCase(),
@@ -68,7 +68,7 @@ export default class ListOfProjects extends Component {
 	render() {
 		let projects = this.props.pageId === 'section' ? 
 			( this.state.search ? this.state.projects 
-				: this.props.projects.filter(project => project.username === this.props.username) ) 
+				: this.props.projects.filter(project => project.owner === this.props.id) ) 
 		: (this.state.search ? this.state.projects : this.props.projects);
 		return (
 			<div>

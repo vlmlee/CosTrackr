@@ -56,27 +56,27 @@ Meteor.methods({
 		Projects.update(projectId, 
 			{ $set: { private: privacy } });
 	},
-	'projects.star' (projectId, username) {
+	'projects.star' (projectId, id) {
 		check(projectId, String);
-		check(username, String);
+		check(id, String);
 
 		const project = Projects.findOne(projectId);
 
-		if (project.stars.indexOf(username) === -1) {
+		if (project.stars.indexOf(id) === -1) {
 			Projects.update(projectId, 
-				{ $push: { stars: username } }
+				{ $push: { stars: id } }
 			);
 		}
 	},
-	'projects.unstar' (projectId, username) {
+	'projects.unstar' (projectId, id) {
 		check(projectId, String);
-		check(username, String);
+		check(id, String);
 
 		const project = Projects.findOne(projectId);
 
-		if (project.stars.indexOf(username) !== -1) {
+		if (project.stars.indexOf(id) !== -1) {
 			Projects.update(projectId, 
-				{ $pull: { stars: username } }
+				{ $pull: { stars: id } }
 			);
 		}
 	},

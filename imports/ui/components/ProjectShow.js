@@ -9,11 +9,11 @@ export default class ProjectShow extends Component {
 	}
 
 	handleStarProject() {
-		Meteor.call('projects.star', this.props.id, this.props.currentUser.username);
+		Meteor.call('projects.star', this.props.id, this.props.currentUser._id);
 	}
 
 	handleUnstarProject() {
-		Meteor.call('projects.unstar', this.props.id, this.props.currentUser.username);
+		Meteor.call('projects.unstar', this.props.id, this.props.currentUser._id);
 	}
 
 	render() {
@@ -22,13 +22,13 @@ export default class ProjectShow extends Component {
 				<h1 className="project-show-name">{this.props.project.name}</h1>
 				<span className="project-show-total">{this.props.project.total.toFixed(2)}</span>
 				<span className="project-show-total-label">Total:</span>
-				<p><span className="project-show-date">{this.props.date} </span><span className="project-show-user">&nbsp;&nbsp;By: <a href={'/profiles/' + this.props.project.username}>
+				<p><span className="project-show-date">{this.props.date} </span><span className="project-show-user">&nbsp;&nbsp;By: <a href={'/profiles/' + this.props.project.owner}>
 					{ this.props.project.username }
 					</a>
 					</span>
 				</p>
 				{ this.props.project.stars
-					.indexOf(this.props.currentUser.username) === -1 ?
+					.indexOf(this.props.currentUser._id) === -1 ?
 					<input type="button"
 						className="star-btn"
 						onClick={this.handleStarProject}
@@ -42,14 +42,21 @@ export default class ProjectShow extends Component {
 						href={"/project/"+this.props.id}>Edit project
 					</a>
 				: '' }
-				<p className="project-show-description">{this.props.project.description}</p>
+				{ this.props.project.description !== '' ? 
+					<p className="project-show-description">{this.props.project.description}</p>
+				: ( this.props.currentUser.username === this.props.project.username ? 
+					<p className="project-show-description-empty">Add a short description about your project.</p> 
+					: <p className="project-show-description-empty">
+						This project's owner hasn't added a description yet.
+					</p> )
+				}
 				<section className="project-show-contents">
 					<section className="project-show-items"> 
 						{ this.props.project.items ? (
 							<div>
 								<section className="project-show-labels">
-									<span className="project-show-list-item"> Item </span>
-									<span className="project-show-price"> Price </span>
+									<span className="project-show-list-item"> &nbsp; Item </span>
+									<span className="project-show-price"> Price &nbsp; </span>
 								</section>
 								{this.props.project.items.map((item, index) => (
 									<section key={item._id}

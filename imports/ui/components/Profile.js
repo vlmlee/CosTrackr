@@ -28,7 +28,7 @@ export default class Profile extends Component {
 
 	componentWillMount() {
 		const user = this.props.users
-			.filter(user => user.username === this.props.username);
+			.filter(user => user._id === this.props.id);
 		this.setState({ 
 			user: user[0],
 			joined: user[0].createdAt,
@@ -38,7 +38,7 @@ export default class Profile extends Component {
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		if (this.state.user.username !== this.props.currentUser.username) {
+		if (this.state.user._id !== this.props.currentUser._id) {
 			return true;
 		} else if (this.state.user !== nextState.user || 
 			this.state.editBio !== nextState.editBio || 
@@ -53,7 +53,7 @@ export default class Profile extends Component {
 
 	componentWillUpdate(nextProps, nextState) {
 		const user = this.props.users
-			.filter(user => user.username === this.props.currentUser.username);
+			.filter(user => user._id === this.props.currentUser._id);
 		if (user[0] !== nextState.user) {
 			this.setState({
 				user: user[0],
@@ -135,7 +135,7 @@ export default class Profile extends Component {
 					Joined: {moment(this.state.joined.toISOString())
 						.format('MMM Do, YYYY')} 
 				</p>
-				{ this.props.currentUser.username === this.state.user.username ?
+				{ this.props.currentUser._id === this.state.user._id ?
 					<CreateNewProjectForm 
 						currentUser={this.props.currentUser} />
 				: '' }
@@ -155,7 +155,7 @@ export default class Profile extends Component {
 					</div>
 				: <div className="profile-bio" > 
 					{ this.state.bio === '' ? 
-						(this.props.currentUser.username === this.state.user.username ? 
+						(this.props.currentUser._id === this.state.user._id ? 
 							<span className="profile-bio">
 								Tell us about yourself.&nbsp;
 							</span> 
@@ -167,7 +167,7 @@ export default class Profile extends Component {
 							<span>{ this.state.bio }</span>
 						</div> ) }
 					<span className="edit-bio">
-						{ this.props.currentUser.username === this.state.user.username ?
+						{ this.props.currentUser._id === this.state.user._id ?
 							<a href=""
 								onClick={this.handleEditBio} >
 							Edit
@@ -191,7 +191,7 @@ export default class Profile extends Component {
 					</div>
 				: <div className="profile-website">
 					{ this.state.website === '' ? 
-						( this.props.currentUser.username === this.state.user.username ? 
+						( this.props.currentUser._id === this.state.user._id ? 
 							<span className="profile-website">
 								Add your personal website here.&nbsp;
 							</span> 
@@ -205,7 +205,7 @@ export default class Profile extends Component {
 							</a>
 						</div> ) }
 					<span className="edit-website">
-						{ this.props.currentUser.username === this.state.user.username ?
+						{ this.props.currentUser._id === this.state.user._id ?
 							<a href=""
 								onClick={this.handleEditWebsite} >
 								Edit

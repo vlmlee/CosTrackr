@@ -5,6 +5,8 @@
 *   Note: the more specific the CSS, the lower down it is.
 */
 
+@import url('https://fonts.googleapis.com/css?family=Rubik:500');
+
 /*********
 *  MAIN  *
 *********/
@@ -597,7 +599,7 @@ header {
 }
 
 .project-show-name {
-
+    font-family: Rubik;
 }
 
 .project-show-total-label {
@@ -649,6 +651,13 @@ header {
 .project-show-description {
     height: 60px;
     overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.project-show-description-empty {
+    color: #7f7f7f;
+    font-style: italic;
+    height: 60px;
 }
 
 .project-show-contents {
