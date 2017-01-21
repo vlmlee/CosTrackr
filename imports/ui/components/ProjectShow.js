@@ -19,13 +19,14 @@ export default class ProjectShow extends Component {
 	render() {
 		return (
 			<section>
-				<h1>{this.props.project.name}</h1>
-				<p>{this.props.date}</p>
-				<span> By: <a href={'/profiles/' + this.props.project.username}>
+				<h1 className="project-show-name">{this.props.project.name}</h1>
+				<span className="project-show-total">{this.props.project.total.toFixed(2)}</span>
+				<span className="project-show-total-label">Total:</span>
+				<p><span className="project-show-date">{this.props.date} </span><span className="project-show-user">&nbsp;&nbsp;By: <a href={'/profiles/' + this.props.project.username}>
 					{ this.props.project.username }
 					</a>
-				</span>
-				<p>{this.props.project.description}</p>
+					</span>
+				</p>
 				{ this.props.project.stars
 					.indexOf(this.props.currentUser.username) === -1 ?
 					<input type="button"
@@ -37,23 +38,39 @@ export default class ProjectShow extends Component {
 						onClick={this.handleUnstarProject}
 						value="unstar" /> }
 				{ this.props.currentUser.username === this.props.project.username ? 
-					<a href={"/project/"+this.props.id}>Edit project</a>
+					<a className="project-show-edit-project" 
+						href={"/project/"+this.props.id}>Edit project
+					</a>
 				: '' }
-				{ this.props.project.items ? (
-					<div>
-						{this.props.project.items.map(item => (
-							<ul key={item._id}>
-								<li> {item.name} </li>
-								<li> {item.price} </li>
-								<li> {item.link} </li>
-							</ul>
-						))} 
-					</div>)
-				: <h2>No current items.</h2> }
-				<Comments 
-					projectId={this.props.id}
-					comments={this.props.comments}
-					currentUser={this.props.currentUser} />
+				<p className="project-show-description">{this.props.project.description}</p>
+				<section className="project-show-contents">
+					<section className="project-show-items"> 
+						{ this.props.project.items ? (
+							<div>
+								<section className="project-show-labels">
+									<span className="project-show-list-item"> Item </span>
+									<span className="project-show-price"> Price </span>
+								</section>
+								{this.props.project.items.map((item, index) => (
+									<section key={item._id}
+										className="project-show-item">
+										{ item.name !== '' ? 
+											<span className="project-show-item-name">{index + 1}) {item.name} </span>
+										: '' }
+										{ item.price !== '0' ?
+											<span className="project-show-item-price"> {item.price} </span>
+										: '' }
+										<p className="project-show-item-link"> {item.link} </p>
+									</section>
+								))} 
+							</div>)
+						: <h2>No current items.</h2> }
+					</section>
+					<Comments 
+						projectId={this.props.id}
+						comments={this.props.comments}
+						currentUser={this.props.currentUser} />
+				</section>
 			</section>
 		);
 	}

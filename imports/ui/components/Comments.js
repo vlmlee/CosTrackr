@@ -35,57 +35,57 @@ export default class Comments extends Component {
 	}
 
 	componentWillUpdate() {
-		ReactDOM.findDOMNode(this.refs.comments).scrollTop = ReactDOM.findDOMNode(this.refs.comments).scrollHeight;
+		if (ReactDOM.findDOMNode(this.refs.comments).scrollTop !== ReactDOM.findDOMNode(this.refs.comments).scrollHeight) {
+			ReactDOM.findDOMNode(this.refs.comments).scrollTop = ReactDOM.findDOMNode(this.refs.comments).scrollHeight;
+		}
 	}
 
 	render() {
 		let comments = this.props.comments
 				.filter(comment => this.props.projectId === comment.projectId)
 		return (
-			<div>
-				<section  
-					ref="comments"
-					className="comments">
-					{ (comments != '') ? (
-						<div>
-							{ comments.map(comment => (
-								<section 
-									key={comment._id} >
-									<Comment 
-										id={comment._id}
-										username={this.props.currentUser.username}
-										text={comment.text}
-										createdAt={comment.createdAt.toString()}
-										projectId={comment.projectId} />
-										{ this.props.currentUser ? 
-											( this.props.currentUser._id === comment.owner ? 
-												<input
-													type="button"
-													onClick={() => this.handleDeleteComment(comment._id)}
-													value="Delete" />
-											: '' ) 
-										: '' }
-								</section>
-							))}
-						</div>) 
-					: <div className="no-comments"> No comments. </div> }
+			<section  
+				ref="comments"
+				className="comments">
+				{ (comments != '') ? (
+					<div>
+						{ comments.map(comment => (
+							<section 
+								key={comment._id} >
+								<Comment 
+									id={comment._id}
+									username={comment.username}
+									text={comment.text}
+									createdAt={comment.createdAt.toString()}
+									projectId={comment.projectId} />
+									{ this.props.currentUser ? 
+										( this.props.currentUser._id === comment.owner ? 
+											<input
+												type="button"
+												className="comment-delete-btn"
+												onClick={() => this.handleDeleteComment(comment._id)}
+												value="Delete" />
+										: '' ) 
+									: '' }
+							</section>
+						))}
+					</div>) 
+				: <div className="no-comments"> No comments. </div> }
+				<section
+					className="comment-form" >
+					<textarea
+						ref="comment"
+						className="comment-textbox"
+						value={this.state.value}
+						onChange={this.handleChange}
+						placeholder="Scroll up for older comments" />
+					<input 
+						type="button" 
+						className="comment-submit-btn"
+						onClick={this.handleSubmitComment}
+						value="Submit" />
 				</section>
-				<section>
-					<form 
-						className="comment-form"
-						onSubmit={this.handleSubmitComment}>
-						<textarea
-							ref="comment"
-							className="comment-textbox"
-							value={this.state.value}
-							onChange={this.handleChange} />
-						<input 
-							type="submit" 
-							className="submit"
-							value="Submit" />
-					</form>
-				</section>
-			</div>
+			</section>
 		);
 	}
 }

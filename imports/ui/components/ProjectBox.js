@@ -14,16 +14,16 @@ export default class ProjectBox extends Component {
 			height: 'auto',
 			minHeight: '80%',
     		width: '60%',
-    		top: '30%',
+    		top: '29%',
     		left: '43.5%',
 		    zIndex: 99,
 		    borderRadius: '5px',
-		    padding: '30px',
-		    backgroundColor: 'rgba(244, 244, 244, 1)'
+		    padding: '30px 30px 30px 50px',
+		    backgroundColor: 'rgba(250, 250, 250, 1)'
 		},
 		date = this.props.project.createdAt ? 
 			moment(this.props.project.createdAt.toISOString())
-			.format('MMM Do YYYY') : '';
+			.format('MMM D YYYY') : '';
 		return (
 			<section className="project-box">
 				<section className="project-box-date">

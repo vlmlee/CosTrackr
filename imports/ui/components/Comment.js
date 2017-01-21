@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
+import moment from 'moment';
 
 const Comment = ({ username, createdAt, text}) => (
-	<ul>
-		<li> {username} </li>
-		<li> {createdAt} </li>
-		<li> {text} </li> 
-	</ul>
+	<section className="comment">
+		<p className="comment-username"> {username} </p>
+		<p className="comment-text"> {text} </p> 
+		<p className="comment-date"> {moment(createdAt).fromNow()} </p>
+	</section>
 );
 
 Comment.propTypes = {
