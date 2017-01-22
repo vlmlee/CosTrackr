@@ -192,18 +192,18 @@ header {
     margin: 0 auto;
 }
 
-.user-link a {
+.header-link a {
     color: #3f3f3f;
 }
 
-.user-link {
+.header-link {
     display: inline-block;
     padding: 21px;
     border-bottom: 2px solid #eee;
     transition: border 0.2s ease-in, background-color 0.2s ease-in, color 0.2s ease-in;
 }
 
-.user-link:hover {
+.header-link:hover {
     background-color: #fff;
     border-bottom: 2px solid #2fed71;
 }
@@ -371,17 +371,17 @@ header {
     font-size: 12px;
 }
 
-.view {
+.project-box-view {
     float: left;
     left: 20px;
 }
 
-.view-center {
+.project-box-view-center {
     float: left;
     left: 77px;
 }
 
-.remove {
+.project-box-remove {
     float: right;
     right: 20px;
 }
@@ -829,7 +829,7 @@ header {
 *  CREATE PROJECT FORM  *
 ************************/
 
-.input-create-project {
+.create-project-input {
     height: 40px;
     width: 285px;
     color: #555;
@@ -843,12 +843,12 @@ header {
     cursor: auto;
 }
 
-.input-create-project:focus {
+.create-project-input:focus {
     outline: none;
     border: 1px solid #CBCBCB;
 }
 
-.button-create-project {
+.create-project-button {
     margin: 15px auto;
     padding: 12px 20px;
     background-color: #59ABE3;
@@ -857,7 +857,7 @@ header {
     transition: border 0.2s ease-in;
 }
 
-.button-create-project:hover {
+.create-project-button:hover {
     border: 1px solid #59ABE3;
 }
 

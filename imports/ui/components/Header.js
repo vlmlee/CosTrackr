@@ -8,13 +8,13 @@ export default class Header extends Component {
 			<header>
 				{ this.props.currentUser ? 
 					<div className="header-container">
-						 <Blaze 
+						<Blaze 
 						 	className="login-buttons-container" 
 						 	template="loginButtons" 
 						 	align="right" />
-						<div className="user-link"> <a href="/profile">Profile</a></div>
-						<div className="user-link last-link"> <a href="/projects">Projects</a></div>
-						<div className="user-link"> <a href="/settings">Settings</a></div>
+						<div className="header-link"> <a href="/profile">Profile</a></div>
+						<div className="header-link"> <a href="/projects">Projects</a></div>
+						<div className="header-link"> <a href="/settings">Settings</a></div>
 					</div>
 				: '' }
 			</header>

@@ -5,7 +5,6 @@ import { assert } from 'meteor/practicalmeteor:chai';
 if (Meteor.isServer) {
 	describe('', () => {
 		describe('', () => {
-
 		});
 	});
 }

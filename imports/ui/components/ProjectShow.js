@@ -22,13 +22,20 @@ export default class ProjectShow extends Component {
 				<h1 className="project-show-name">{this.props.project.name}</h1>
 				<span className="project-show-total">{this.props.project.total.toFixed(2)}</span>
 				<span className="project-show-total-label">Total:</span>
-				<p><span className="project-show-date">{this.props.date} </span><span className="project-show-user">&nbsp;&nbsp;By: <a href={'/profiles/' + this.props.project.owner}>
-					{ this.props.project.username }
-					</a>
+
+				<p>
+					<span className="project-show-date">
+						{this.props.date} 
+					</span>
+					<span className="project-show-user">
+						&nbsp;&nbsp;By: 
+						<a href={'/profiles/' + this.props.project.owner}>
+							{ this.props.project.username }
+						</a>
 					</span>
 				</p>
-				{ this.props.project.stars
-					.indexOf(this.props.currentUser._id) === -1 ?
+
+				{ this.props.project.stars.indexOf(this.props.currentUser._id) === -1 ?
 					<input type="button"
 						className="star-btn"
 						onClick={this.handleStarProject}
@@ -37,19 +44,26 @@ export default class ProjectShow extends Component {
 						className="star-btn"
 						onClick={this.handleUnstarProject}
 						value="unstar" /> }
+
 				{ this.props.currentUser.username === this.props.project.username ? 
 					<a className="project-show-edit-project" 
-						href={"/project/"+this.props.id}>Edit project
+						href={"/project/"+this.props.id}>
+						Edit project
 					</a>
 				: '' }
+
 				{ this.props.project.description !== '' ? 
-					<p className="project-show-description">{this.props.project.description}</p>
+					<p className="project-show-description">
+						{this.props.project.description}
+					</p>
 				: ( this.props.currentUser.username === this.props.project.username ? 
-					<p className="project-show-description-empty">Add a short description about your project.</p> 
+					<p className="project-show-description-empty">
+						Add a short description about your project.
+					</p> 
 					: <p className="project-show-description-empty">
 						This project's owner hasn't added a description yet.
-					</p> )
-				}
+					</p> ) }
+
 				<section className="project-show-contents">
 					<section className="project-show-items"> 
 						<div>
@@ -58,20 +72,31 @@ export default class ProjectShow extends Component {
 								<span className="project-show-price"> Price &nbsp; </span>
 							</section>
 						</div>
-						{ this.props.project.items ? (
-							this.props.project.items.map((item, index) => (
+
+						{ this.props.project.items ? 
+							( this.props.project.items.map((item, index) => (
 								<section key={index}
 									className="project-show-item">
+
 									{ item.name !== '' ? 
-										<span className="project-show-item-name">{index + 1}) {item.name} </span>
+										<span className="project-show-item-name">
+											{index + 1}) {item.name} 
+										</span>
 									: '' }
+
 									{ item.price !== '0' ?
-										<span className="project-show-item-price"> {item.price} </span>
+										<span className="project-show-item-price"> 
+											{item.price} 
+										</span>
 									: '' }
-									<p className="project-show-item-link"> {item.link} </p>
+
+									<p className="project-show-item-link"> 
+										{item.link} 
+									</p>
 								</section>
 							)) )
-						: <h2>No current items.</h2> }
+						: <h2> No current items. </h2> }
+
 					</section>
 					<Comments 
 						projectId={this.props.id}
@@ -86,4 +111,5 @@ export default class ProjectShow extends Component {
 ProjectShow.propTypes = {
 	project: PropTypes.object.isRequired,
 	comments: PropTypes.array.isRequired,
+	currentUser: PropTypes.object.isRequired,
 };

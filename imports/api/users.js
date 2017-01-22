@@ -1,8 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Accounts } from 'meteor/accounts-base';
-import { FlowRouter } from 'meteor/kadira:flow-router';
-
 
 if (Meteor.isServer) {
 	Meteor.publish('directory', function publishUsers() {
@@ -33,11 +31,6 @@ Meteor.methods({
 				username: username
 			}
 		});
-	},
-	'users.changePassword' (id, password) {
-		check(id, String);
-		check(password, String);
-		Accounts.setPassword(id, password);
 	},
 	'users.changeEmail' (id, email) {
 		check(id, String);

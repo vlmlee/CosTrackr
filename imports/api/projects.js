@@ -19,7 +19,7 @@ Meteor.methods({
 	'projects.create' (name, userId) {
 		check(name, String);
 		if (!this.userId) {
-			throw new Meteor.Error('error');
+			throw new Meteor.Error('You must be logged in to create a project.');
 		}
 		const project = Projects.findOne({name: name, owner: userId});
 		if (!project) {
@@ -35,14 +35,14 @@ Meteor.methods({
 				stars: [],
 			});
 		} else {
-			throw new Meteor.Error('error');
+			throw new Meteor.Error('Something went wrong. Was not able to create a project.');
 		}
 	},
 	'projects.remove' (projectId) {
 		check(projectId, String);
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
-			throw new Meteor.Error('error');
+			throw new Meteor.Error('You must be the owner of this project to delete it.');
 		}
 		Projects.remove(projectId);
 	},
@@ -51,7 +51,7 @@ Meteor.methods({
 		check(privacy, Boolean);
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
-			throw new Meteor.Error('error');
+			throw new Meteor.Error('You must be the owner of this project to change the privacy.');
 		}
 		Projects.update(projectId, 
 			{ $set: { private: privacy } });
@@ -66,6 +66,8 @@ Meteor.methods({
 			Projects.update(projectId, 
 				{ $push: { stars: id } }
 			);
+		} else {
+			throw new Meteor.Error('You have already starred this project!')
 		}
 	},
 	'projects.unstar' (projectId, id) {
@@ -78,6 +80,8 @@ Meteor.methods({
 			Projects.update(projectId, 
 				{ $pull: { stars: id } }
 			);
+		} else {
+			throw new Meteor.Error("You have to star this project first!")
 		}
 	},
 	'items.update' (projectId, items, total) {
@@ -85,7 +89,7 @@ Meteor.methods({
 		check(total, Number);
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
-			throw new Meteor.Error('error');
+			throw new Meteor.Error('You must be the owner of this project to add items to it.');
 		}
 		Projects.update(projectId, 
 			{ $set: { items: items, total: total } });
@@ -95,19 +99,9 @@ Meteor.methods({
 		check(itemId, String);
 		const project = Projects.findOne(projectId);
 		if (project.owner !== this.userId) {
-			throw new Meteor.Error('error');
+			throw new Meteor.Error('You must be the owner of this project to remove items from it.');
 		}
 		Projects.update(projectId, 
 			{ $pull: { items: { id: itemId } } });
-	},
-	'items.sum' (projectId, total) {
-		check(projectId, String);
-		check(total, Number);
-		const project = Projects.findOne(projectId);
-		if (project.owner !== this.userId) {
-			throw new Meteor.Error('error');
-		}
-		Projects.update(projectId, 
-			{ $set: { total: total } });
 	},
 });

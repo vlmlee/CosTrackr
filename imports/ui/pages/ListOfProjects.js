@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import ProjectBox from '../components/ProjectBox.js';
-import CreateNewProjectForm from '../components/CreateNewProjectForm.js';
 import SearchBar from '../components/SearchBar.js';
 
 export default class ListOfProjects extends Component {
@@ -8,7 +7,7 @@ export default class ListOfProjects extends Component {
 		super(props);
 		this.state = {
 			search: false,
-			projects: []
+			projects: [],
 		};
 		this.handleSearch = this.handleSearch.bind(this);
 		this.handleRemoveProject = this.handleRemoveProject.bind(this);
@@ -16,8 +15,7 @@ export default class ListOfProjects extends Component {
 
 	componentWillMount() {
 		const projectList = this.props.pageId === 'section' ? 
-			this.props.projects
-				.filter(project => project.owner === this.props.id) 
+			this.props.projects.filter(project => project.owner === this.props.id) 
 			: this.props.projects;
 		this.setState({ projects: projectList });
 	}
@@ -29,7 +27,7 @@ export default class ListOfProjects extends Component {
 	}
 
 	fillEmptyRow() {
-		let projects = this.props.pageId === 'section' ? 
+		const projects = this.props.pageId === 'section' ? 
 			( this.state.search ? this.state.projects 
 				: this.props.projects.filter(project => project.owner === this.props.id) ) 
 		: (this.state.search ? this.state.projects : this.props.projects);
@@ -66,12 +64,12 @@ export default class ListOfProjects extends Component {
 	}
 
 	render() {
-		let projects = this.props.pageId === 'section' ? 
+		const projects = this.props.pageId === 'section' ? 
 			( this.state.search ? this.state.projects 
 				: this.props.projects.filter(project => project.owner === this.props.id) ) 
 		: (this.state.search ? this.state.projects : this.props.projects);
 		return (
-			<div>
+			<section>
 				<SearchBar 
 					handleSearch={this.handleSearch} />
 				{ this.state.search ?
@@ -100,7 +98,7 @@ export default class ListOfProjects extends Component {
 						{this.fillEmptyRow()}
 					</section> 
 				}
-			</div>
+			</section>
 		);
 	}
 }

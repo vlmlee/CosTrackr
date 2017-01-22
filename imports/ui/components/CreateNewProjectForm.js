@@ -12,7 +12,7 @@ export default class CreateNewProjectForm extends Component {
 	}
 
 	handleNameChange(e) {
-		let name = e.target.value.trim();
+		const name = e.target.value.trim();
 		this.setState({ name: name });
 	}
 
@@ -20,29 +20,32 @@ export default class CreateNewProjectForm extends Component {
 		e.preventDefault();
 		if (this.state.name !== '') {
 			Meteor.call('projects.create', this.state.name, this.props.currentUser._id);
-			ReactDOM.findDOMNode(this.refs.createProject).value = '';
 			this.setState({ name: '' });
 		}
 	}
 
 	render() {
 		return (
-			<div>
+			<section>
 				{ this.props.currentUser ? 
-					<form
-						onSubmit={this.createNewProject}>
+					<form onSubmit={this.createNewProject}>
 						<input
 							ref="createProject"
-							className="input-create-project"
+							className="create-project-input"
 							onChange={this.handleNameChange}
-							placeholder="Enter the title of your project" />
+							placeholder="Enter the title of your project"
+							value={this.state.name} />
 						<input 
 							type="submit" 
-							className="button-create-project btn"
+							className="create-project-button btn"
 							value="Create project" />
 					</form>
 				: '' }
-			</div>
+			</section>
 		);
 	}
+}
+
+CreateNewProjectForm.propTypes = {
+	currentUser: PropTypes.object.isRequired,
 }

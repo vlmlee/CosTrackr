@@ -1,29 +1,29 @@
 import React, { PropTypes } from 'react';
 
 const ProjectButtons = ({ owner, currentUser, createNewItem, toggleMakePublic, handleSaveItems }) => (
-	<div>
+	<section>
 		{ currentUser ? 
 			( currentUser._id === owner ? 
 				<section className="project-buttons">
 					<input
-						type="submit"
-						className="btn blue inline"
+						type="button"
+						className="btn"
 						onClick={() => handleSaveItems()}
 						value="Save" />
 					<input
 						type="button" 
-						className="btn green"
-						onClick={ () => createNewItem() }
+						className="btn"
+						onClick={() => createNewItem()}
 						value="Add new input" />
 					<input
 						type="button"
-						className="btn purple"
-						onClick={ () => toggleMakePublic() }
+						className="btn"
+						onClick={() => toggleMakePublic()}
 						value="Make Public" />
 				</section> 
 			: '' )
 		: '' }
-	</div>
+	</section>
 );
 
 ProjectButtons.propTypes = {

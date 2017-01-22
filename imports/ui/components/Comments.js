@@ -44,20 +44,19 @@ export default class Comments extends Component {
 		let comments = this.props.comments
 				.filter(comment => this.props.projectId === comment.projectId)
 		return (
-			<section  
-				ref="comments"
+			<section ref="comments"
 				className="comments">
+
 				{ (comments != '') ? (
-					<div>
+					<section>
 						{ comments.map(comment => (
 							<section 
 								key={comment._id} >
 								<Comment 
-									id={comment._id}
 									username={comment.username}
-									text={comment.text}
 									createdAt={comment.createdAt}
-									projectId={comment.projectId} />
+									text={comment.text} />
+
 									{ this.props.currentUser ? 
 										( this.props.currentUser._id === comment.owner ? 
 											<input
@@ -67,10 +66,12 @@ export default class Comments extends Component {
 												value="Delete" />
 										: '' ) 
 									: '' }
+
 							</section>
-						))}
-					</div>) 
-				: <div className="no-comments"> No comments. </div> }
+						)) }
+					</section> ) 
+				: <section className="no-comments"> No comments. </section> }
+
 				<section
 					className="comment-form" >
 					<textarea
@@ -93,4 +94,5 @@ export default class Comments extends Component {
 Comments.propTypes = {
 	projectId: PropTypes.string.isRequired,
 	comments: PropTypes.array.isRequired,
+	currentUser: PropTypes.object.isRequired,
 }

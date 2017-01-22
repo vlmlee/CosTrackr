@@ -38,9 +38,9 @@ export default class Profile extends Component {
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		if (this.state.user._id !== this.props.currentUser._id) {
-			return true;
-		} else if (this.state.user !== nextState.user || 
+		if (this.props.id === this.props.currentUser._id) {
+			return false;
+		} else if (this.props.id !== this.props.currentUser._id ||
 			this.state.editBio !== nextState.editBio || 
 			this.state.editWebsite !== nextState.editWebsite ||
 			this.state.bio !== nextState.bio || 
@@ -54,7 +54,7 @@ export default class Profile extends Component {
 	componentWillUpdate(nextProps, nextState) {
 		const user = this.props.users
 			.filter(user => user._id === this.props.currentUser._id);
-		if (user[0] !== nextState.user) {
+		if (user[0]._id !== nextState.user._id) {
 			this.setState({
 				user: user[0],
 				joined: user[0].createdAt,

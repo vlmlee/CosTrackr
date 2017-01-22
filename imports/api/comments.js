@@ -15,7 +15,7 @@ Meteor.methods({
 		check(text, String);
 		check(projectId, String);
 		if (!this.userId) {
-			throw new Meteor.Error('error');
+			throw new Meteor.Error('You must be logged in to write a comment.');
 		}
 		Comments.insert({
 			text: text,
@@ -26,16 +26,19 @@ Meteor.methods({
 		});
 	},
 	'comments.remove' (commentId) {
+		check(commentId, String);
 		const comment = Comments.findOne(commentId);
 		if (comment.owner !== this.userId) {
-			throw new Meteor.Error('error');
+			throw new Meteor.Error('You must be logged in to delete a comment.');
 		}
 		Comments.remove(commentId);
 	},
 	'comments.update' (commentId, text) {
+		check(commentId, String);
+		check(text, String);
 		const comment = Comments.findOne(commentId);
 		if (comment.owner !== this.userId) {
-			throw new Meteor.Error('error');
+			throw new Meteor.Error('You must be logged in to edit a comment.');
 		}
 		Comments.update(commentId, 
 			{ $set: { text: text } });

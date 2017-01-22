@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ProjectShow from './ProjectShow.js';
-import moment from 'moment';
 import SkyLight from 'react-skylight';
+import moment from 'moment';
 
 export default class ProjectBox extends Component {
 	constructor(props) {
@@ -23,7 +23,7 @@ export default class ProjectBox extends Component {
 		},
 		date = this.props.project.createdAt ? 
 			moment(this.props.project.createdAt.toISOString())
-			.format('MMM D YYYY') : '';
+				.format('MMM D YYYY') : '';
 		return (
 			<section className="project-box">
 				<section className="project-box-date">
@@ -43,9 +43,11 @@ export default class ProjectBox extends Component {
 				<p className="project-box-owner">by <a href={'/profiles/' + this.props.project.owner}>
 					{this.props.project.username}</a>
 				</p>
+
 				{ this.props.currentUser ?
-					( this.props.currentUser._id === this.props.project.owner ? (<div>
-							<a className="project-box-link view" 
+					( this.props.currentUser._id === this.props.project.owner ? 
+						( <div>
+							<a className="project-box-link project-box-view" 
 								onClick={() => this.refs.modal.show()}
 								href="" >
 								View
@@ -61,7 +63,7 @@ export default class ProjectBox extends Component {
 									comments={this.props.comments}
 									currentUser={this.props.currentUser} />
 							</SkyLight>
-							<a className="project-box-link remove"
+							<a className="project-box-link project-box-remove"
 								href=""
 								onClick={() => 
 									this.props.handleRemoveProject(this.props.id)} >
@@ -69,7 +71,7 @@ export default class ProjectBox extends Component {
 							</a>
 						</div> )
 						: <div>
-							<a className="project-box-link view-center" 
+							<a className="project-box-link project-box-view-center" 
 								onClick={() => this.refs.modal.show()}
 								href="" >
 								View
@@ -86,16 +88,18 @@ export default class ProjectBox extends Component {
 									comments={this.props.comments}
 									currentUser={this.props.currentUser} />
 							</SkyLight>
-						</div> )
+						</div> 
+					)
 				: '' }
+				
 			</section>
 		);
 	}
 }
 
 ProjectBox.propTypes = {
-	id: PropTypes.string,
+	id: PropTypes.string.isRequired,
 	project: PropTypes.object.isRequired,
 	comments: PropTypes.array.isRequired,
-	currentUser: PropTypes.object,
+	currentUser: PropTypes.object.isRequired,
 };
