@@ -9,13 +9,12 @@ import Spinner from 'react-spin';
 
 class App extends Component {
 	render() {
+		// Makes sure all props are loaded before rendering App.
 		if (this.props.loading) {
 			return (
 				<main className="app">
-					<Header 
-						currentUser={this.props.currentUser} />
-						<section 
-							className="container">
+					<Header currentUser={this.props.currentUser} />
+						<section className="container">
 							<section className="main-content">
 								{this.props.main(this.props)} 
 							</section>
@@ -29,6 +28,7 @@ class App extends Component {
 				</main>
 			);
 		} else {
+			// If props are still loading, we show a spinner.
 			const opts = {
 				lines: 20,
 				length: 2,
@@ -50,6 +50,8 @@ App.propTypes = {
 	currentUser: PropTypes.object,
 };
 
+// Creates a wrapper that makes sure data from our mongo 
+// database is passed as props to our App component.
 export default AppContainer = createContainer(props => {
 	const subProjects = Meteor.subscribe('projects'),
 		subComments = Meteor.subscribe('comments'),

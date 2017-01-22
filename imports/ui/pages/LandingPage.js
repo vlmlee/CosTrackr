@@ -24,18 +24,21 @@ export default class LandingPage extends Component {
 		this.handleCreateUser = this.handleCreateUser.bind(this);
 	}
 
+	// Handles login after pressing enter.
 	keyPressEnterLogin(e) {
 		if (e.key === 'Enter') {
 			this.handleLogin();
 		}
  	}
 
+	// Handles creating account after pressing enter.
  	keyPressEnterCreateUser(e) {
  		if (e.key === 'Enter') {
 			this.handleCreateUser();
 		}
  	}
 
+ 	// Makes sure logo doesn't display a broken image.
  	handleDefaultSrc(e) {
  		e.target.src = '/images/logo.png';
  	}
@@ -63,10 +66,13 @@ export default class LandingPage extends Component {
 		this.setState({ confirmPassword: password });
 	}
 
+	// Changes login form to account creation form.
 	handleCreateForm() {
 		this.setState({ loginForm: !this.state.loginForm });
 	}
 
+	// Accounts seems to only work on the client, hence we cannot
+	// create a server side meteor call for account creation.
 	handleCreateUser() {
 		if (this.state.password === this.state.confirmPassword) {
 			Accounts.createUser({ 
@@ -92,9 +98,15 @@ export default class LandingPage extends Component {
 				className="landing-page">
 				<img onError={this.handleDefaultSrc} src="images/logo.png" alt="logo" />
 				<h1>Track your costs.</h1>
+
+				{/********************************************************
+					Conditional to display the login page or the account
+					creation page when 'loginForm' is toggled. If true, 
+					shows the login page, else shows the account creation
+					page.
+				*********************************************************/}
 				{ this.state.loginForm ? 
-					<section
-						className="login-buttons">
+					<section className="login-buttons">
 						<input
 							className="login-btn input-btn"
 							type="text"
@@ -117,37 +129,37 @@ export default class LandingPage extends Component {
 							Create an Account 
 						</a>
 					</section>
-				: 	<section
-						className="login-buttons">
-						<input
-							className="login-btn input-btn"
-							type="text"
-							onChange={this.handleChangeUsername}
-							placeholder="Choose a Username"
-							value={this.state.username} />
-						<input
-							className="login-btn input-btn"
-							type="password"
-							onChange={this.handleChangePassword}
-							placeholder="New Password"
-							value={this.state.password} />
-						<input
-							className="login-btn input-btn"
-							type="password"
-							onChange={this.handleChangeConfirmPassword}
-							onKeyPress={this.keyPressEnterCreateUser}
-							placeholder="Confirm Password"
-							value={this.state.confirmPassword} />
-						<input
-							className="login-btn submit-btn"
-							type="submit"
-							onClick={this.handleCreateUser}
-							value="Create Account" />
-						<a href="/" onClick={this.handleCreateForm} > 
-							Sign In
-						</a>
-					</section>
-				}
+				: <section className="login-buttons">
+					<input
+						className="login-btn input-btn"
+						type="text"
+						onChange={this.handleChangeUsername}
+						placeholder="Choose a Username"
+						value={this.state.username} />
+					<input
+						className="login-btn input-btn"
+						type="password"
+						onChange={this.handleChangePassword}
+						placeholder="New Password"
+						value={this.state.password} />
+					<input
+						className="login-btn input-btn"
+						type="password"
+						onChange={this.handleChangeConfirmPassword}
+						onKeyPress={this.keyPressEnterCreateUser}
+						placeholder="Confirm Password"
+						value={this.state.confirmPassword} />
+					<input
+						className="login-btn submit-btn"
+						type="submit"
+						onClick={this.handleCreateUser}
+						value="Create Account" />
+					<a href="/" onClick={this.handleCreateForm} > 
+						Sign In
+					</a>
+				</section> }
+
+				{/* Displays error messages */}
 				<section className="login-error">
 					{ this.state.error }
 				</section>

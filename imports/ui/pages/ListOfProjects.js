@@ -9,15 +9,18 @@ export default class ListOfProjects extends Component {
 			search: false,
 			projects: [],
 		};
-		this.handleSearch = this.handleSearch.bind(this);
+
 		this.handleRemoveProject = this.handleRemoveProject.bind(this);
+		this.handleSearch = this.handleSearch.bind(this);
 	}
 
 	componentWillMount() {
-		const projectList = this.props.pageId === 'section' ? 
+		// Filters a user's project and set it to this.state if you are in 
+		// a profile page and shows all projects when not. 
+		const projects = this.props.pageId === 'section' ? 
 			this.props.projects.filter(project => project.owner === this.props.id) 
 			: this.props.projects;
-		this.setState({ projects: projectList });
+		this.setState({ projects: projects });
 	}
 
 	handleRemoveProject(projectId) {
@@ -26,19 +29,41 @@ export default class ListOfProjects extends Component {
 		this.setState({ projects: projects });
 	}
 
+	handleSearch(e) {
+		const projects = this.props.pageId === 'section' ? 
+			this.props.projects.filter(project => project.owner === this.props.id)
+				: this.props.projects;
+		if (e.target.value) {
+
+			// Filters out projects not containing the input search value.
+			const regex = e.target.value.toLowerCase(),
+				searchProjects = projects
+					.filter(project => project.name.toLowerCase().includes(regex));
+			this.setState({ search: true, projects: searchProjects });
+		} else {
+			this.setState({ search: false });
+		}
+	}
+
 	fillEmptyRow() {
 		const projects = this.props.pageId === 'section' ? 
 			( this.state.search ? this.state.projects 
 				: this.props.projects.filter(project => project.owner === this.props.id) ) 
 		: (this.state.search ? this.state.projects : this.props.projects);
 
-		let emptyArray = [],
-			offset = (this.props.pageId === 'section') ? 3 : 5,
+		/*
+			We fill up the rest of row of projects with empty boxes to make
+			our flex grid work correctly. For the profile page, we want to 
+			set grid offset to 3, while for the projects page, we set to 5. 
+		*/
+		let emptyArray = [];
+		const offset = (this.props.pageId === 'section') ? 3 : 5,
 			numberOfEmptyBoxes = this.state.search ? 
 			((offset - projects.length % offset === offset) ? 0 
 				: (offset - projects.length % offset)) :
 			((offset - projects.length % offset === offset) ? 0 
 				: (offset - projects.length % offset));
+
 		for (i = 0; i < numberOfEmptyBoxes; i++) {
 			emptyArray.push('');
 		}
@@ -49,21 +74,9 @@ export default class ListOfProjects extends Component {
 		);
 	}
 
-	handleSearch(e) {
-		const projects = this.props.pageId === 'section' ? 
-			this.props.projects.filter(project => project.owner === this.props.id)
-				: this.props.projects;
-		if (e.target.value) {
-			const regex = e.target.value.toLowerCase(),
-				searchProjects = projects
-					.filter(project => project.name.toLowerCase().includes(regex));
-			this.setState({ search: true, projects: searchProjects });
-		} else {
-			this.setState({ search: false });
-		}
-	}
-
 	render() {
+		// Determines which projects to display based on if we're searching
+		// or if we're in a profile page or not. 
 		const projects = this.props.pageId === 'section' ? 
 			( this.state.search ? this.state.projects 
 				: this.props.projects.filter(project => project.owner === this.props.id) ) 
@@ -72,6 +85,13 @@ export default class ListOfProjects extends Component {
 			<section>
 				<SearchBar 
 					handleSearch={this.handleSearch} />
+
+				{/********************************************************
+					If the search state is set to true, we display all
+					projects matching the input value of the search form.
+					If the search state is set to false, we display the 
+					projects normally.
+				*********************************************************/}
 				{ this.state.search ?
 					<section className="list-of-projects"> 
 						{ projects.map(project => (
@@ -83,6 +103,10 @@ export default class ListOfProjects extends Component {
 								currentUser={this.props.currentUser}
 								handleRemoveProject={this.handleRemoveProject} />
 						)) }
+
+						{/*******************************************
+							Fills up the empty rows with boxes here.
+						********************************************/}
 						{this.fillEmptyRow()}
 					</section>
 					: <section className="list-of-projects"> 
@@ -94,7 +118,11 @@ export default class ListOfProjects extends Component {
 								comments={this.props.comments}
 								currentUser={this.props.currentUser}
 								handleRemoveProject={this.handleRemoveProject} />
-						)) }
+						)) }						
+						
+						{/*******************************************
+							Fills up the empty rows with boxes here.
+						********************************************/}
 						{this.fillEmptyRow()}
 					</section> 
 				}

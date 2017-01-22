@@ -33,6 +33,7 @@ export default class Settings extends Component {
 	}
 
 	handleSetNewUsername() {
+		// Makes sure username state is not empty and is not the same as your current username.
 		if (this.state.username && (this.state.username !== this.props.currentUser.username)) {
 			Meteor.call('users.changeUsername', this.props.currentUser._id, this.state.username);
 			this.setState({ username: '', error: '', success: 'Username changed successfully!' });
@@ -42,6 +43,7 @@ export default class Settings extends Component {
 	}
 
 	handleCurrentPassword(e) {
+		// Clears success messages but not error messages
 		if (this.state.currentPassword !== '') {
 			this.setState({ success: '' });
 		}
@@ -57,6 +59,8 @@ export default class Settings extends Component {
 	}
 
 	handleChangePassword() {
+		// Make sure password is not empty, the old entered password is correct, and the two new
+		// password entries are the same.
 		if ((this.state.newPassword === this.state.confirmPassword) && this.state.currentPassword) {
 			Accounts.changePassword(this.state.currentPassword, this.state.newPassword, (err) => {
 				if (err) { 
