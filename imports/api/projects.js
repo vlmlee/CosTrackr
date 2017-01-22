@@ -84,7 +84,7 @@ Meteor.methods({
 			throw new Meteor.Error("You have to star this project first!")
 		}
 	},
-	'items.update' (projectId, items, total) {
+	'items.update' (projectId, description, items, total) {
 		check(projectId, String);
 		check(total, Number);
 		const project = Projects.findOne(projectId);
@@ -92,7 +92,12 @@ Meteor.methods({
 			throw new Meteor.Error('You must be the owner of this project to add items to it.');
 		}
 		Projects.update(projectId, 
-			{ $set: { items: items, total: total } });
+			{ $set: { 
+				description: description, 
+				items: items, 
+				total: total 
+			} 
+		});
 	},
 	'items.remove' (projectId, itemId) {
 		check(projectId, String);

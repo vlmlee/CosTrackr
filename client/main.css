@@ -527,6 +527,13 @@ header {
 .project-date {
 }
 
+.project-description-textarea {
+    width: 100%;
+    border: 1px solid #eee;
+    resize: none;
+    outline: none;
+}
+
 .project-section {
     width: 100%;
     margin: 60px auto 0;
@@ -717,12 +724,15 @@ header {
 .project-show-contents {
     display: flex;
     flex-direction: row;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .project-show-items {
-    width: 50%;
+    width: 46%;
     overflow-y: auto;
     height: 400px;
+    margin: 0 10px 0 30px;
 }
 
 .project-show-labels {
@@ -813,6 +823,7 @@ header {
     margin: 0 20px;
     border-radius: 5px;
     border: 1px solid #f1f1f1;
+    clear: both;
 }
 
 .comments-count {
@@ -825,17 +836,16 @@ header {
 }
 
 .comment-form {
-    position: absolute;
-    width: 35%;
+    width: 100%;
     bottom: 0;
+    margin-top: 15px;
 }
 
 .comment-textbox {
     display: inline-block;
-    position: relative;
-    top: 110px;
-    right: 20px;
-    width: 90%;
+    border: 1px solid #e9e9e9;
+    float: right;
+    width: 81.1%;
     resize: none;
     height: 60px;
     border-radius: 10px;
@@ -846,18 +856,17 @@ header {
 }
 
 .comment-submit-btn {
+    float: right;
+    display: inline-block;
     background-color: #69B3E5;
     border: 1px solid #e9e9e9;
     outline: none;
     border-radius: 0 5px 5px 0;
     color: white;
     float: right;
-    position: relative;
-    bottom: 8px;
-    left: 63px;
-    width: 80px;
+    width: 10%;
     height: 100px;
-    margin: 18px auto;
+    margin-right: 20px;
     transition: border 0.2s ease-in;
 }
 

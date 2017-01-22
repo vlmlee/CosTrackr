@@ -6,6 +6,7 @@ export default class Header extends Component {
 	render() {
 		return (
 			<header>
+			
 				{/* If the user is not signed in, do not display the header. */}
 				{ this.props.currentUser ? 
 					<section className="header-container">

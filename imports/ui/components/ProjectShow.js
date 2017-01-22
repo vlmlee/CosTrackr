@@ -4,9 +4,14 @@ import Comments from './Comments.js';
 export default class ProjectShow extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			comment: '',
+		};
 		
 		this.handleStarProject = this.handleStarProject.bind(this);
 		this.handleUnstarProject = this.handleUnstarProject.bind(this);
+		this.handleChangeComment = this.handleChangeComment.bind(this);
+		this.handleSubmitComment = this.handleSubmitComment.bind(this);
 	}
 
 	// Adds the current user's id to the starred list.
@@ -19,76 +24,88 @@ export default class ProjectShow extends Component {
 		Meteor.call('projects.unstar', this.props.id, this.props.currentUser._id);
 	}
 
+	handleChangeComment(e) {
+		this.setState({ comment: e.target.value });
+	}
+
+	handleSubmitComment(e) {
+		if (this.state.comment) {
+			Meteor.call('comments.insert', this.state.comment, this.props.project._id);
+			this.setState({ comment: '' });
+		}
+	}
+
 	render() {
 		return (
 			<section>
-				<h1 className="project-show-name">
-					{this.props.project.name}
-				</h1>
-				<span className="project-show-total">
-					{this.props.project.total.toFixed(2)}
-				</span>
-				<span className="project-show-total-label">
-					Total:
-				</span>
-
-				<section>
-					<span className="project-show-date">
-						{this.props.date} 
+				<section class="project-heading">
+					<h1 className="project-show-name">
+						{this.props.project.name}
+					</h1>
+					<span className="project-show-total">
+						{this.props.project.total.toFixed(2)}
 					</span>
-					<span className="project-show-user">
-						&nbsp;&nbsp;By: <a href={'/profiles/' + this.props.project.owner}>
-							{this.props.project.username}
+					<span className="project-show-total-label">
+						Total:
+					</span>
+
+					<section>
+						<span className="project-show-date">
+							{this.props.date} 
+						</span>
+						<span className="project-show-user">
+							&nbsp;&nbsp;By: <a href={'/profiles/' + this.props.project.owner}>
+								{this.props.project.username}
+							</a>
+						</span>
+					</section>
+
+					{/****************************************************************
+						Conditional to display between 'star' and 'unstar' buttons.
+						If the user's id is not found within the project's star list,
+						then display 'star', and if it is, display 'unstar'. 
+					*****************************************************************/}
+					{ this.props.project.stars.indexOf(this.props.currentUser._id) === -1 ?
+						<input type="button"
+							className="project-show-star-btn"
+							onClick={this.handleStarProject}
+							value="star" />
+					: <input type="button"
+							className="project-show-star-btn"
+							onClick={this.handleUnstarProject}
+							value="unstar" /> }
+
+					{/***********************************************************
+						Conditional to display an edit link to user if it is the 
+						project's owner. If not, does not display it.
+					************************************************************/}
+					{ this.props.currentUser._id === this.props.project.owner ? 
+						<a className="project-show-edit-project" 
+							href={"/project/"+this.props.id}>
+							Edit project
 						</a>
-					</span>
+					: '' }
+
+					{/**************************************************************
+						Conditional to display the project description or a default
+						message if there is no project description.
+					***************************************************************/}
+					{ this.props.project.description !== '' ? 
+						<p className="project-show-description">
+							{this.props.project.description}
+						</p>
+					: ( this.props.currentUser._id === this.props.project.owner ? 
+						<p className="project-show-description-empty">
+							Add a short description about your project.
+						</p> 
+						: <p className="project-show-description-empty">
+							This project's owner hasn't added a description yet.
+						</p> ) }
 				</section>
-
-				{/****************************************************************
-					Conditional to display between 'star' and 'unstar' buttons.
-					If the user's id is not found within the project's star list,
-					then display 'star', and if it is, display 'unstar'. 
-				*****************************************************************/}
-				{ this.props.project.stars.indexOf(this.props.currentUser._id) === -1 ?
-					<input type="button"
-						className="project-show-star-btn"
-						onClick={this.handleStarProject}
-						value="star" />
-				: <input type="button"
-						className="project-show-star-btn"
-						onClick={this.handleUnstarProject}
-						value="unstar" /> }
-
-				{/***********************************************************
-					Conditional to display an edit link to user if it is the 
-					project's owner. If not, does not display it.
-				************************************************************/}
-				{ this.props.currentUser.username === this.props.project.username ? 
-					<a className="project-show-edit-project" 
-						href={"/project/"+this.props.id}>
-						Edit project
-					</a>
-				: '' }
-
-				{/**************************************************************
-					Conditional to display the project description or a default
-					message if there is no project description.
-				***************************************************************/}
-				{ this.props.project.description !== '' ? 
-					<p className="project-show-description">
-						{this.props.project.description}
-					</p>
-				: ( this.props.currentUser.username === this.props.project.username ? 
-					<p className="project-show-description-empty">
-						Add a short description about your project.
-					</p> 
-					: <p className="project-show-description-empty">
-						This project's owner hasn't added a description yet.
-					</p> ) }
-
 				<section className="project-show-contents">
 					<section className="project-show-items"> 
 						<section className="project-show-labels">
-							<span className="project-show-list-item"> &nbsp; Item </span>
+							<span className="project-show-list-item"> &nbsp; Project Items </span>
 							<span className="project-show-price"> Price &nbsp; </span>
 						</section>
 
@@ -137,6 +154,20 @@ export default class ProjectShow extends Component {
 						comments={this.props.comments}
 						currentUser={this.props.currentUser} />
 				</section>
+
+					{/*****************
+						Comment form
+					******************/}
+					<section className="comment-form" >
+						<input type="button" 
+							className="comment-submit-btn"
+							onClick={this.handleSubmitComment}
+							value="Submit" />
+						<textarea className="comment-textbox"
+							value={this.state.comment}
+							onChange={this.handleChangeComment}
+							placeholder="Scroll up for older comments" />
+					</section>
 			</section>
 		);
 	}

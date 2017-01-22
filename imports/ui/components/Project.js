@@ -10,6 +10,7 @@ export default class Project extends Component {
 		super(props);
 		this.state = { 
 			project: {},
+			description: '',
 			items: [],
 			total: '0'
 		};
@@ -22,6 +23,7 @@ export default class Project extends Component {
 		this.handleNameChange = this.handleNameChange.bind(this);
 		this.handlePriceChange = this.handlePriceChange.bind(this);
 		this.handleLinkChange = this.handleLinkChange.bind(this);
+		this.handleChangeDescription = this.handleChangeDescription.bind(this);
 		this.handleSaveItems = this.handleSaveItems.bind(this);
 		this.handleRemoveItem = this.handleRemoveItem.bind(this);
 		this.toggleMakePublic = this.toggleMakePublic.bind(this);
@@ -34,6 +36,7 @@ export default class Project extends Component {
 		if (project) {
 			this.setState({ 
 				project: project, 
+				description: project.description,
 				items: project.items, 
 				total: project.items.reduce((a, b) => a + Number(b["price"]), 0), 
 			});
@@ -50,10 +53,12 @@ export default class Project extends Component {
 				name: '',
 				price: '0',
 				link: '',
+				error: false
 			}])
 		});
-		Meteor.call( 'items.update', 
+		Meteor.call('items.update', 
 			this.state.project._id, 
+			this.state.description,
 			this.state.items, 
 			this.state.total 
 		);
@@ -101,11 +106,17 @@ export default class Project extends Component {
 		this.handleGetTotal(items);
 	}
 
+	handleChangeDescription(e) {
+		const description = e.target.value;
+		this.setState({ description: description });
+	}
+
 	handleGetTotal(items) {
 		const total = items.reduce((a, b) => a + Number(b["price"]), 0);
-		this.setState({ items: items, total: total });
-		Meteor.call( 'items.update', 
+		this.setState({items: items, total: total });
+		Meteor.call('items.update', 
 			this.state.project._id, 
+			this.state.description,
 			this.state.items, 
 			this.state.total 
 		);
@@ -117,6 +128,7 @@ export default class Project extends Component {
 	handleSaveItems(e) {
 		Meteor.call( 'items.update', 
 			this.state.project._id, 
+			this.state.description,
 			this.state.items, 
 			this.state.total 
 		);
@@ -163,20 +175,28 @@ export default class Project extends Component {
 		return (
 			<section className="project-page">
 				<section className="project-section">
+
+					{/* Project total that is floating right*/}
 					<span className="project-total">
 					    <input type="text"
 					    	readOnly
-					    	value={total.toFixed(2)}  />
+					    	value={total.toFixed(2)} />
 					</span>
 					<h1 className="project-name">{ project.name }</h1>
-					{ project ? 
-						( <section className="project-date">
-								{ project.createdAt ? 
-									moment(project.createdAt.toISOString()).calendar() 
-								: '' } 
-						  </section> )
-					: '' }
+					<section className="project-date">
+						{ moment(project.createdAt.toISOString()).calendar() }
+				  	</section>
+				  	<section className="project-description">
+				  		<textarea className="project-description-textarea"
+							value={this.state.description}
+							onChange={this.handleChangeDescription} />
+				  	</section>
 					<section>
+
+						{/*************************************************
+							Extra protection in the case that anyone other
+							than the project owner gets to this component.
+						**************************************************/}
 						{ this.props.currentUser ? 
 							(this.props.currentUser._id === project.owner ? 
 								<ProjectButtons 
@@ -190,11 +210,21 @@ export default class Project extends Component {
 						: '' }
 					</section>
 					<section className="project-items">
+
+						{/************************************************
+							Conditional to display a message if there no
+							items in the project or nothing if there are.
+						*************************************************/}
 						{ items.length === 0 ? 
 							<h1 className="project-add-item-prompt">
 								Add an item below.
 							</h1> 
 						: '' }
+
+						{/**********************************************
+							Displays the item inputs that are editable.
+							This also displays the delete button.
+						***********************************************/}
 						{ items.length !== 0 ?
 							items.map((item, i) => (
 							<section key={item.id} >

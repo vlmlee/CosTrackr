@@ -13,6 +13,7 @@ export default class ProjectBox extends Component {
 			position: 'fixed',
 			height: 'auto',
 			minHeight: '80%',
+			minWidth: '680px',
     		width: '60%',
     		top: '29%',
     		left: '43.5%',
@@ -35,13 +36,18 @@ export default class ProjectBox extends Component {
 				<p className="project-box-name">
 					{this.props.project.name}
 				</p>
-
 				<section className="project-box-star-count">
 					<p className="project-box-star-count-number">
 						{this.props.project.stars.length}
 					</p>
 				</section>
-				<p className="project-box-owner">		{ this.props.project.private ? 
+				<p className="project-box-owner"> 
+
+					{/*******************************************
+						Conditional to display if the project is 
+						private or not.
+					********************************************/}
+					{ this.props.project.private ? 
 						<span className="project-box-privacy">
 							(Private) &nbsp; 
 						</span> 
