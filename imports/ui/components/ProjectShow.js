@@ -4,14 +4,17 @@ import Comments from './Comments.js';
 export default class ProjectShow extends Component {
 	constructor(props) {
 		super(props);
+		
 		this.handleStarProject = this.handleStarProject.bind(this);
 		this.handleUnstarProject = this.handleUnstarProject.bind(this);
 	}
 
+	// Adds the current user's id to the starred list.
 	handleStarProject() {
 		Meteor.call('projects.star', this.props.id, this.props.currentUser._id);
 	}
 
+	// Removes the current user's id from the starred list. 
 	handleUnstarProject() {
 		Meteor.call('projects.unstar', this.props.id, this.props.currentUser._id);
 	}
@@ -19,32 +22,46 @@ export default class ProjectShow extends Component {
 	render() {
 		return (
 			<section>
-				<h1 className="project-show-name">{this.props.project.name}</h1>
-				<span className="project-show-total">{this.props.project.total.toFixed(2)}</span>
-				<span className="project-show-total-label">Total:</span>
+				<h1 className="project-show-name">
+					{this.props.project.name}
+				</h1>
+				<span className="project-show-total">
+					{this.props.project.total.toFixed(2)}
+				</span>
+				<span className="project-show-total-label">
+					Total:
+				</span>
 
-				<p>
+				<section>
 					<span className="project-show-date">
 						{this.props.date} 
 					</span>
 					<span className="project-show-user">
-						&nbsp;&nbsp;By: 
-						<a href={'/profiles/' + this.props.project.owner}>
-							{ this.props.project.username }
+						&nbsp;&nbsp;By: <a href={'/profiles/' + this.props.project.owner}>
+							{this.props.project.username}
 						</a>
 					</span>
-				</p>
+				</section>
 
+				{/****************************************************************
+					Conditional to display between 'star' and 'unstar' buttons.
+					If the user's id is not found within the project's star list,
+					then display 'star', and if it is, display 'unstar'. 
+				*****************************************************************/}
 				{ this.props.project.stars.indexOf(this.props.currentUser._id) === -1 ?
 					<input type="button"
-						className="star-btn"
+						className="project-show-star-btn"
 						onClick={this.handleStarProject}
 						value="star" />
 				: <input type="button"
-						className="star-btn"
+						className="project-show-star-btn"
 						onClick={this.handleUnstarProject}
 						value="unstar" /> }
 
+				{/***********************************************************
+					Conditional to display an edit link to user if it is the 
+					project's owner. If not, does not display it.
+				************************************************************/}
 				{ this.props.currentUser.username === this.props.project.username ? 
 					<a className="project-show-edit-project" 
 						href={"/project/"+this.props.id}>
@@ -52,6 +69,10 @@ export default class ProjectShow extends Component {
 					</a>
 				: '' }
 
+				{/**************************************************************
+					Conditional to display the project description or a default
+					message if there is no project description.
+				***************************************************************/}
 				{ this.props.project.description !== '' ? 
 					<p className="project-show-description">
 						{this.props.project.description}
@@ -66,38 +87,51 @@ export default class ProjectShow extends Component {
 
 				<section className="project-show-contents">
 					<section className="project-show-items"> 
-						<div>
-							<section className="project-show-labels">
-								<span className="project-show-list-item"> &nbsp; Item </span>
-								<span className="project-show-price"> Price &nbsp; </span>
-							</section>
-						</div>
+						<section className="project-show-labels">
+							<span className="project-show-list-item"> &nbsp; Item </span>
+							<span className="project-show-price"> Price &nbsp; </span>
+						</section>
 
+						{/*****************************************************
+							Conditional to display the items in the project or 
+							a message stating that there are no items.
+						******************************************************/}
 						{ this.props.project.items ? 
 							( this.props.project.items.map((item, index) => (
 								<section key={index}
 									className="project-show-item">
 
+									{/**************************************
+										Enumerates the items with the index
+										of the item. If the item doesn't
+										have a name, it doesn't display the
+										index or the price.
+									***************************************/}
 									{ item.name !== '' ? 
-										<span className="project-show-item-name">
-											{index + 1}) {item.name} 
-										</span>
+										( <section>
+											<span className="project-show-item-name">
+												&nbsp; {index + 1}) {item.name} 
+											</span>
+											{ item.price !== '0' ?
+												<span className="project-show-item-price"> 
+													{parseInt(item.price).toFixed(2)} &nbsp;
+												</span>
+											: '' } 
+										</section> )
 									: '' }
-
-									{ item.price !== '0' ?
-										<span className="project-show-item-price"> 
-											{item.price} 
-										</span>
-									: '' }
-
 									<p className="project-show-item-link"> 
-										{item.link} 
+										<a href={item.link}>
+											{item.link} 
+										</a>
 									</p>
 								</section>
 							)) )
 						: <h2> No current items. </h2> }
-
 					</section>
+
+					{/****************************************************
+						Displays comments on the right side of the modal.
+					*****************************************************/}
 					<Comments 
 						projectId={this.props.id}
 						comments={this.props.comments}

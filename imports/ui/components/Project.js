@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import { Session } from 'meteor/session';
 import ProjectButtons from './ProjectButtons.js';
 import Item from './Item.js';
-import SkyLight from 'react-skylight';
 import moment from 'moment';
 
 export default class Project extends Component {
@@ -15,6 +13,8 @@ export default class Project extends Component {
 			total: '0'
 		};
 
+		// Our session state makes sure that we are notified when
+		// there are unsavedChanges and the window changes page.
 		Session.set('unsavedChanges', false);
 		
 		this.createNewItem = this.createNewItem.bind(this);
@@ -27,6 +27,7 @@ export default class Project extends Component {
 	}
 
 	componentWillMount() {
+		// Sets the state to the project identified by the url parameter
 		const project = this.props.projects
 			.find(project => this.props.projectId === project._id);
 		if (project) {
@@ -39,6 +40,8 @@ export default class Project extends Component {
 	}
 
 	createNewItem() {
+		// Creates an item into the project's 'items' array with
+		// a random 16-character id. 
 		let id = this.generateRandomId();
 		this.setState({ 
 			items: this.state.items.concat([{
@@ -70,8 +73,13 @@ export default class Project extends Component {
 
 	handleLinkChange(itemId, e) {
 		const items = this.state.items,
-			index = items.indexOf(items.find(i => i.id === itemId));
-		items[index].link = e.target.value;
+			index = items.indexOf(items.find(i => i.id === itemId)),
+			// If the link enter does not contain http:// or https://
+			// protocols, add it to the link before saving.
+			link = (e.target.value.search(/^http[s]?\:\/\//) === -1) ? 
+				'https://' + e.target.value : e.target.value;
+
+		items[index].link = link;
 		this.setState({ items: items });
 		if (!Session.get('unsavedChanges')) {
 			Session.set('unsavedChanges', true);
@@ -82,6 +90,8 @@ export default class Project extends Component {
 		const items = this.state.items,
 			index = items.indexOf(items.find(i => i.id === itemId));
 		items[index].price = e.target.value;
+		// The handleGetTotal method handles all the item updating 
+		// to the database.
 		this.handleGetTotal(items);
 	}
 
@@ -127,7 +137,7 @@ export default class Project extends Component {
 
 	generateRandomId() {
 		let randomId = '';
-        for (var i = 0; i < 16; i++) {
+        for (let i = 0; i < 16; i++) {
             randomId += 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
             	.charAt( Math.floor( Math.random() * (62) ));
         }
@@ -135,7 +145,7 @@ export default class Project extends Component {
 	}
 
 	render() {
-		let project = this.state.project,
+		const project = this.state.project,
 			items = this.state.items,
 			total = this.state.total;
 		return (
@@ -186,7 +196,7 @@ export default class Project extends Component {
 									handleLinkChange={this.handleLinkChange} />
 								<input
 									type="button"
-									className="btn red inline"
+									className=""
 									onClick={() => this.handleRemoveItem(item)}
 									value="Delete" />
 								<div className="item-index">
@@ -195,7 +205,7 @@ export default class Project extends Component {
 							</div> ))
 						: ''}
 					</section>
-					<section className="all-buttons">
+					<section className="project-all-buttons">
 						{ this.props.currentUser ? 
 							(this.props.currentUser._id === project.owner ? 
 								<ProjectButtons 

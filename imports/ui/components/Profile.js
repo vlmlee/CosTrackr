@@ -177,19 +177,18 @@ export default class Profile extends Component {
 					bio or a default message if no bio exists.
 				************************************************/}
 				{ this.state.editBio ? 
-					<div>
-						<textarea
-							className="profile-bio-input"
+					<section>
+						<textarea className="profile-bio-input"
 							value={this.state.bio}
 							onChange={this.handleChangeBio}
 							onKeyPress={this.handleUpdateBio} />
 						<a href=""
-							className="cancel-bio"
+							className="profile-cancel-bio"
 							onClick={this.handleCancelEditBio} >
 							Cancel
 						</a> 
-					</div>
-				: <div className="profile-bio" > 
+					</section>
+				: <section className="profile-bio" > 
 
 					{/**********************************************
 						Conditional to show different bio messages 
@@ -202,13 +201,13 @@ export default class Profile extends Component {
 								Tell us about yourself.&nbsp;
 							</span> 
 						: <span className="profile-has-not">This user hasn't written a bio yet.</span>)
-					: ( <div>
+					: ( <section>
 							<p className="profile-website-personal">
 								About me:
 							</p>
 							<span>{ this.state.bio }</span>
-						</div> ) }
-					<span className="edit-bio">
+						</section> ) }
+					<span className="profile-edit-bio">
 
 						{/*********************************************
 							Conditional to show if edit link should be
@@ -221,7 +220,7 @@ export default class Profile extends Component {
 							</a>
 						: <div className="push-down"> </div> }
 					</span> 
-				</div> }
+				</section> }
 
 				{/****************************************************
 					Conditional to toggle website input field to be
@@ -230,19 +229,18 @@ export default class Profile extends Component {
 					blank.
 				*****************************************************/}
 				{ this.state.editWebsite ?
-					<div>
-						<input
-							className="profile-website-input"
+					<section>
+						<input className="profile-website-input"
 							type="text"
 							onChange={this.handleChangeWebsite}
 							onKeyPress={this.handleUpdateWebsite} />
 						<a href=""
-							className="cancel-bio"
+							className="profile-cancel-bio"
 							onClick={this.handleCancelEditWebsite} >
 							Cancel
 						</a> 
-					</div>
-				: <div className="profile-website">
+					</section>
+				: <section className="profile-website">
 
 					{/****************************************************
 						Conditional to show different website messages to 
@@ -262,7 +260,7 @@ export default class Profile extends Component {
 								{this.state.website}
 							</a>
 						</div> ) }
-					<span className="edit-website">
+					<span className="profile-edit-website">
 
 						{/**********************************************
 							Conditional that will show if edit link
@@ -276,7 +274,7 @@ export default class Profile extends Component {
 							</a>
 						: <div className="push-down"> </div> }
 					</span>
-				</div> } 
+				</section> } 
 			</section>
 		);
 	}

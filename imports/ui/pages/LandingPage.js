@@ -62,7 +62,7 @@ export default class LandingPage extends Component {
 	}
 
 	handleChangeConfirmPassword(e) {
-		const password = e.target.value
+		const password = e.target.value;
 		this.setState({ confirmPassword: password });
 	}
 
@@ -94,8 +94,7 @@ export default class LandingPage extends Component {
 
 	render() {
 		return (
-			<section
-				className="landing-page">
+			<section className="landing-page">
 				<img onError={this.handleDefaultSrc} src="images/logo.png" alt="logo" />
 				<h1>Track your costs.</h1>
 
@@ -107,21 +106,18 @@ export default class LandingPage extends Component {
 				*********************************************************/}
 				{ this.state.loginForm ? 
 					<section className="login-buttons">
-						<input
-							className="login-btn input-btn"
+						<input className="login-btn input-btn"
 							type="text"
 							onChange={this.handleChangeUsername}
 							placeholder="Username"
 							value={this.state.username} />
-						<input
-							className="login-btn input-btn"
+						<input className="login-btn input-btn"
 							type="password"
 							onChange={this.handleChangePassword}
 							onKeyPress={this.keyPressEnterLogin}
 							placeholder="Password"
 							value={this.state.password} />
-						<input
-							className="login-btn submit-btn"
+						<input className="login-btn submit-btn"
 							type="submit"
 							onClick={this.handleLogin}
 							value="Sign In" />
@@ -130,27 +126,23 @@ export default class LandingPage extends Component {
 						</a>
 					</section>
 				: <section className="login-buttons">
-					<input
-						className="login-btn input-btn"
+					<input className="login-btn input-btn"
 						type="text"
 						onChange={this.handleChangeUsername}
 						placeholder="Choose a Username"
 						value={this.state.username} />
-					<input
-						className="login-btn input-btn"
+					<input className="login-btn input-btn"
 						type="password"
 						onChange={this.handleChangePassword}
 						placeholder="New Password"
 						value={this.state.password} />
-					<input
-						className="login-btn input-btn"
+					<input className="login-btn input-btn"
 						type="password"
 						onChange={this.handleChangeConfirmPassword}
 						onKeyPress={this.keyPressEnterCreateUser}
 						placeholder="Confirm Password"
 						value={this.state.confirmPassword} />
-					<input
-						className="login-btn submit-btn"
+					<input className="login-btn submit-btn"
 						type="submit"
 						onClick={this.handleCreateUser}
 						value="Create Account" />

@@ -8,6 +8,7 @@ export default class Comments extends Component {
 		this.state = {
 			text: ''
 		};
+
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmitComment = this.handleSubmitComment.bind(this);
 		this.handleDeleteComment = this.handleDeleteComment.bind(this);
@@ -18,7 +19,6 @@ export default class Comments extends Component {
 	}
 
 	handleSubmitComment(e) {
-		e.preventDefault();
 		if (this.state.text) {
 			Meteor.call('comments.insert', this.state.text, this.props.projectId);
 			this.setState({ text: '' });
@@ -35,53 +35,77 @@ export default class Comments extends Component {
 	}
 
 	componentWillUpdate() {
-		if (ReactDOM.findDOMNode(this.refs.comments).scrollTop !== ReactDOM.findDOMNode(this.refs.comments).scrollHeight) {
-			ReactDOM.findDOMNode(this.refs.comments).scrollTop = ReactDOM.findDOMNode(this.refs.comments).scrollHeight;
-		}
+	  const commentsWindow = ReactDOM.findDOMNode(this);
+	  this.scrollHeight = commentsWindow.scrollHeight;
+	  this.scrollTop = commentsWindow.scrollTop;
+	}
+	 
+	componentDidUpdate() {
+	  const commentsWindow = ReactDOM.findDOMNode(this);
+	  commentsWindow.scrollTop = this.scrollTop + (commentsWindow.scrollHeight - this.scrollHeight);
 	}
 
 	render() {
-		let comments = this.props.comments
-				.filter(comment => this.props.projectId === comment.projectId)
+		const comments = this.props.comments
+				.filter(comment => this.props.projectId === comment.projectId);
 		return (
 			<section ref="comments"
 				className="comments">
 
+				{/**************************************************
+					Conditional that displays the comments if 
+					there are any, else it displays a 'No comments' 
+					message.
+				***************************************************/}
 				{ (comments != '') ? (
 					<section>
 						{ comments.map(comment => (
-							<section 
-								key={comment._id} >
+							<section key={comment._id} >
 								<Comment 
 									username={comment.username}
 									createdAt={comment.createdAt}
 									text={comment.text} />
 
+									{/****************************************
+										Conditional that displays the delete
+										button if the comment owner is the
+										current user, otherwise it is blank.
+									*****************************************/}
 									{ this.props.currentUser ? 
 										( this.props.currentUser._id === comment.owner ? 
-											<input
-												type="button"
+											<input type="button"
 												className="comment-delete-btn"
 												onClick={() => this.handleDeleteComment(comment._id)}
 												value="Delete" />
 										: '' ) 
 									: '' }
-
 							</section>
 						)) }
 					</section> ) 
 				: <section className="no-comments"> No comments. </section> }
 
-				<section
-					className="comment-form" >
-					<textarea
-						ref="comment"
+				{/*******************************************************
+					Conditional that displays the number of comments if 
+					there are any comments, otherwise it is hidden. 
+				********************************************************/}
+				<p className="comments-count">
+					{ comments.length ? 
+						( comments.length === 1 ? 
+							<span>{comments.length} comment</span>
+						: <span>{comments.length} comments</span> )
+					: '' }
+				</p>
+
+				{/*****************
+					Comment form
+				******************/}
+				<section className="comment-form" >
+					<textarea ref="comment"
 						className="comment-textbox"
 						value={this.state.value}
 						onChange={this.handleChange}
 						placeholder="Scroll up for older comments" />
-					<input 
-						type="button" 
+					<input type="button" 
 						className="comment-submit-btn"
 						onClick={this.handleSubmitComment}
 						value="Submit" />
@@ -95,4 +119,4 @@ Comments.propTypes = {
 	projectId: PropTypes.string.isRequired,
 	comments: PropTypes.array.isRequired,
 	currentUser: PropTypes.object.isRequired,
-}
+};

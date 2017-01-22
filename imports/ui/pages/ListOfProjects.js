@@ -30,6 +30,7 @@ export default class ListOfProjects extends Component {
 	}
 
 	handleSearch(e) {
+		e.preventDefault();
 		const projects = this.props.pageId === 'section' ? 
 			this.props.projects.filter(project => project.owner === this.props.id)
 				: this.props.projects;
@@ -83,8 +84,7 @@ export default class ListOfProjects extends Component {
 		: (this.state.search ? this.state.projects : this.props.projects);
 		return (
 			<section>
-				<SearchBar 
-					handleSearch={this.handleSearch} />
+				<SearchBar handleSearch={this.handleSearch} />
 
 				{/********************************************************
 					If the search state is set to true, we display all

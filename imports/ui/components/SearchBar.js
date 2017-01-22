@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 const SearchBar = ({ handleSearch }) => (
-	<input
-		className="input-user search"
+	<input className="search-input search"
 		onChange={ (e) => handleSearch(e) }
 		placeholder="Search for projects" />
 );

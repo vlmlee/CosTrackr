@@ -5,7 +5,7 @@
 *   Note: the more specific the CSS, the lower down it is.
 */
 
-@import url('https://fonts.googleapis.com/css?family=Rubik:500');
+@import url('https://fonts.googleapis.com/css?family=Rubik:500|Montserrat');
 
 /*********
 *  MAIN  *
@@ -57,6 +57,11 @@ h1 {
 
 a {
     text-decoration: none;
+    color: #365899;
+}
+
+a:hover { 
+    color: #06e; 
 }
 
 footer {
@@ -69,22 +74,14 @@ footer p {
     position: relative;
 }
 
+.footer-content {
+    margin: 0 auto;
+}
+
 
 /*************
 *  GENERICS  *
 *************/
-
-.center {
-    margin: 0 auto;
-}
-
-.inline {
-    display: inline-block;
-}
-
-.block {
-    display: block;
-}
 
 .push-down {
     margin: 20px auto;
@@ -164,7 +161,8 @@ footer p {
     margin: 0 auto 8px;
 }
 
-.all-buttons {
+.project-all-buttons {
+
 }
 
 /***********
@@ -287,11 +285,11 @@ header {
     overflow-y: auto;
 }
 
-.star-count {
+.project-box-star-count {
     position: relative;
     right: 40px;
     bottom: 125px;
-    font-family: Consolas;
+    font-family: Consolas, 'Avenir', 'Helvetica';
     font-size: 12px;
     height: 40px;
     width: 40px;
@@ -301,7 +299,8 @@ header {
     z-index: 2;
 }
 
-.star-count-number {
+.project-box-star-count-number {
+    font-family: Consolas, 'Avenir', 'Helvetica';
     text-align: center;
     padding-top: 14px;
 }
@@ -343,7 +342,8 @@ header {
 .project-box-total {
     position: relative;
     text-align: center;
-    width: 60px;
+    width: auto;
+    max-width: 70px;
     float: right;
     left: 8px;
     bottom: 8px;
@@ -363,6 +363,7 @@ header {
     padding-bottom: 5px;
     font-style: italic;
     font-size: 12px;
+    font-weight: 400;
 }
 
 .project-box-link {
@@ -407,7 +408,8 @@ header {
     margin-top: 40px;
     margin-left: 20px;
     background-color: #f8f8f8;
-    height: 78%;
+    height: 640px;
+    max-height: 670px;
     padding: 30px;
     border-radius: 10px;
     min-width: 285px;
@@ -443,13 +445,13 @@ header {
     outline: none;
 }
 
-.edit-bio {
+.profile-edit-bio {
     opacity: 0;
     font-size: 8px;
     transition: opacity 0.2s ease-in;
 }
 
-.cancel-bio {
+.profile-cancel-bio {
     position: relative;
     font-size: 8px;
 }
@@ -464,17 +466,17 @@ header {
     outline: none;
 }
 
-.edit-website {
+.profile-edit-website {
     opacity: 0;
     font-size: 8px;
     transition: opacity 0.2s ease-in;
 }
 
-.profile-bio:hover .edit-bio {
+.profile-bio:hover .profile-edit-bio {
     opacity: 1.0;
 }
 
-.profile-website:hover .edit-website {
+.profile-website:hover .profile-edit-website {
     opacity: 1.0;
 }
 
@@ -529,21 +531,6 @@ header {
     font-size: 20px;
 }
 
-.input-user {
-    height: 34px;
-    width: 285px;
-    color: #555;
-    border-radius: 3px;
-    padding: 6px 10px;
-    border: 1px solid #CBCBCB;
-    background: #f9f9f9;
-    box-sizing: border-box;
-    box-shadow: inset 0 1px 5px #E9E9E8, 0 0 0 100px #fbfbfa inset;
-    -webkit-appearance: textfield;
-    user-select: text;
-    cursor: auto;
-}
-
 .input-user:focus {
     outline: none;
 }
@@ -574,11 +561,6 @@ header {
     margin-top: 5px;
 }
 
-.project-summary {
-    display: flex;
-    flex-direction: column;
-}
-
 .project-section {
     flex: 1;
 }
@@ -587,7 +569,7 @@ header {
 *  PROJECT SHOW  *
 *****************/
 
-.star-btn {
+.project-show-star-btn {
     font-family: Montserrat;
     background-color: #f1c40f;
     color: #3f3f3f;
@@ -603,7 +585,7 @@ header {
     transition: border 0.2s ease-in;
 }
 
-.star-btn:hover {
+.project-show-star-btn:hover {
     border: 1px solid #f1c40f;
 }
 
@@ -652,15 +634,16 @@ header {
 }
 
 .project-show-edit-project {
-    border: 1px solid #bbb;
+    border: 1px solid #eee;
     padding: 9px 10px 9px 10px;
     border-radius: 5px;
     font-style: italic;
     transition: border 0.2s ease-in;
+    font-weight: 600;
 }
 
 .project-show-edit-project:hover {
-    border: 1px solid #777;
+    border: 1px solid #bbb;
 }
 
 .project-show-description {
@@ -714,7 +697,12 @@ header {
 
 .project-show-item-link {
     clear: both;
+    margin-left: 23px;
 }
+
+/*************
+*  COMMENTS  *
+*************/
 
 .comments-section {
     flex: 1;
@@ -751,19 +739,32 @@ header {
     border: 1px solid #eee;
     background-color: #f9f9f9;
     border-radius: 5px;
+    transition: border 0.2s ease-in;
+}
+
+.comment-delete-btn:hover {
+    border: 1px solid #bbb;
 }
 
 .comments {
     overflow-y: auto;
-    height: 400px;
+    height: 380px;
     flex: 1;
     display: flex;
     flex-direction: column;
     width: 50%;
-    padding: 0 20px;
+    padding: 0 20px 20px 20px;
     margin: 0 20px;
     border-radius: 5px;
     border: 1px solid #f1f1f1;
+}
+
+.comments-count {
+    text-align: right;
+    font-size: 12px;
+    color: #7f7f7f;
+    font-style: italic;
+    font-weight: bold;
 }
 
 .comment-form {
@@ -809,10 +810,16 @@ header {
 
 .no-comments {
     position: relative;
-    top: 30%;
+    top: 35%;
     text-align: center;
     font-size: 16px;
+    font-weight: 300;
+    color: #9f9f9f;
 }
+
+/***********
+*  SEARCH  *
+***********/
 
 .search {
     margin-top: -95px;
@@ -823,6 +830,21 @@ header {
 
 .search:focus {
     border: 1px solid #CBCBCB;
+}
+
+.search-input {
+    height: 34px;
+    width: 285px;
+    color: #555;
+    border-radius: 3px;
+    padding: 6px 10px;
+    border: 1px solid #CBCBCB;
+    background: #f9f9f9;
+    box-sizing: border-box;
+    box-shadow: inset 0 1px 5px #E9E9E8, 0 0 0 100px #fbfbfa inset;
+    -webkit-appearance: textfield;
+    user-select: text;
+    cursor: auto;
 }
 
 /************************
@@ -878,7 +900,6 @@ header {
 
 .settings-input-btn {
     border-radius: 5px;
-    height: 10px;
     width: 300px;
     margin: 40px 20px 20px 20px;
     padding: 20px;

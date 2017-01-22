@@ -7,6 +7,7 @@ export default class CreateNewProjectForm extends Component {
 		this.state = {
 			name: ''
 		};
+		
 		this.handleNameChange = this.handleNameChange.bind(this);
 		this.createNewProject = this.createNewProject.bind(this);
 	}

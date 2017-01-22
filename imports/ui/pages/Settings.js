@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { Accounts } from 'meteor/accounts-base';
-import ReactDOM from 'react-dom';
 
 export default class Settings extends Component {
 	constructor(props) {
@@ -38,7 +37,7 @@ export default class Settings extends Component {
 			Meteor.call('users.changeUsername', this.props.currentUser._id, this.state.username);
 			this.setState({ username: '', error: '', success: 'Username changed successfully!' });
 		} else {
-			this.setState({ error: 'Invalid name!'});
+			this.setState({ error: 'Invalid name!' });
 		}
 	}
 
@@ -64,9 +63,9 @@ export default class Settings extends Component {
 		if ((this.state.newPassword === this.state.confirmPassword) && this.state.currentPassword) {
 			Accounts.changePassword(this.state.currentPassword, this.state.newPassword, (err) => {
 				if (err) { 
-					this.setState({ error: err.reason, success: ''});
+					this.setState({ error: err.reason, success: '' });
 				} else {
-					this.setState({ error: '', success: 'Password changed successfully!'});
+					this.setState({ error: '', success: 'Password changed successfully!' });
 				}
 			});
 			this.setState({ newPassword: '', confirmPassword: '', currentPassword: '' });
@@ -87,48 +86,41 @@ export default class Settings extends Component {
 		return(
 			<section className="settings">
 				<h1>Change Settings</h1>
-				<input 
-					type="text"
+
+				<input type="text"
 					className="settings-input-btn"
 					onChange={this.handleChangeUsername}
 					placeholder="New username"
 					value={this.state.username} />
-				<input
-					type="button"
+				<input type="button"
 					className="settings-submit-btn"
 					onClick={this.handleSetNewUsername}
 					value="Change username" />
-				<input 
-					type="email"
+				<input type="email"
 					className="settings-input-btn"
 					onChange={this.setNewEmail}
 					placeholder="New email"
 					value={this.state.email} />
-				<input
-					type="button"
+				<input type="button"
 					className="settings-submit-btn"
 					onClick={this.handleChangeEmail}
 					value="Change email" />
-				<input
-					type="password"
+				<input type="password"
 					className="settings-input-btn settings-current-btn"
 					onChange={this.handleCurrentPassword}
 					placeholder="Enter current password"
 					value={this.state.currentPassword} />
-				<input 
-					type="password"
+				<input type="password"
 					className="settings-input-btn settings-current-btn"
 					onChange={this.handleNewPassword}
 					placeholder="New password"
 					value={this.state.newNassword} />
-				<input 
-					type="password"
+				<input type="password"
 					className="settings-input-btn"
 					onChange={this.handleConfirmPassword}
-					placeholder="Reenter new password"
+					placeholder="Re-enter new password"
 					value={this.state.confirmPassword} />
-				<input
-					type="button"
+				<input type="button"
 					className="settings-submit-btn"
 					onClick={this.handleChangePassword}
 					value="Change password" />

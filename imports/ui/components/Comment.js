@@ -3,9 +3,9 @@ import moment from 'moment';
 
 const Comment = ({ username, createdAt, text}) => (
 	<section className="comment">
-		<p className="comment-username"> {username} </p>
-		<p className="comment-text"> {text} </p> 
-		<p className="comment-date"> {moment(createdAt).fromNow()} </p>
+		<p className="comment-username">{username}</p>
+		<p className="comment-text">{text}</p> 
+		<p className="comment-date">{moment(createdAt).fromNow()}</p>
 	</section>
 );
 

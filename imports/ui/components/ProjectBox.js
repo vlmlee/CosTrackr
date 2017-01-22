@@ -35,23 +35,34 @@ export default class ProjectBox extends Component {
 				<p className="project-box-name">
 					{this.props.project.name}
 				</p>
-				<section className="star-count">
-					<p className="star-count-number">
+				<section className="project-box-star-count">
+					<p className="project-box-star-count-number">
 						{this.props.project.stars.length}
 					</p>
 				</section>
 				<p className="project-box-owner">by <a href={'/profiles/' + this.props.project.owner}>
-					{this.props.project.username}</a>
+						{this.props.project.username}
+					</a>
 				</p>
 
+				{/******************************************************
+					Conditional to display either 'view/remove' or just
+					'view' depending if the current user is the project
+					owner or not.
+				*******************************************************/}
 				{ this.props.currentUser ?
 					( this.props.currentUser._id === this.props.project.owner ? 
-						( <div>
+						( <section>
 							<a className="project-box-link project-box-view" 
 								onClick={() => this.refs.modal.show()}
 								href="" >
 								View
 							</a>
+
+							{/*********************************************
+								Modal activated by view anchor tag 'view',
+								and opens the ProjectShow component.
+							**********************************************/}
 							<SkyLight 
 								hideOverlayClicked
 								dialogStyles={modalStyles}
@@ -63,14 +74,18 @@ export default class ProjectBox extends Component {
 									comments={this.props.comments}
 									currentUser={this.props.currentUser} />
 							</SkyLight>
+
+							{/*****************************************
+								Removes the project from the database.
+							******************************************/}
 							<a className="project-box-link project-box-remove"
 								href=""
 								onClick={() => 
 									this.props.handleRemoveProject(this.props.id)} >
 								Remove
 							</a>
-						</div> )
-						: <div>
+						</section> )
+						: <section>
 							<a className="project-box-link project-box-view-center" 
 								onClick={() => this.refs.modal.show()}
 								href="" >
@@ -88,10 +103,9 @@ export default class ProjectBox extends Component {
 									comments={this.props.comments}
 									currentUser={this.props.currentUser} />
 							</SkyLight>
-						</div> 
+						</section> 
 					)
 				: '' }
-				
 			</section>
 		);
 	}
