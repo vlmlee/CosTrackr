@@ -30,7 +30,7 @@ Meteor.methods({
 				username: Meteor.users.findOne(this.userId).username,
 				description: '',
 				items: [],
-				private: false,
+				private: true,
 				total: 0,
 				stars: [],
 			});

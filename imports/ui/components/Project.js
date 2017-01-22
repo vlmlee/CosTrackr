@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { Session } from 'meteor/session';
 import ProjectButtons from './ProjectButtons.js';
 import Item from './Item.js';
@@ -135,6 +136,17 @@ export default class Project extends Component {
 		);
 	}
 
+	componentWillUpdate() {
+	  const commentsWindow = ReactDOM.findDOMNode(this);
+	  this.scrollHeight = commentsWindow.scrollHeight;
+	  this.scrollTop = commentsWindow.scrollTop;
+	}
+	 
+	componentDidUpdate() {
+	  const commentsWindow = ReactDOM.findDOMNode(this);
+	  commentsWindow.scrollTop = this.scrollTop + (commentsWindow.scrollHeight - this.scrollHeight);
+	}
+
 	generateRandomId() {
 		let randomId = '';
         for (let i = 0; i < 16; i++) {
@@ -151,40 +163,41 @@ export default class Project extends Component {
 		return (
 			<section className="project-page">
 				<section className="project-section">
-					<h1>{ project.name }</h1>
-					<a href="javascript:history.back()">
-						<input
-							type="button"
-							className="btn orange block back"
-							value="‹Back" />
-					</a>
-					{ project ? 
-						( <section>
-							<h3> 
-								{ project.createdAt ? 
-									moment(project.createdAt.toISOString()).calendar() 
-								: '' } 
-							</h3>
-						  </section> )
-					: '' }
-					<span className="total">
-					    <input 
-					    	type="text"
+					<span className="project-total">
+					    <input type="text"
 					    	readOnly
 					    	value={total.toFixed(2)}  />
 					</span>
-					<section 
-						ref="itemsList"
-						className="items">
+					<h1 className="project-name">{ project.name }</h1>
+					{ project ? 
+						( <section className="project-date">
+								{ project.createdAt ? 
+									moment(project.createdAt.toISOString()).calendar() 
+								: '' } 
+						  </section> )
+					: '' }
+					<section>
+						{ this.props.currentUser ? 
+							(this.props.currentUser._id === project.owner ? 
+								<ProjectButtons 
+									owner={project.owner}
+									privacy={this.state.project.private}
+									currentUser={this.props.currentUser}
+									createNewItem={this.createNewItem} 
+									toggleMakePublic={this.toggleMakePublic}
+									handleSaveItems={this.handleSaveItems} />
+							: '' )
+						: '' }
+					</section>
+					<section className="project-items">
 						{ items.length === 0 ? 
-							<h1 className="add-item-prompt">
+							<h1 className="project-add-item-prompt">
 								Add an item below.
 							</h1> 
 						: '' }
 						{ items.length !== 0 ?
 							items.map((item, i) => (
-							<div
-								key={item.id} >
+							<section key={item.id} >
 								<Item
 									id={item.id}
 									name={item.name}
@@ -194,28 +207,14 @@ export default class Project extends Component {
 									handleNameChange={this.handleNameChange}
 									handlePriceChange={this.handlePriceChange}
 									handleLinkChange={this.handleLinkChange} />
-								<input
-									type="button"
-									className=""
+								<input type="button"
+									className="project-btn-delete project-btn btn"
 									onClick={() => this.handleRemoveItem(item)}
 									value="Delete" />
-								<div className="item-index">
-									{ items.indexOf(item) + 1 }
-								</div>
-							</div> ))
+								<section className="project-item-clear">
+								</section>
+							</section> ))
 						: ''}
-					</section>
-					<section className="project-all-buttons">
-						{ this.props.currentUser ? 
-							(this.props.currentUser._id === project.owner ? 
-								<ProjectButtons 
-									owner={project.owner}
-									currentUser={this.props.currentUser}
-									createNewItem={this.createNewItem} 
-									toggleMakePublic={this.toggleMakePublic}
-									handleSaveItems={this.handleSaveItems} />
-							: '' )
-						: '' }
 					</section>
 				</section>
 			</section>
