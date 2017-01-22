@@ -35,12 +35,18 @@ export default class ProjectBox extends Component {
 				<p className="project-box-name">
 					{this.props.project.name}
 				</p>
+
 				<section className="project-box-star-count">
 					<p className="project-box-star-count-number">
 						{this.props.project.stars.length}
 					</p>
 				</section>
-				<p className="project-box-owner">by <a href={'/profiles/' + this.props.project.owner}>
+				<p className="project-box-owner">		{ this.props.project.private ? 
+						<span className="project-box-privacy">
+							(Private) &nbsp; 
+						</span> 
+					: '' }
+					by <a href={'/profiles/' + this.props.project.owner}>
 						{this.props.project.username}
 					</a>
 				</p>

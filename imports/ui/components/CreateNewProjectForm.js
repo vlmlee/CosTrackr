@@ -13,7 +13,7 @@ export default class CreateNewProjectForm extends Component {
 	}
 
 	handleNameChange(e) {
-		const name = e.target.value.trim();
+		const name = e.target.value;
 		this.setState({ name: name });
 	}
 
