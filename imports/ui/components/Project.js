@@ -116,7 +116,7 @@ export default class Project extends Component {
 		this.setState({items: items, total: total });
 		Meteor.call('items.update', 
 			this.state.project._id, 
-			this.state.description,
+			this.state.description.trim(),
 			this.state.items, 
 			this.state.total 
 		);
@@ -126,16 +126,22 @@ export default class Project extends Component {
 	}
 
 	handleSaveItems(e) {
-		Meteor.call( 'items.update', 
-			this.state.project._id, 
-			this.state.description,
-			this.state.items, 
-			this.state.total 
-		);
-		if (Session.get('unsavedChanges')) {
-			Session.set('unsavedChanges', false);
+		if (this.state.items.filter(i => i.name === '').length !== 0) {
+			alert('You cannot have blank item names!');
+		} else if (isNaN(this.state.total)) {
+			alert('Your total must be a number!');
+		} else {
+			Meteor.call( 'items.update', 
+				this.state.project._id, 
+				this.state.description.trim(),
+				this.state.items, 
+				this.state.total 
+			);
+			if (Session.get('unsavedChanges')) {
+				Session.set('unsavedChanges', false);
+			}
+			alert('Saved!');
 		}
-		alert('Saved!');
 	}
 
 	toggleMakePublic() {
@@ -191,7 +197,7 @@ export default class Project extends Component {
 				  		<textarea className="project-description-textarea"
 							value={this.state.description}
 							onChange={this.handleChangeDescription} 
-							placeholder="Tell us about your project" />
+							placeholder="Add a short description about your project." />
 				  	</section>
 					<section>
 
