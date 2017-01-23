@@ -187,9 +187,11 @@ export default class Project extends Component {
 						{ moment(project.createdAt.toISOString()).calendar() }
 				  	</section>
 				  	<section className="project-description">
+				  		<p>Description:</p>
 				  		<textarea className="project-description-textarea"
 							value={this.state.description}
-							onChange={this.handleChangeDescription} />
+							onChange={this.handleChangeDescription} 
+							placeholder="Tell us about your project" />
 				  	</section>
 					<section>
 

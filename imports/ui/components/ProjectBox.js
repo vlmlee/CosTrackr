@@ -15,7 +15,7 @@ export default class ProjectBox extends Component {
 			minHeight: '80%',
 			minWidth: '680px',
     		width: '60%',
-    		top: '29%',
+    		top: '28%',
     		left: '43.5%',
 		    zIndex: 99,
 		    borderRadius: '5px',

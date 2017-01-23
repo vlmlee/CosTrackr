@@ -65,6 +65,7 @@ a:hover {
 }
 
 footer {
+    margin-top: 30px;
     display: flex;
     height: 30px;
     font-size: 12px;
@@ -510,7 +511,7 @@ header {
 .project-total input {
     display: inline;
     float: right;
-    margin: 0 18px 0 0;
+    margin: 0 20px 0 0;
     padding-right: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
@@ -527,11 +528,26 @@ header {
 .project-date {
 }
 
+.project-description p {
+    margin: 20px 0 0 8px;
+    font-size: 12px;
+    font-style: italic;
+}
+
 .project-description-textarea {
-    width: 100%;
+    width: 93%;
+    height: 100px;
+    margin: 2px 0 10px 0;
+    padding: 10px 10px;
     border: 1px solid #eee;
+    border-radius: 5px;
     resize: none;
     outline: none;
+    transition: border 0.2s ease-in;
+}
+
+.project-description-textarea:focus {
+    border: 1px solid #bbb;
 }
 
 .project-section {
@@ -712,7 +728,7 @@ header {
 .project-show-description {
     height: 60px;
     overflow-y: auto;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .project-show-description-empty {
