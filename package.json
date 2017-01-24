@@ -18,5 +18,6 @@
     "react-dropzone": "^3.9.1",
     "react-mounter": "^1.2.0",
     "react-skylight": "^0.4.1",
+    "react-spin": "^0.6.2"
   }
 }
