@@ -12,6 +12,7 @@ export default class ProjectShow extends Component {
 		this.handleUnstarProject = this.handleUnstarProject.bind(this);
 		this.handleChangeComment = this.handleChangeComment.bind(this);
 		this.handleSubmitComment = this.handleSubmitComment.bind(this);
+		this.toggleMakePublic = this.toggleMakePublic.bind(this);
 	}
 
 	// Adds the current user's id to the starred list.
@@ -35,10 +36,15 @@ export default class ProjectShow extends Component {
 		}
 	}
 
+	toggleMakePublic() {
+		const privacy = !this.props.project.private;
+		Meteor.call('projects.privacy', this.props.project._id, privacy);
+	}
+
 	render() {
 		return (
 			<section>
-				<section class="project-heading">
+				<section className="project-show-header">
 					<h1 className="project-show-name">
 						{this.props.project.name}
 					</h1>
@@ -80,10 +86,16 @@ export default class ProjectShow extends Component {
 						project's owner. If not, does not display it.
 					************************************************************/}
 					{ this.props.currentUser._id === this.props.project.owner ? 
-						<a className="project-show-edit-project" 
-							href={"/project/"+this.props.id}>
-							Edit project
-						</a>
+						<span>
+							<a className="project-show-edit-project" 
+								href={"/project/"+this.props.id}>
+								Edit project
+							</a>
+							<input type="button"
+								className="project-btn project-btn-public btn project-show-public"
+								onClick={this.toggleMakePublic}
+								value={ this.props.project.private ? "Make Public" : "Make Private" } />
+						</span>
 					: '' }
 
 					{/**************************************************************
@@ -155,19 +167,19 @@ export default class ProjectShow extends Component {
 						currentUser={this.props.currentUser} />
 				</section>
 
-					{/*****************
-						Comment form
-					******************/}
-					<section className="comment-form" >
-						<input type="button" 
-							className="comment-submit-btn"
-							onClick={this.handleSubmitComment}
-							value="Submit" />
-						<textarea className="comment-textbox"
-							value={this.state.comment}
-							onChange={this.handleChangeComment}
-							placeholder="Scroll up for older comments" />
-					</section>
+				{/*****************
+					Comment form
+				******************/}
+				<section className="comment-form" >
+					<input type="button" 
+						className="comment-submit-btn"
+						onClick={this.handleSubmitComment}
+						value="Comment" />
+					<textarea className="comment-textbox"
+						value={this.state.comment}
+						onChange={this.handleChangeComment}
+						placeholder="Scroll up for older comments" />
+				</section>
 			</section>
 		);
 	}

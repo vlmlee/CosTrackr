@@ -105,7 +105,7 @@ export default class LandingPage extends Component {
 					page.
 				*********************************************************/}
 				{ this.state.loginForm ? 
-					<section className="login-buttons">
+					<section className="login-btns">
 						<input className="login-btn input-btn"
 							type="text"
 							onChange={this.handleChangeUsername}
@@ -125,7 +125,7 @@ export default class LandingPage extends Component {
 							Create an Account 
 						</a>
 					</section>
-				: <section className="login-buttons">
+				: <section className="login-btns">
 					<input className="login-btn input-btn"
 						type="text"
 						onChange={this.handleChangeUsername}

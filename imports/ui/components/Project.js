@@ -126,8 +126,10 @@ export default class Project extends Component {
 	}
 
 	handleSaveItems(e) {
+		// If any items have blank names, alert the user 
 		if (this.state.items.filter(i => i.name === '').length !== 0) {
 			alert('You cannot have blank item names!');
+		// If the total is not a number, alert the user
 		} else if (isNaN(this.state.total)) {
 			alert('Your total must be a number!');
 		} else {

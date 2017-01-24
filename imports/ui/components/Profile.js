@@ -156,8 +156,8 @@ export default class Profile extends Component {
 					{this.state.username}
 				</p>
 				<p className="profile-joined"> 
-					Joined: {moment(this.state.joined.toISOString())
-						.format('MMM Do, YYYY')} 
+					Joined: { this.state.joined ? moment(this.state.joined.toISOString())
+						.format('MMM Do, YYYY') : ''} 
 				</p>
 
 				{/*********************************************
