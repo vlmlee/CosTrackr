@@ -7,6 +7,8 @@
   "dependencies": {
     "bcrypt": "^1.0.1",
     "classnames": "^2.2.5",
+    "form-data": "^2.1.2",
+    "got": "^6.7.1",
     "immutability-helper": "^2.0.0",
     "meteor-node-stubs": "~0.2.0",
     "moment": "^2.17.1",
@@ -16,6 +18,5 @@
     "react-dropzone": "^3.9.1",
     "react-mounter": "^1.2.0",
     "react-skylight": "^0.4.1",
-    "superagent": "^3.3.2"
   }
 }

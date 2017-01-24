@@ -1,7 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
+import Dropzone from 'react-dropzone';
+import got from 'got';
+import FormData from 'form-data';
+import setimmediate from 'setimmediate';
 import CreateNewProjectForm from './CreateNewProjectForm.js';
+
+const CLOUDINARY_UPLOAD_PRESET = 'xzlcljah';
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/www-corollari-com/upload/';
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -10,6 +17,8 @@ export default class Profile extends Component {
 			returnToProfile: false,
 			id: '',
 			username: '',
+			profilePicture: '',
+			uploadedImage: '',
 			bio: '',
 			website: '',
 			joined: '',
@@ -25,6 +34,8 @@ export default class Profile extends Component {
 		this.handleCancelEditWebsite = this.handleCancelEditWebsite.bind(this);
 		this.handleChangeWebsite = this.handleChangeWebsite.bind(this);
 		this.handleUpdateWebsite = this.handleUpdateWebsite.bind(this);
+		this.onImageDrop = this.onImageDrop.bind(this);
+		this.handleImageUpload = this.handleImageUpload.bind(this);
 	}
 
 	componentWillMount() {
@@ -72,7 +83,7 @@ export default class Profile extends Component {
 		/*
 			We want to change the state while moving from 
 			/profiles/:id to /profile to update the profile 
-			data but only once to prevent unbounded updates.
+			data but only -once- to prevent unbounded updates.
 		*/
 		if (this.props.pageId !== nextProps.pageId) {
 			this.setState({
@@ -147,10 +158,67 @@ export default class Profile extends Component {
 		}
 	}
 
+	onImageDrop(files) {
+		this.setState({ uploadedImage: files[0] });
+		this.handleImageUpload(files[0]);
+	}
+
+	handleImageUpload(file) {
+		const form = new FormData();
+		form.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+		form.append('file', file);
+		got.post(CLOUDINARY_UPLOAD_URL, {
+			body: form,
+		}).then(response => {
+			if (response.body.secure_url !== '') {
+				this.setState({
+					profilePicture: response.body.secure_url
+				});
+			}
+		});
+	}
+
 	render() {
+		const profilePicture = this.state.profilePicture ? this.state.profilePicture : '/images/user.png',
+			profilePictureStyle = {
+				backgroundImage: 'url(' + profilePicture + ')',
+				height: '200px',
+				width: '200px',
+				backgroundColor: 'white',
+				margin: '0 auto',
+				borderRadius: '5px',
+				transition: 'box-shadow 0.2s ease-in',
+				backgroundSize: '95% 95%',
+				backgroundRepeat: 'no-repeat',
+				backgroundPosition: 'center bottom',
+			},
+			dropzoneStyle = {
+				border: 'none',
+				height: '200px',
+				width: '200px'
+			};
 		return (
 			<section className="profile"> 
-				<section className="profile-picture">
+
+				{/* Profile picture. Defaults to /images/user.png */}
+				<section style={profilePictureStyle} className="profile-picture">
+
+				{/**************************************************
+					Conditional to display a message to the user to
+					set their profile picture only if they are the
+					profile owner. 
+				***************************************************/}
+					<Dropzone
+						multiple={false}
+						accept="image/*"
+						style={dropzoneStyle}
+						onDrop={this.onImageDrop}>
+						{ this.props.currentUser._id === this.state.id ? 
+							<p className="profile-picture-add-prompt">
+								Drag an image here to set your profile picture
+							</p>
+						: '' }
+					</Dropzone>
 				</section>
 				<p className="profile-name">
 					{this.state.username}
