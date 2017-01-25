@@ -813,7 +813,7 @@ header {
 
 .comments-count {
     text-align: right;
-    padding: 0 0 20px;
+    padding: 10px 0 20px;
     font-size: 12px;
     color: #7f7f7f;
     font-style: italic;
