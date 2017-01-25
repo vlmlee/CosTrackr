@@ -202,7 +202,7 @@ export default class Profile extends Component {
 				this.state.profilePicture : '/images/user.png',
 			backgroundPos = this.state.profilePicture ? 
 				'center center' : 'center bottom',
-			backgroundSize = this.staet.profilePicture ?
+			backgroundSize = this.state.profilePicture ?
 				'95% auto' : '95% 95%';
 		const profilePictureStyle = {
 				backgroundImage: 'url(' + profilePicture + ')',
