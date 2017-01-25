@@ -178,7 +178,6 @@ header {
     flex-direction: column;
     width: 400px;
     margin: 0 auto;
-    -webkit-appearance: textfield;
     user-select: text;
 }
 
