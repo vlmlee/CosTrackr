@@ -80,7 +80,8 @@ export default class LandingPage extends Component {
 				password: this.state.password, 
 				profile: {
 					bio: '',
-					website: ''
+					website: '',
+					profilePicture: '',
 				},
 			}, (err) => {
 				if (err) {

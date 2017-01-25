@@ -2,13 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Dropzone from 'react-dropzone';
-import got from 'got';
-import FormData from 'form-data';
-import setimmediate from 'setimmediate';
 import CreateNewProjectForm from './CreateNewProjectForm.js';
-
-const CLOUDINARY_UPLOAD_PRESET = 'xzlcljah';
-const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/www-corollari-com/upload/';
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -18,7 +12,6 @@ export default class Profile extends Component {
 			id: '',
 			username: '',
 			profilePicture: '',
-			uploadedImage: '',
 			bio: '',
 			website: '',
 			joined: '',
@@ -51,6 +44,7 @@ export default class Profile extends Component {
 		this.setState({ 
 			id: user._id,
 			username: user.username,
+			profilePicture: user.profile.profilePicture,
 			joined: user.createdAt,
 			bio: user.profile.bio,
 			website: user.profile.website,
@@ -67,6 +61,7 @@ export default class Profile extends Component {
 		*/
 		if (this.props.id !== this.props.currentUser._id ||
 			this.state.editBio !== nextState.editBio || 
+			this.state.profilePicture !== nextState.profilePicture ||
 			this.state.editWebsite !== nextState.editWebsite ||
 			this.state.bio !== nextState.bio || 
 			this.state.website !== nextState.website) {
@@ -159,27 +154,33 @@ export default class Profile extends Component {
 	}
 
 	onImageDrop(files) {
-		this.setState({ uploadedImage: files[0] });
-		this.handleImageUpload(files[0]);
+		const self = this;
+		if (files[0].type.match(/image.*/)) {
+			let reader = new FileReader();
+			reader.onload = function() {
+				let img = new Image();
+				img.src = reader.result;
+				self.setState({ profilePicture: reader.result });
+			}
+			reader.onloadend = function() {
+				self.handleImageUpload();
+			}
+			reader.readAsDataURL(files[0]);
+		}
 	}
 
-	handleImageUpload(file) {
-		const form = new FormData();
-		form.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-		form.append('file', file);
-		got.post(CLOUDINARY_UPLOAD_URL, {
-			body: form,
-		}).then(response => {
-			if (response.body.secure_url !== '') {
-				this.setState({
-					profilePicture: response.body.secure_url
-				});
-			}
-		});
+	handleImageUpload() {
+		Meteor.call('users.updateProfilePicture', 
+			this.props.currentUser._id,
+			this.state.profilePicture
+		);
 	}
 
 	render() {
-		const profilePicture = this.state.profilePicture ? this.state.profilePicture : '/images/user.png',
+		const profilePicture = this.state.profilePicture ? 
+				this.state.profilePicture : '/images/user.png',
+			backgroundPos = this.state.profilePicture ? 
+				'center center' : 'center bottom';
 			profilePictureStyle = {
 				backgroundImage: 'url(' + profilePicture + ')',
 				height: '200px',
@@ -188,9 +189,9 @@ export default class Profile extends Component {
 				margin: '0 auto',
 				borderRadius: '5px',
 				transition: 'box-shadow 0.2s ease-in',
-				backgroundSize: '95% 95%',
+				backgroundSize: '95% auto',
 				backgroundRepeat: 'no-repeat',
-				backgroundPosition: 'center bottom',
+				backgroundPosition: backgroundPos,
 			},
 			dropzoneStyle = {
 				border: 'none',
@@ -203,23 +204,33 @@ export default class Profile extends Component {
 				{/* Profile picture. Defaults to /images/user.png */}
 				<section style={profilePictureStyle} className="profile-picture">
 
-				{/**************************************************
-					Conditional to display a message to the user to
-					set their profile picture only if they are the
-					profile owner. 
-				***************************************************/}
+					{/*************************************************
+						This is a dropzone for images. It will save it
+						as the user's profile image.
+					***************************************************/}
 					<Dropzone
 						multiple={false}
 						accept="image/*"
 						style={dropzoneStyle}
 						onDrop={this.onImageDrop}>
+
+						{/**************************************************
+							Conditional to display a message to the user to
+							set their profile picture only if they are the
+							profile owner. 
+						***************************************************/}
 						{ this.props.currentUser._id === this.state.id ? 
-							<p className="profile-picture-add-prompt">
+							( this.state.profilePicture ? 
+								<p className="profile-picture-add-prompt-light">
+									Drag an image here to set your profile picture
+								</p> 
+							: <p className="profile-picture-add-prompt-dark">
 								Drag an image here to set your profile picture
-							</p>
+							</p> ) 
 						: '' }
 					</Dropzone>
 				</section>
+
 				<p className="profile-name">
 					{this.state.username}
 				</p>

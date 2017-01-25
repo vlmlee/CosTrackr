@@ -61,5 +61,14 @@ Meteor.methods({
 				'profile.website': website
 			}
 		});
+	},
+	'users.updateProfilePicture' (id, imageData) {
+		check(id, String);
+
+		Meteor.users.update(id, {
+			$set: {
+				'profile.profilePicture': imageData
+			}
+		}, { $upsert: true });
 	}
 });
