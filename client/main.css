@@ -440,7 +440,7 @@ header {
 }
 
 .profile-picture-add-prompt-light {
-    padding: 95px 20px;
+    padding: 85px 20px;
     font-size: 12px;
     color: #f9f9f9;
     opacity: 0;
@@ -448,7 +448,7 @@ header {
 }
 
 .profile-picture-add-prompt-dark {
-    padding: 95px 20px;
+    padding: 85px 20px;
     font-size: 12px;
     color: #8f8f8f;
     opacity: 0;
@@ -469,6 +469,13 @@ header {
     font-size: 12px;
     color: #999;
     font-style: italic;
+}
+
+.profile-error {
+    color: red;
+    position: fixed;
+    top: 103px;
+    left: 208px;
 }
 
 /*****************

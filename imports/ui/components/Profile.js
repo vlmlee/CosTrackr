@@ -17,6 +17,7 @@ export default class Profile extends Component {
 			joined: '',
 			editBio: false,
 			editWebsite: false,
+			error : '',
 		};
 
 		this.handleEditBio = this.handleEditBio.bind(this);
@@ -64,7 +65,8 @@ export default class Profile extends Component {
 			this.state.profilePicture !== nextState.profilePicture ||
 			this.state.editWebsite !== nextState.editWebsite ||
 			this.state.bio !== nextState.bio || 
-			this.state.website !== nextState.website) {
+			this.state.website !== nextState.website ||
+			this.state.error !== nextState.error) {
 			return true;
 		} else {
 			return false;
@@ -155,17 +157,21 @@ export default class Profile extends Component {
 
 	onImageDrop(files) {
 		const self = this;
-		if (files[0].type.match(/image.*/)) {
-			let reader = new FileReader();
-			reader.onload = function() {
-				let img = new Image();
-				img.src = reader.result;
-				self.setState({ profilePicture: reader.result });
+		if (files[0].size <= 200000) {
+			if (files[0].type.match(/image.*/)) {
+				let reader = new FileReader();
+				reader.onload = function() {
+					let img = new Image();
+					img.src = reader.result;
+					self.setState({ profilePicture: reader.result, error: '' });
+				}
+				reader.onloadend = function() {
+					self.handleImageUpload();
+				}
+				reader.readAsDataURL(files[0]);
 			}
-			reader.onloadend = function() {
-				self.handleImageUpload();
-			}
-			reader.readAsDataURL(files[0]);
+		} else {
+			this.setState({ error: 'File size too large!'});
 		}
 	}
 
@@ -181,7 +187,7 @@ export default class Profile extends Component {
 				this.state.profilePicture : '/images/user.png',
 			backgroundPos = this.state.profilePicture ? 
 				'center center' : 'center bottom';
-			profilePictureStyle = {
+		const profilePictureStyle = {
 				backgroundImage: 'url(' + profilePicture + ')',
 				height: '200px',
 				width: '200px',
@@ -222,10 +228,12 @@ export default class Profile extends Component {
 						{ this.props.currentUser._id === this.state.id ? 
 							( this.state.profilePicture ? 
 								<p className="profile-picture-add-prompt-light">
-									Drag an image here to set your profile picture
+									Drag an image here to set your profile picture 
+									(200x200 limit:200kb)
 								</p> 
 							: <p className="profile-picture-add-prompt-dark">
 								Drag an image here to set your profile picture
+								(200x200 limit:200kb)
 							</p> ) 
 						: '' }
 					</Dropzone>
@@ -354,6 +362,11 @@ export default class Profile extends Component {
 						: <div className="push-down"> </div> }
 					</span>
 				</section> } 
+
+				{/* Error messages for profile picture */}
+				<section className="profile-error">
+					<p>{this.state.error}</p>
+				</section>
 			</section>
 		);
 	}
