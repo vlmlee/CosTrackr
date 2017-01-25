@@ -82,7 +82,7 @@ export default class Profile extends Component {
 			/profiles/:id to /profile to update the profile 
 			data but only -once- to prevent unbounded updates.
 		*/
-		if (this.props.id !== nextProps.id && this.props.id === this.props.currentUser._id) {
+		if (this.props.id !== nextProps.id && this.props.currentUser._id === nextProps.id) {
 			const user = this.props.users
 				.filter(user => user._id === this.props.currentUser._id)[0];
 			this.setState({
@@ -93,7 +93,7 @@ export default class Profile extends Component {
 				website: user.profile.website,
 				joined: user.createdAt,
 			});
-		} else {
+		} else if (this.props.currentUser._id !== nextProps.id) {
 			const user = this.props.users.filter(user => user._id === this.props.id)[0];
 			this.setState({
 				id: user._id,
@@ -201,9 +201,7 @@ export default class Profile extends Component {
 		const profilePicture = this.state.profilePicture ? 
 				this.state.profilePicture : '/images/user.png',
 			backgroundPos = this.state.profilePicture ? 
-				'center center' : 'center bottom',
-			backgroundSize = this.state.profilePicture ?
-				'95% auto' : '95% 95%';
+				'center center' : 'center bottom';
 		const profilePictureStyle = {
 				backgroundImage: 'url(' + profilePicture + ')',
 				height: '200px',
@@ -212,7 +210,7 @@ export default class Profile extends Component {
 				margin: '0 auto',
 				borderRadius: '5px',
 				transition: 'box-shadow 0.2s ease-in',
-				backgroundSize: backgroundSize,
+				backgroundSize: '95% auto',
 				backgroundRepeat: 'no-repeat',
 				backgroundPosition: backgroundPos,
 			},
