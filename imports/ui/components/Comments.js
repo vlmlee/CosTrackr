@@ -45,6 +45,7 @@ export default class Comments extends Component {
 						{ comments.map(comment => (
 							<section key={comment._id} >
 								<Comment 
+									id={comment.owner}
 									username={comment.username}
 									createdAt={comment.createdAt}
 									text={comment.text} />

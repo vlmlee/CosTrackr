@@ -86,6 +86,7 @@ export default class Profile extends Component {
 			this.setState({
 				id: user._id,
 				username: user.username,
+				profilePicture: user.profile.profilePicture,
 				bio: user.profile.bio,
 				website: user.profile.website,
 				joined: user.createdAt,
@@ -214,31 +215,35 @@ export default class Profile extends Component {
 
 					{/*************************************************
 						This is a dropzone for images. It will save it
-						as the user's profile image.
+						as the user's profile image. Conditional so that
+						only the profile owner can change the profile
+						picture.
 					***************************************************/}
-					<Dropzone
-						multiple={false}
-						accept="image/*"
-						style={dropzoneStyle}
-						onDrop={this.onImageDrop}>
+					{ this.props.currentUser._id === this.state.id ? 
+						<Dropzone
+							multiple={false}
+							accept="image/*"
+							style={dropzoneStyle}
+							onDrop={this.onImageDrop}>
 
-						{/**************************************************
-							Conditional to display a message to the user to
-							set their profile picture only if they are the
-							profile owner. 
-						***************************************************/}
-						{ this.props.currentUser._id === this.state.id ? 
-							( this.state.profilePicture ? 
-								<p className="profile-picture-add-prompt profile-picture-add-prompt-light">
-									Drag an image here to set your profile picture 
+							{/**************************************************
+								Conditional to display a message to the user to
+								set their profile picture only if they are the
+								profile owner. 
+							***************************************************/}
+							{ this.props.currentUser._id === this.state.id ? 
+								( this.state.profilePicture ? 
+									<p className="profile-picture-add-prompt profile-picture-add-prompt-light">
+										Drag an image here to set your profile picture 
+										(200x200 limit:200kb)
+									</p> 
+								: <p className="profile-picture-add-prompt profile-picture-add-prompt-dark">
+									Drag an image here to set your profile picture
 									(200x200 limit:200kb)
-								</p> 
-							: <p className="profile-picture-add-prompt profile-picture-add-prompt-dark">
-								Drag an image here to set your profile picture
-								(200x200 limit:200kb)
-							</p> ) 
-						: '' }
-					</Dropzone>
+								</p> ) 
+							: '' }
+						</Dropzone>
+					: '' }
 				</section>
 
 				<p className="profile-name">

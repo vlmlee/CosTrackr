@@ -1,15 +1,16 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
 
-const Comment = ({ username, createdAt, text}) => (
+const Comment = ({ id, username, createdAt, text}) => (
 	<section className="comment">
-		<p className="comment-username">{username}</p>
+		<a href={'/profiles/' + id} className="comment-username">{username}</a>
 		<p className="comment-text">{text}</p> 
 		<p className="comment-date">{moment(createdAt).fromNow()}</p>
 	</section>
 );
 
 Comment.propTypes = {
+	id: PropTypes.string.isRequired,
 	username: PropTypes.string.isRequired,
 	text: PropTypes.string.isRequired,
 	createdAt: PropTypes.object.isRequired,
