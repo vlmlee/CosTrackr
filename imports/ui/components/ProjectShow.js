@@ -48,10 +48,10 @@ export default class ProjectShow extends Component {
 					<h1 className="project-show-name">
 						{this.props.project.name}
 					</h1>
-					<span className="project-show-total">
+					<span className="project-show-total project-show-total-price">
 						{this.props.project.total.toFixed(2)}
 					</span>
-					<span className="project-show-total-label">
+					<span className="project-show-total project-show-total-label">
 						Total:
 					</span>
 

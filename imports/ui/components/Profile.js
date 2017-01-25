@@ -229,11 +229,11 @@ export default class Profile extends Component {
 						***************************************************/}
 						{ this.props.currentUser._id === this.state.id ? 
 							( this.state.profilePicture ? 
-								<p className="profile-picture-add-prompt-light">
+								<p className="profile-picture-add-prompt profile-picture-add-prompt-light">
 									Drag an image here to set your profile picture 
 									(200x200 limit:200kb)
 								</p> 
-							: <p className="profile-picture-add-prompt-dark">
+							: <p className="profile-picture-add-prompt profile-picture-add-prompt-dark">
 								Drag an image here to set your profile picture
 								(200x200 limit:200kb)
 							</p> ) 
