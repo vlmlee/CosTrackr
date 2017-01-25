@@ -60,7 +60,9 @@ export default class Profile extends Component {
 			This prevents any other updates like 'starring' 
 			to cause an update to the component.
 		*/
-		if (this.props.id !== this.props.currentUser._id ||
+		if (this.props.currentUser._id !== this.props.id ||
+			this.props.currentUser._id !== nextProps.id ||
+			this.props.currentUser._id !== nextState.id ||
 			this.state.editBio !== nextState.editBio || 
 			this.state.profilePicture !== nextState.profilePicture ||
 			this.state.editWebsite !== nextState.editWebsite ||
@@ -74,15 +76,25 @@ export default class Profile extends Component {
 	}
 
 	componentWillUpdate(nextProps, nextState) {
-		const user = this.props.users
-			.filter(user => user._id === this.props.currentUser._id)[0];
 
 		/*
 			We want to change the state while moving from 
 			/profiles/:id to /profile to update the profile 
 			data but only -once- to prevent unbounded updates.
 		*/
-		if (this.props.pageId !== nextProps.pageId) {
+		if (this.props.id !== nextProps.id && this.props.id === this.props.currentUser._id) {
+			const user = this.props.users
+				.filter(user => user._id === this.props.currentUser._id)[0];
+			this.setState({
+				id: user._id,
+				username: user.username,
+				profilePicture: user.profile.profilePicture,
+				bio: user.profile.bio,
+				website: user.profile.website,
+				joined: user.createdAt,
+			});
+		} else {
+			const user = this.props.users.filter(user => user._id === this.props.id)[0];
 			this.setState({
 				id: user._id,
 				username: user.username,
