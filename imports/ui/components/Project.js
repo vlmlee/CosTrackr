@@ -241,7 +241,7 @@ export default class Project extends Component {
 								<Item
 									id={item.id}
 									name={item.name}
-									price={item.price}
+									price={parseFloat(item.price).toFixed(2)}
 									link={item.link}
 									projectId={project._id}
 									handleNameChange={this.handleNameChange}
