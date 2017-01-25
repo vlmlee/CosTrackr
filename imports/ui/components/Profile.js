@@ -201,7 +201,9 @@ export default class Profile extends Component {
 		const profilePicture = this.state.profilePicture ? 
 				this.state.profilePicture : '/images/user.png',
 			backgroundPos = this.state.profilePicture ? 
-				'center center' : 'center bottom';
+				'center center' : 'center bottom',
+			backgroundSize = this.state.profilePicture ?
+				'95% auto' : '95% 95%';
 		const profilePictureStyle = {
 				backgroundImage: 'url(' + profilePicture + ')',
 				height: '200px',
@@ -210,7 +212,7 @@ export default class Profile extends Component {
 				margin: '0 auto',
 				borderRadius: '5px',
 				transition: 'box-shadow 0.2s ease-in',
-				backgroundSize: '95% auto',
+				backgroundSize: backgroundSize,
 				backgroundRepeat: 'no-repeat',
 				backgroundPosition: backgroundPos,
 			},
