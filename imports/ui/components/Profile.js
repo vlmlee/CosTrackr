@@ -157,6 +157,7 @@ export default class Profile extends Component {
 
 	onImageDrop(files) {
 		const self = this;
+		// Makes sure that the uploaded image is less than 200kb.
 		if (files[0].size <= 200000) {
 			if (files[0].type.match(/image.*/)) {
 				let reader = new FileReader();
@@ -165,13 +166,14 @@ export default class Profile extends Component {
 					img.src = reader.result;
 					self.setState({ profilePicture: reader.result, error: '' });
 				}
+				// After the file has been upload, then store it in the database.
 				reader.onloadend = function() {
 					self.handleImageUpload();
 				}
 				reader.readAsDataURL(files[0]);
 			}
 		} else {
-			this.setState({ error: 'File size too large!'});
+			this.setState({ error: 'File size too large!' });
 		}
 	}
 
@@ -244,7 +246,7 @@ export default class Profile extends Component {
 				</p>
 				<p className="profile-joined"> 
 					Joined: { this.state.joined ? moment(this.state.joined.toISOString())
-						.format('MMM Do, YYYY') : ''} 
+						.format('MMM Do, YYYY') : '' } 
 				</p>
 
 				{/*********************************************
