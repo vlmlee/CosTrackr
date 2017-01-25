@@ -143,7 +143,7 @@ export default class ProjectShow extends Component {
 											</span>
 											{ item.price !== '0' ?
 												<span className="project-show-item-price"> 
-													{parseInt(item.price).toFixed(2)} &nbsp;
+													{parseFloat(item.price).toFixed(2)} &nbsp;
 												</span>
 											: '' } 
 										</section> )
