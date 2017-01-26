@@ -10,7 +10,7 @@ export default class ProjectBox extends Component {
 
 	render() {
 		const modalStyles = {
-			position: 'fixed',
+			position: 'absolute',
 			height: 'auto',
 			minHeight: '80%',
 			minWidth: '680px',
