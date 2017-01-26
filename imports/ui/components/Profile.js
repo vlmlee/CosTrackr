@@ -175,8 +175,6 @@ export default class Profile extends Component {
 			if (files[0].type.match(/image.*/)) {
 				let reader = new FileReader();
 				reader.onload = function() {
-					let img = new Image();
-					img.src = reader.result;
 					self.setState({ profilePicture: reader.result, error: '' });
 				}
 				// After the file has been upload, then store it in the database.
