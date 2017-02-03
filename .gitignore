@@ -26,6 +26,7 @@ node_modules
 nbproject
 Thumbs.db
 tags
+.vscode
 
 # NPM packages folder.
 node_modules/
