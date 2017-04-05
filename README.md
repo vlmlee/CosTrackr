@@ -1,4 +1,4 @@
-#Costrakr
+# Costrakr
 
 This is a design project I had in my head for some time. The app is hosted [here](http://www.costrakr.us) and you can sign up without using an email.
 
